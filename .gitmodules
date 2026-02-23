@@ -1,3 +1,6 @@
 [submodule "Motion-Player-ROS"]
 	path = Motion-Player-ROS
 	url = https://github.com/MOVIN3D/Motion-Player-ROS.git
+[submodule "mjlab"]
+	path = mjlab
+	url = https://github.com/mujocolab/mjlab
