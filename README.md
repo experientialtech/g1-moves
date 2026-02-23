@@ -67,26 +67,26 @@ Each clip lives in its own subfolder containing:
 | B_ForwardKarate | [MP4](karate/B_ForwardKarate/B_ForwardKarate.mp4) | [GIF](karate/B_ForwardKarate/B_ForwardKarate.gif) |
 | B_LongKarate | [MP4](karate/B_LongKarate/B_LongKarate.mp4) | [GIF](karate/B_LongKarate/B_LongKarate.gif) |
 | B_SpinKarate | [MP4](karate/B_SpinKarate/B_SpinKarate.mp4) | [GIF](karate/B_SpinKarate/B_SpinKarate.gif) |
-| M_Dance1 | [MP4](karate/M_Dance1/M_Dance1.mp4) | [GIF](karate/M_Dance1/M_Dance1.gif) |
-| M_Dance2 | [MP4](karate/M_Dance2/M_Dance2.mp4) | [GIF](karate/M_Dance2/M_Dance2.gif) |
-| M_Dance3 | [MP4](karate/M_Dance3/M_Dance3.mp4) | [GIF](karate/M_Dance3/M_Dance3.gif) |
-| M_Dance4 | [MP4](karate/M_Dance4/M_Dance4.mp4) | [GIF](karate/M_Dance4/M_Dance4.gif) |
-| M_Dance5 | [MP4](karate/M_Dance5/M_Dance5.mp4) | [GIF](karate/M_Dance5/M_Dance5.gif) |
-| M_Dance6 | [MP4](karate/M_Dance6/M_Dance6.mp4) | [GIF](karate/M_Dance6/M_Dance6.gif) |
-| M_Dance7 | [MP4](karate/M_Dance7/M_Dance7.mp4) | [GIF](karate/M_Dance7/M_Dance7.gif) |
-| M_Dance8 | [MP4](karate/M_Dance8/M_Dance8.mp4) | [GIF](karate/M_Dance8/M_Dance8.gif) |
-| M_Dance9 | [MP4](karate/M_Dance9/M_Dance9.mp4) | [GIF](karate/M_Dance9/M_Dance9.gif) |
-| M_Dance10 | [MP4](karate/M_Dance10/M_Dance10.mp4) | [GIF](karate/M_Dance10/M_Dance10.gif) |
-| M_Dance11 | [MP4](karate/M_Dance11/M_Dance11.mp4) | [GIF](karate/M_Dance11/M_Dance11.gif) |
-| M_Dance17 | [MP4](karate/M_Dance17/M_Dance17.mp4) | [GIF](karate/M_Dance17/M_Dance17.gif) |
-| M_Dance18 | [MP4](karate/M_Dance18/M_Dance18.mp4) | [GIF](karate/M_Dance18/M_Dance18.gif) |
-| M_Dance19 | [MP4](karate/M_Dance19/M_Dance19.mp4) | [GIF](karate/M_Dance19/M_Dance19.gif) |
-| M_Dance20 | [MP4](karate/M_Dance20/M_Dance20.mp4) | [GIF](karate/M_Dance20/M_Dance20.gif) |
-| M_ShortDance12 | [MP4](karate/M_ShortDance12/M_ShortDance12.mp4) | [GIF](karate/M_ShortDance12/M_ShortDance12.gif) |
-| M_ShortDance13 | [MP4](karate/M_ShortDance13/M_ShortDance13.mp4) | [GIF](karate/M_ShortDance13/M_ShortDance13.gif) |
-| M_ShortDance14 | [MP4](karate/M_ShortDance14/M_ShortDance14.mp4) | [GIF](karate/M_ShortDance14/M_ShortDance14.gif) |
-| M_ShortDance15 | [MP4](karate/M_ShortDance15/M_ShortDance15.mp4) | [GIF](karate/M_ShortDance15/M_ShortDance15.gif) |
-| M_ShortDance16 | [MP4](karate/M_ShortDance16/M_ShortDance16.mp4) | [GIF](karate/M_ShortDance16/M_ShortDance16.gif) |
+| M_Move1 | [MP4](karate/M_Move1/M_Move1.mp4) | [GIF](karate/M_Move1/M_Move1.gif) |
+| M_Move2 | [MP4](karate/M_Move2/M_Move2.mp4) | [GIF](karate/M_Move2/M_Move2.gif) |
+| M_Move3 | [MP4](karate/M_Move3/M_Move3.mp4) | [GIF](karate/M_Move3/M_Move3.gif) |
+| M_Move4 | [MP4](karate/M_Move4/M_Move4.mp4) | [GIF](karate/M_Move4/M_Move4.gif) |
+| M_Move5 | [MP4](karate/M_Move5/M_Move5.mp4) | [GIF](karate/M_Move5/M_Move5.gif) |
+| M_Move6 | [MP4](karate/M_Move6/M_Move6.mp4) | [GIF](karate/M_Move6/M_Move6.gif) |
+| M_Move7 | [MP4](karate/M_Move7/M_Move7.mp4) | [GIF](karate/M_Move7/M_Move7.gif) |
+| M_Move8 | [MP4](karate/M_Move8/M_Move8.mp4) | [GIF](karate/M_Move8/M_Move8.gif) |
+| M_Move9 | [MP4](karate/M_Move9/M_Move9.mp4) | [GIF](karate/M_Move9/M_Move9.gif) |
+| M_Move10 | [MP4](karate/M_Move10/M_Move10.mp4) | [GIF](karate/M_Move10/M_Move10.gif) |
+| M_Move11 | [MP4](karate/M_Move11/M_Move11.mp4) | [GIF](karate/M_Move11/M_Move11.gif) |
+| M_Move17 | [MP4](karate/M_Move17/M_Move17.mp4) | [GIF](karate/M_Move17/M_Move17.gif) |
+| M_Move18 | [MP4](karate/M_Move18/M_Move18.mp4) | [GIF](karate/M_Move18/M_Move18.gif) |
+| M_Move19 | [MP4](karate/M_Move19/M_Move19.mp4) | [GIF](karate/M_Move19/M_Move19.gif) |
+| M_Move20 | [MP4](karate/M_Move20/M_Move20.mp4) | [GIF](karate/M_Move20/M_Move20.gif) |
+| M_ShortMove12 | [MP4](karate/M_ShortMove12/M_ShortMove12.mp4) | [GIF](karate/M_ShortMove12/M_ShortMove12.gif) |
+| M_ShortMove13 | [MP4](karate/M_ShortMove13/M_ShortMove13.mp4) | [GIF](karate/M_ShortMove13/M_ShortMove13.gif) |
+| M_ShortMove14 | [MP4](karate/M_ShortMove14/M_ShortMove14.mp4) | [GIF](karate/M_ShortMove14/M_ShortMove14.gif) |
+| M_ShortMove15 | [MP4](karate/M_ShortMove15/M_ShortMove15.mp4) | [GIF](karate/M_ShortMove15/M_ShortMove15.gif) |
+| M_ShortMove16 | [MP4](karate/M_ShortMove16/M_ShortMove16.mp4) | [GIF](karate/M_ShortMove16/M_ShortMove16.gif) |
 
 ### Bonus (4)
 
