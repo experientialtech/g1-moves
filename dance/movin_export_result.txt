@@ -1,0 +1,5 @@
+Start exporting clip 'J_Dance23_MidnightSun'.
+Start loading MOVINMan motion : J_Dance23_MidnightSun
+	Motion Path : recordings\Actor_1_260223_074610.bin
+Clip 'J_Dance23_MidnightSun' exported successfully.
+

@@ -1,0 +1,5 @@
+Start exporting clip 'B_DadDance'.
+Start loading MOVINMan motion : B_DadDance
+	Motion Path : recordings\Actor_1_260223_072738.bin
+Clip 'B_DadDance' exported successfully.
+

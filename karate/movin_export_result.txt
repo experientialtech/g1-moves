@@ -1,0 +1,5 @@
+Start exporting clip 'M_Dance20'.
+Start loading MOVINMan motion : M_Dance20
+	Motion Path : recordings\Actor_1_260223_073816.bin
+Clip 'M_Dance20' exported successfully.
+
