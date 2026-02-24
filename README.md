@@ -102,12 +102,16 @@ Run `python retarget_all.py` to regenerate (skips existing outputs).
 
 ### Bonus (4)
 
-| Clip | Mocap | Retarget | Training |
-|------|-------|----------|----------|
-| B_Fence1 | ![](bonus/B_Fence1/B_Fence1.gif) | ![](bonus/B_Fence1/B_Fence1_retarget.gif) | ![](bonus/B_Fence1/B_Fence1_training.gif) |
-| B_Fence3 | ![](bonus/B_Fence3/B_Fence3.gif) | ![](bonus/B_Fence3/B_Fence3_retarget.gif) | ![](bonus/B_Fence3/B_Fence3_training.gif) |
-| B_HandsChop | ![](bonus/B_HandsChop/B_HandsChop.gif) | ![](bonus/B_HandsChop/B_HandsChop_retarget.gif) | ![](bonus/B_HandsChop/B_HandsChop_training.gif) |
-| B_HandsUp | ![](bonus/B_HandsUp/B_HandsUp.gif) | ![](bonus/B_HandsUp/B_HandsUp_retarget.gif) | ![](bonus/B_HandsUp/B_HandsUp_training.gif) |
+| Mocap | Retarget | Training |
+|-------|----------|----------|
+| **B_Fence1** | | |
+| ![](bonus/B_Fence1/B_Fence1.gif) | ![](bonus/B_Fence1/B_Fence1_retarget.gif) | ![](bonus/B_Fence1/B_Fence1_training.gif) |
+| **B_Fence3** | | |
+| ![](bonus/B_Fence3/B_Fence3.gif) | ![](bonus/B_Fence3/B_Fence3_retarget.gif) | ![](bonus/B_Fence3/B_Fence3_training.gif) |
+| **B_HandsChop** | | |
+| ![](bonus/B_HandsChop/B_HandsChop.gif) | ![](bonus/B_HandsChop/B_HandsChop_retarget.gif) | ![](bonus/B_HandsChop/B_HandsChop_training.gif) |
+| **B_HandsUp** | | |
+| ![](bonus/B_HandsUp/B_HandsUp.gif) | ![](bonus/B_HandsUp/B_HandsUp_retarget.gif) | ![](bonus/B_HandsUp/B_HandsUp_training.gif) |
 
 ## Capture Details
 
