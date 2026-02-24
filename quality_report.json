@@ -1,0 +1,1512 @@
+{
+  "generated": "2026-02-24T20:36:33Z",
+  "checks": {
+    "joint_limit_violations": {
+      "description": "Frames where retargeted angles exceed G1 limits",
+      "clips": {
+        "B_DadDance": {
+          "violations": 1,
+          "max_excess_rad": 0.0,
+          "worst_joint": "right_ankle_roll_joint"
+        },
+        "B_LongDance": {
+          "violations": 62,
+          "max_excess_rad": 0.0,
+          "worst_joint": "right_ankle_roll_joint"
+        },
+        "B_SpiralDance": {
+          "violations": 0,
+          "max_excess_rad": 0.0,
+          "worst_joint": null
+        },
+        "B_StretchDance": {
+          "violations": 0,
+          "max_excess_rad": 0.0,
+          "worst_joint": null
+        },
+        "B_WiggleDance": {
+          "violations": 0,
+          "max_excess_rad": 0.0,
+          "worst_joint": null
+        },
+        "J_Dance0_StepTouch": {
+          "violations": 281,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "J_Dance11_Gnarly": {
+          "violations": 2,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "J_Dance12_LushLife": {
+          "violations": 0,
+          "max_excess_rad": 0.0,
+          "worst_joint": null
+        },
+        "J_Dance17_Shuffle": {
+          "violations": 16,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "J_Dance18_TikTok": {
+          "violations": 8,
+          "max_excess_rad": 0.0,
+          "worst_joint": "right_ankle_roll_joint"
+        },
+        "J_Dance19_LetsGO": {
+          "violations": 0,
+          "max_excess_rad": 0.0,
+          "worst_joint": null
+        },
+        "J_Dance1_Modern": {
+          "violations": 58,
+          "max_excess_rad": 0.0,
+          "worst_joint": "right_ankle_roll_joint"
+        },
+        "J_Dance20_DWG": {
+          "violations": 0,
+          "max_excess_rad": 0.0,
+          "worst_joint": null
+        },
+        "J_Dance21_Blunt": {
+          "violations": 81,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "J_Dance22_Thrilling": {
+          "violations": 17,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "J_Dance23_MidnightSun": {
+          "violations": 31,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "J_Dance2_Salsa": {
+          "violations": 9,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "J_Dance3_Woah": {
+          "violations": 109,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "J_Dance4_Broadway": {
+          "violations": 27,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "J_Dance5_Hype": {
+          "violations": 134,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "J_Dance6_Sassy": {
+          "violations": 0,
+          "max_excess_rad": 0.0,
+          "worst_joint": null
+        },
+        "J_Dance7_Party": {
+          "violations": 38,
+          "max_excess_rad": 0.0,
+          "worst_joint": "right_ankle_roll_joint"
+        },
+        "J_Dance8_WestCoast": {
+          "violations": 11,
+          "max_excess_rad": 0.0,
+          "worst_joint": "right_ankle_roll_joint"
+        },
+        "J_Dance9_PeaceMaker": {
+          "violations": 105,
+          "max_excess_rad": 0.0,
+          "worst_joint": "right_ankle_roll_joint"
+        },
+        "J_ShortDance13_SingleLadies": {
+          "violations": 0,
+          "max_excess_rad": 0.0,
+          "worst_joint": null
+        },
+        "J_ShortDance14_Disco": {
+          "violations": 1,
+          "max_excess_rad": 0.0,
+          "worst_joint": "right_ankle_roll_joint"
+        },
+        "J_ShortDance15_Nineties": {
+          "violations": 2,
+          "max_excess_rad": 0.0,
+          "worst_joint": "right_ankle_roll_joint"
+        },
+        "J_ShortDance16_JazzWalk": {
+          "violations": 1,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "B_AttackKarate": {
+          "violations": 310,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "B_BowKarate": {
+          "violations": 283,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "B_ChopsKarate": {
+          "violations": 149,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "B_CrazyChopsKarate": {
+          "violations": 68,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "B_ForwardKarate": {
+          "violations": 132,
+          "max_excess_rad": 0.0,
+          "worst_joint": "right_ankle_roll_joint"
+        },
+        "B_LongKarate": {
+          "violations": 398,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "B_SpinKarate": {
+          "violations": 208,
+          "max_excess_rad": 0.0,
+          "worst_joint": "right_ankle_roll_joint"
+        },
+        "M_Move1": {
+          "violations": 376,
+          "max_excess_rad": 0.0,
+          "worst_joint": "right_ankle_roll_joint"
+        },
+        "M_Move10": {
+          "violations": 80,
+          "max_excess_rad": 0.0,
+          "worst_joint": "right_ankle_roll_joint"
+        },
+        "M_Move11": {
+          "violations": 117,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "M_Move17": {
+          "violations": 53,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "M_Move18": {
+          "violations": 77,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "M_Move19": {
+          "violations": 7,
+          "max_excess_rad": 0.0,
+          "worst_joint": "right_ankle_roll_joint"
+        },
+        "M_Move2": {
+          "violations": 477,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "M_Move20": {
+          "violations": 56,
+          "max_excess_rad": 0.0,
+          "worst_joint": "right_ankle_roll_joint"
+        },
+        "M_Move3": {
+          "violations": 331,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "M_Move4": {
+          "violations": 330,
+          "max_excess_rad": 0.0,
+          "worst_joint": "right_ankle_roll_joint"
+        },
+        "M_Move5": {
+          "violations": 297,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "M_Move6": {
+          "violations": 98,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "M_Move7": {
+          "violations": 167,
+          "max_excess_rad": 0.0,
+          "worst_joint": "right_ankle_roll_joint"
+        },
+        "M_Move8": {
+          "violations": 117,
+          "max_excess_rad": 0.0,
+          "worst_joint": "right_ankle_roll_joint"
+        },
+        "M_Move9": {
+          "violations": 182,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "M_ShortMove12": {
+          "violations": 10,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "M_ShortMove13": {
+          "violations": 37,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "M_ShortMove14": {
+          "violations": 16,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "M_ShortMove15": {
+          "violations": 46,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "M_ShortMove16": {
+          "violations": 76,
+          "max_excess_rad": 0.0,
+          "worst_joint": "right_ankle_roll_joint"
+        },
+        "B_Fence1": {
+          "violations": 17,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "B_Fence2": {
+          "violations": 35,
+          "max_excess_rad": 0.0,
+          "worst_joint": "left_ankle_roll_joint"
+        },
+        "B_HandsChop": {
+          "violations": 0,
+          "max_excess_rad": 0.0,
+          "worst_joint": null
+        },
+        "B_HandsUp": {
+          "violations": 0,
+          "max_excess_rad": 0.0,
+          "worst_joint": null
+        }
+      }
+    },
+    "ground_penetration": {
+      "description": "Frames where foot Z < -1cm",
+      "clips": {
+        "B_DadDance": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0423
+        },
+        "B_LongDance": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0424
+        },
+        "B_SpiralDance": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0361
+        },
+        "B_StretchDance": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0323
+        },
+        "B_WiggleDance": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0313
+        },
+        "J_Dance0_StepTouch": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0367
+        },
+        "J_Dance11_Gnarly": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.035
+        },
+        "J_Dance12_LushLife": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0371
+        },
+        "J_Dance17_Shuffle": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0387
+        },
+        "J_Dance18_TikTok": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0344
+        },
+        "J_Dance19_LetsGO": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0419
+        },
+        "J_Dance1_Modern": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0369
+        },
+        "J_Dance20_DWG": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0335
+        },
+        "J_Dance21_Blunt": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0494
+        },
+        "J_Dance22_Thrilling": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0382
+        },
+        "J_Dance23_MidnightSun": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0335
+        },
+        "J_Dance2_Salsa": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0386
+        },
+        "J_Dance3_Woah": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0399
+        },
+        "J_Dance4_Broadway": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0394
+        },
+        "J_Dance5_Hype": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0384
+        },
+        "J_Dance6_Sassy": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0348
+        },
+        "J_Dance7_Party": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0435
+        },
+        "J_Dance8_WestCoast": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0607
+        },
+        "J_Dance9_PeaceMaker": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0359
+        },
+        "J_ShortDance13_SingleLadies": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0331
+        },
+        "J_ShortDance14_Disco": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0394
+        },
+        "J_ShortDance15_Nineties": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.038
+        },
+        "J_ShortDance16_JazzWalk": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0353
+        },
+        "B_AttackKarate": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0371
+        },
+        "B_BowKarate": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0355
+        },
+        "B_ChopsKarate": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0406
+        },
+        "B_CrazyChopsKarate": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0381
+        },
+        "B_ForwardKarate": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0415
+        },
+        "B_LongKarate": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0346
+        },
+        "B_SpinKarate": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0406
+        },
+        "M_Move1": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0353
+        },
+        "M_Move10": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.038
+        },
+        "M_Move11": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0381
+        },
+        "M_Move17": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0313
+        },
+        "M_Move18": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0355
+        },
+        "M_Move19": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0355
+        },
+        "M_Move2": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0362
+        },
+        "M_Move20": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0365
+        },
+        "M_Move3": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0365
+        },
+        "M_Move4": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0418
+        },
+        "M_Move5": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.042
+        },
+        "M_Move6": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0335
+        },
+        "M_Move7": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0375
+        },
+        "M_Move8": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0469
+        },
+        "M_Move9": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0361
+        },
+        "M_ShortMove12": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0336
+        },
+        "M_ShortMove13": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0324
+        },
+        "M_ShortMove14": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0346
+        },
+        "M_ShortMove15": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.038
+        },
+        "M_ShortMove16": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0365
+        },
+        "B_Fence1": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0394
+        },
+        "B_Fence2": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0414
+        },
+        "B_HandsChop": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.0361
+        },
+        "B_HandsUp": {
+          "penetration_frames": 0,
+          "min_foot_z_m": 0.05
+        }
+      }
+    },
+    "frame_consistency": {
+      "description": "PKL frames == BVH frames, NPZ frames == BVH - 1",
+      "clips": {
+        "B_DadDance": {
+          "bvh_frames": 2509,
+          "pkl_frames": 2509,
+          "npz_frames": 2508,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "B_LongDance": {
+          "bvh_frames": 7167,
+          "pkl_frames": 7167,
+          "npz_frames": 7166,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "B_SpiralDance": {
+          "bvh_frames": 2868,
+          "pkl_frames": 2868,
+          "npz_frames": 2867,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "B_StretchDance": {
+          "bvh_frames": 2586,
+          "pkl_frames": 2586,
+          "npz_frames": 2585,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "B_WiggleDance": {
+          "bvh_frames": 2237,
+          "pkl_frames": 2237,
+          "npz_frames": 2236,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_Dance0_StepTouch": {
+          "bvh_frames": 1949,
+          "pkl_frames": 1949,
+          "npz_frames": 1949,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_Dance11_Gnarly": {
+          "bvh_frames": 2709,
+          "pkl_frames": 2709,
+          "npz_frames": 2708,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_Dance12_LushLife": {
+          "bvh_frames": 2136,
+          "pkl_frames": 2136,
+          "npz_frames": 2135,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_Dance17_Shuffle": {
+          "bvh_frames": 1922,
+          "pkl_frames": 1922,
+          "npz_frames": 1921,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_Dance18_TikTok": {
+          "bvh_frames": 1077,
+          "pkl_frames": 1077,
+          "npz_frames": 1076,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_Dance19_LetsGO": {
+          "bvh_frames": 1491,
+          "pkl_frames": 1491,
+          "npz_frames": 1490,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_Dance1_Modern": {
+          "bvh_frames": 2265,
+          "pkl_frames": 2265,
+          "npz_frames": 2264,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_Dance20_DWG": {
+          "bvh_frames": 938,
+          "pkl_frames": 938,
+          "npz_frames": 937,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_Dance21_Blunt": {
+          "bvh_frames": 1725,
+          "pkl_frames": 1725,
+          "npz_frames": 1724,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_Dance22_Thrilling": {
+          "bvh_frames": 1619,
+          "pkl_frames": 1619,
+          "npz_frames": 1618,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_Dance23_MidnightSun": {
+          "bvh_frames": 2915,
+          "pkl_frames": 2915,
+          "npz_frames": 2914,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_Dance2_Salsa": {
+          "bvh_frames": 2151,
+          "pkl_frames": 2151,
+          "npz_frames": 2150,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_Dance3_Woah": {
+          "bvh_frames": 1800,
+          "pkl_frames": 1800,
+          "npz_frames": 1799,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_Dance4_Broadway": {
+          "bvh_frames": 1677,
+          "pkl_frames": 1677,
+          "npz_frames": 1676,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_Dance5_Hype": {
+          "bvh_frames": 1896,
+          "pkl_frames": 1896,
+          "npz_frames": 1895,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_Dance6_Sassy": {
+          "bvh_frames": 1914,
+          "pkl_frames": 1914,
+          "npz_frames": 1913,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_Dance7_Party": {
+          "bvh_frames": 2773,
+          "pkl_frames": 2773,
+          "npz_frames": 2772,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_Dance8_WestCoast": {
+          "bvh_frames": 2395,
+          "pkl_frames": 2395,
+          "npz_frames": 2394,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_Dance9_PeaceMaker": {
+          "bvh_frames": 3501,
+          "pkl_frames": 3501,
+          "npz_frames": 3500,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_ShortDance13_SingleLadies": {
+          "bvh_frames": 842,
+          "pkl_frames": 842,
+          "npz_frames": 841,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_ShortDance14_Disco": {
+          "bvh_frames": 858,
+          "pkl_frames": 858,
+          "npz_frames": 857,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_ShortDance15_Nineties": {
+          "bvh_frames": 787,
+          "pkl_frames": 787,
+          "npz_frames": 786,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "J_ShortDance16_JazzWalk": {
+          "bvh_frames": 637,
+          "pkl_frames": 637,
+          "npz_frames": 636,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "B_AttackKarate": {
+          "bvh_frames": 2831,
+          "pkl_frames": 2831,
+          "npz_frames": 2830,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "B_BowKarate": {
+          "bvh_frames": 2254,
+          "pkl_frames": 2254,
+          "npz_frames": 2253,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "B_ChopsKarate": {
+          "bvh_frames": 3160,
+          "pkl_frames": 3160,
+          "npz_frames": 3159,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "B_CrazyChopsKarate": {
+          "bvh_frames": 1452,
+          "pkl_frames": 1452,
+          "npz_frames": 1451,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "B_ForwardKarate": {
+          "bvh_frames": 2180,
+          "pkl_frames": 2180,
+          "npz_frames": 2179,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "B_LongKarate": {
+          "bvh_frames": 2881,
+          "pkl_frames": 2881,
+          "npz_frames": 2880,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "B_SpinKarate": {
+          "bvh_frames": 1540,
+          "pkl_frames": 1540,
+          "npz_frames": 1539,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_Move1": {
+          "bvh_frames": 1870,
+          "pkl_frames": 1870,
+          "npz_frames": 1869,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_Move10": {
+          "bvh_frames": 1832,
+          "pkl_frames": 1832,
+          "npz_frames": 1831,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_Move11": {
+          "bvh_frames": 996,
+          "pkl_frames": 996,
+          "npz_frames": 995,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_Move17": {
+          "bvh_frames": 1598,
+          "pkl_frames": 1598,
+          "npz_frames": 1597,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_Move18": {
+          "bvh_frames": 1003,
+          "pkl_frames": 1003,
+          "npz_frames": 1002,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_Move19": {
+          "bvh_frames": 1012,
+          "pkl_frames": 1012,
+          "npz_frames": 1012,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_Move2": {
+          "bvh_frames": 2187,
+          "pkl_frames": 2187,
+          "npz_frames": 2186,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_Move20": {
+          "bvh_frames": 1414,
+          "pkl_frames": 1414,
+          "npz_frames": 1413,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_Move3": {
+          "bvh_frames": 1918,
+          "pkl_frames": 1918,
+          "npz_frames": 1917,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_Move4": {
+          "bvh_frames": 1755,
+          "pkl_frames": 1755,
+          "npz_frames": 1754,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_Move5": {
+          "bvh_frames": 2159,
+          "pkl_frames": 2159,
+          "npz_frames": 2158,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_Move6": {
+          "bvh_frames": 2137,
+          "pkl_frames": 2137,
+          "npz_frames": 2136,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_Move7": {
+          "bvh_frames": 1429,
+          "pkl_frames": 1429,
+          "npz_frames": 1428,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_Move8": {
+          "bvh_frames": 843,
+          "pkl_frames": 843,
+          "npz_frames": 842,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_Move9": {
+          "bvh_frames": 1638,
+          "pkl_frames": 1638,
+          "npz_frames": 1637,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_ShortMove12": {
+          "bvh_frames": 467,
+          "pkl_frames": 467,
+          "npz_frames": 466,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_ShortMove13": {
+          "bvh_frames": 539,
+          "pkl_frames": 539,
+          "npz_frames": 538,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_ShortMove14": {
+          "bvh_frames": 393,
+          "pkl_frames": 393,
+          "npz_frames": 392,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_ShortMove15": {
+          "bvh_frames": 408,
+          "pkl_frames": 408,
+          "npz_frames": 407,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "M_ShortMove16": {
+          "bvh_frames": 443,
+          "pkl_frames": 443,
+          "npz_frames": 442,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "B_Fence1": {
+          "bvh_frames": 1620,
+          "pkl_frames": 1620,
+          "npz_frames": 1619,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "B_Fence2": {
+          "bvh_frames": 638,
+          "pkl_frames": 638,
+          "npz_frames": 637,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "B_HandsChop": {
+          "bvh_frames": 1766,
+          "pkl_frames": 1766,
+          "npz_frames": 1765,
+          "pkl_match": true,
+          "npz_match": true
+        },
+        "B_HandsUp": {
+          "bvh_frames": 442,
+          "pkl_frames": 442,
+          "npz_frames": 441,
+          "pkl_match": true,
+          "npz_match": true
+        }
+      }
+    },
+    "nan_check": {
+      "description": "NaN values in PKL or NPZ arrays",
+      "clips": {
+        "B_DadDance": {
+          "has_nan": false,
+          "fields": []
+        },
+        "B_LongDance": {
+          "has_nan": false,
+          "fields": []
+        },
+        "B_SpiralDance": {
+          "has_nan": false,
+          "fields": []
+        },
+        "B_StretchDance": {
+          "has_nan": false,
+          "fields": []
+        },
+        "B_WiggleDance": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_Dance0_StepTouch": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_Dance11_Gnarly": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_Dance12_LushLife": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_Dance17_Shuffle": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_Dance18_TikTok": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_Dance19_LetsGO": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_Dance1_Modern": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_Dance20_DWG": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_Dance21_Blunt": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_Dance22_Thrilling": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_Dance23_MidnightSun": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_Dance2_Salsa": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_Dance3_Woah": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_Dance4_Broadway": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_Dance5_Hype": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_Dance6_Sassy": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_Dance7_Party": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_Dance8_WestCoast": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_Dance9_PeaceMaker": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_ShortDance13_SingleLadies": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_ShortDance14_Disco": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_ShortDance15_Nineties": {
+          "has_nan": false,
+          "fields": []
+        },
+        "J_ShortDance16_JazzWalk": {
+          "has_nan": false,
+          "fields": []
+        },
+        "B_AttackKarate": {
+          "has_nan": false,
+          "fields": []
+        },
+        "B_BowKarate": {
+          "has_nan": false,
+          "fields": []
+        },
+        "B_ChopsKarate": {
+          "has_nan": false,
+          "fields": []
+        },
+        "B_CrazyChopsKarate": {
+          "has_nan": false,
+          "fields": []
+        },
+        "B_ForwardKarate": {
+          "has_nan": false,
+          "fields": []
+        },
+        "B_LongKarate": {
+          "has_nan": false,
+          "fields": []
+        },
+        "B_SpinKarate": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_Move1": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_Move10": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_Move11": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_Move17": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_Move18": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_Move19": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_Move2": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_Move20": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_Move3": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_Move4": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_Move5": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_Move6": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_Move7": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_Move8": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_Move9": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_ShortMove12": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_ShortMove13": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_ShortMove14": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_ShortMove15": {
+          "has_nan": false,
+          "fields": []
+        },
+        "M_ShortMove16": {
+          "has_nan": false,
+          "fields": []
+        },
+        "B_Fence1": {
+          "has_nan": false,
+          "fields": []
+        },
+        "B_Fence2": {
+          "has_nan": false,
+          "fields": []
+        },
+        "B_HandsChop": {
+          "has_nan": false,
+          "fields": []
+        },
+        "B_HandsUp": {
+          "has_nan": false,
+          "fields": []
+        }
+      }
+    },
+    "file_completeness": {
+      "description": "All expected files present",
+      "clips": {
+        "B_DadDance": {
+          "complete": true,
+          "missing": []
+        },
+        "B_LongDance": {
+          "complete": true,
+          "missing": []
+        },
+        "B_SpiralDance": {
+          "complete": true,
+          "missing": []
+        },
+        "B_StretchDance": {
+          "complete": true,
+          "missing": []
+        },
+        "B_WiggleDance": {
+          "complete": true,
+          "missing": []
+        },
+        "J_Dance0_StepTouch": {
+          "complete": true,
+          "missing": []
+        },
+        "J_Dance11_Gnarly": {
+          "complete": true,
+          "missing": []
+        },
+        "J_Dance12_LushLife": {
+          "complete": true,
+          "missing": []
+        },
+        "J_Dance17_Shuffle": {
+          "complete": true,
+          "missing": []
+        },
+        "J_Dance18_TikTok": {
+          "complete": true,
+          "missing": []
+        },
+        "J_Dance19_LetsGO": {
+          "complete": true,
+          "missing": []
+        },
+        "J_Dance1_Modern": {
+          "complete": true,
+          "missing": []
+        },
+        "J_Dance20_DWG": {
+          "complete": true,
+          "missing": []
+        },
+        "J_Dance21_Blunt": {
+          "complete": true,
+          "missing": []
+        },
+        "J_Dance22_Thrilling": {
+          "complete": true,
+          "missing": []
+        },
+        "J_Dance23_MidnightSun": {
+          "complete": true,
+          "missing": []
+        },
+        "J_Dance2_Salsa": {
+          "complete": true,
+          "missing": []
+        },
+        "J_Dance3_Woah": {
+          "complete": true,
+          "missing": []
+        },
+        "J_Dance4_Broadway": {
+          "complete": true,
+          "missing": []
+        },
+        "J_Dance5_Hype": {
+          "complete": true,
+          "missing": []
+        },
+        "J_Dance6_Sassy": {
+          "complete": true,
+          "missing": []
+        },
+        "J_Dance7_Party": {
+          "complete": true,
+          "missing": []
+        },
+        "J_Dance8_WestCoast": {
+          "complete": true,
+          "missing": []
+        },
+        "J_Dance9_PeaceMaker": {
+          "complete": true,
+          "missing": []
+        },
+        "J_ShortDance13_SingleLadies": {
+          "complete": true,
+          "missing": []
+        },
+        "J_ShortDance14_Disco": {
+          "complete": true,
+          "missing": []
+        },
+        "J_ShortDance15_Nineties": {
+          "complete": true,
+          "missing": []
+        },
+        "J_ShortDance16_JazzWalk": {
+          "complete": true,
+          "missing": []
+        },
+        "B_AttackKarate": {
+          "complete": true,
+          "missing": []
+        },
+        "B_BowKarate": {
+          "complete": true,
+          "missing": []
+        },
+        "B_ChopsKarate": {
+          "complete": true,
+          "missing": []
+        },
+        "B_CrazyChopsKarate": {
+          "complete": true,
+          "missing": []
+        },
+        "B_ForwardKarate": {
+          "complete": true,
+          "missing": []
+        },
+        "B_LongKarate": {
+          "complete": true,
+          "missing": []
+        },
+        "B_SpinKarate": {
+          "complete": true,
+          "missing": []
+        },
+        "M_Move1": {
+          "complete": true,
+          "missing": []
+        },
+        "M_Move10": {
+          "complete": true,
+          "missing": []
+        },
+        "M_Move11": {
+          "complete": true,
+          "missing": []
+        },
+        "M_Move17": {
+          "complete": true,
+          "missing": []
+        },
+        "M_Move18": {
+          "complete": true,
+          "missing": []
+        },
+        "M_Move19": {
+          "complete": true,
+          "missing": []
+        },
+        "M_Move2": {
+          "complete": true,
+          "missing": []
+        },
+        "M_Move20": {
+          "complete": true,
+          "missing": []
+        },
+        "M_Move3": {
+          "complete": true,
+          "missing": []
+        },
+        "M_Move4": {
+          "complete": true,
+          "missing": []
+        },
+        "M_Move5": {
+          "complete": true,
+          "missing": []
+        },
+        "M_Move6": {
+          "complete": true,
+          "missing": []
+        },
+        "M_Move7": {
+          "complete": true,
+          "missing": []
+        },
+        "M_Move8": {
+          "complete": true,
+          "missing": []
+        },
+        "M_Move9": {
+          "complete": true,
+          "missing": []
+        },
+        "M_ShortMove12": {
+          "complete": true,
+          "missing": []
+        },
+        "M_ShortMove13": {
+          "complete": true,
+          "missing": []
+        },
+        "M_ShortMove14": {
+          "complete": true,
+          "missing": []
+        },
+        "M_ShortMove15": {
+          "complete": true,
+          "missing": []
+        },
+        "M_ShortMove16": {
+          "complete": true,
+          "missing": []
+        },
+        "B_Fence1": {
+          "complete": true,
+          "missing": []
+        },
+        "B_Fence2": {
+          "complete": true,
+          "missing": []
+        },
+        "B_HandsChop": {
+          "complete": true,
+          "missing": []
+        },
+        "B_HandsUp": {
+          "complete": true,
+          "missing": []
+        }
+      }
+    }
+  },
+  "summary": {
+    "passed": [
+      "B_SpiralDance",
+      "B_StretchDance",
+      "B_WiggleDance",
+      "J_Dance12_LushLife",
+      "J_Dance19_LetsGO",
+      "J_Dance20_DWG",
+      "J_Dance6_Sassy",
+      "J_ShortDance13_SingleLadies",
+      "B_HandsChop",
+      "B_HandsUp"
+    ],
+    "warnings": [
+      "B_DadDance",
+      "B_LongDance",
+      "J_Dance0_StepTouch",
+      "J_Dance11_Gnarly",
+      "J_Dance17_Shuffle",
+      "J_Dance18_TikTok",
+      "J_Dance1_Modern",
+      "J_Dance21_Blunt",
+      "J_Dance22_Thrilling",
+      "J_Dance23_MidnightSun",
+      "J_Dance2_Salsa",
+      "J_Dance3_Woah",
+      "J_Dance4_Broadway",
+      "J_Dance5_Hype",
+      "J_Dance7_Party",
+      "J_Dance8_WestCoast",
+      "J_Dance9_PeaceMaker",
+      "J_ShortDance14_Disco",
+      "J_ShortDance15_Nineties",
+      "J_ShortDance16_JazzWalk",
+      "B_AttackKarate",
+      "B_BowKarate",
+      "B_ChopsKarate",
+      "B_CrazyChopsKarate",
+      "B_ForwardKarate",
+      "B_LongKarate",
+      "B_SpinKarate",
+      "M_Move1",
+      "M_Move10",
+      "M_Move11",
+      "M_Move17",
+      "M_Move18",
+      "M_Move19",
+      "M_Move2",
+      "M_Move20",
+      "M_Move3",
+      "M_Move4",
+      "M_Move5",
+      "M_Move6",
+      "M_Move7",
+      "M_Move8",
+      "M_Move9",
+      "M_ShortMove12",
+      "M_ShortMove13",
+      "M_ShortMove14",
+      "M_ShortMove15",
+      "M_ShortMove16",
+      "B_Fence1",
+      "B_Fence2"
+    ],
+    "errors": []
+  }
+}
