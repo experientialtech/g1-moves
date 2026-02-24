@@ -33,6 +33,28 @@ All 59 BVH clips have been retargeted to the Unitree G1 (mode 15, 29 DOF) using 
 
 Run `python retarget_all.py` to regenerate (skips existing outputs).
 
+## Equipment
+
+### Motion Capture
+
+All 59 clips were captured using the [MOVIN TRACIN](https://movin3d.com/) markerless motion capture system from [MOVIN3D](https://movin3d.com/). MOVIN TRACIN uses on-device AI to fuse LiDAR point clouds and vision into production-ready motion data — no markers, no suit, no multi-camera rig. Captured performances were recorded and exported using [MOVIN Studio](https://www.movin3d.com/studio), which provides real-time skeleton visualization, recording management, and export to BVH and FBX formats. Retargeting from human skeleton to G1 robot joint space was performed using [movin_sdk_python](https://github.com/MOVIN3D/movin_sdk_python).
+
+Thank you to [MOVIN3D](https://movin3d.com/) for building an incredible motion capture platform that makes professional-grade mocap accessible to robotics researchers.
+
+### Workstation
+
+All data was captured and policies were trained on a [Dell Pro Max Tower T2](https://creatorfolio.co/mitchbookpro) workstation from [Dell Technologies](https://www.dell.com/):
+
+| Component | Spec |
+|-----------|------|
+| CPU | Intel Core Ultra 9 285K (24 cores, up to 7.2 GHz) |
+| GPU | NVIDIA RTX PRO 6000 Blackwell Workstation Edition (96 GB GDDR7) |
+| RAM | 128 GB DDR5 |
+| Storage | 2x 4 TB WD SN8000S NVMe SSD (8 TB total) |
+| OS | Ubuntu 24.04 LTS |
+
+The RTX PRO 6000 Blackwell with 96 GB of VRAM enables running thousands of parallel MuJoCo-Warp simulation environments on a single GPU for reinforcement learning training, while the 24-core Ultra 9 285K handles motion retargeting and data processing. Thank you to [Dell Technologies](https://www.dell.com/) for providing the compute power behind this project.
+
 ## Clips
 
 ### Dance (28)
@@ -170,18 +192,5 @@ Run `python retarget_all.py` to regenerate (skips existing outputs).
 
 ## Capture Details
 
-- **Tool**: Movin Studio
 - **Skeleton**: Humanoid, Hips root, 6-DOF root channels, 3-DOF joint rotations (YXZ)
 - **Export formats**: BVH + 4 FBX variants (Blender, Maya, Unreal, Unity)
-
-## Workstation
-
-All data was captured and policies were trained on a [Dell Pro Max Tower T2](https://creatorfolio.co/mitchbookpro) workstation:
-
-| Component | Spec |
-|-----------|------|
-| CPU | Intel Core Ultra 9 285K (24 cores, up to 7.2 GHz) |
-| GPU | NVIDIA RTX PRO 6000 Blackwell Workstation Edition (96 GB GDDR7) |
-| RAM | 128 GB DDR5 |
-| Storage | 2x 4 TB WD SN8000S NVMe SSD (8 TB total) |
-| OS | Ubuntu 24.04 LTS |
