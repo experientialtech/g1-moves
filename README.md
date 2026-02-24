@@ -1,6 +1,17 @@
+<p align="center">
+  <img src="logo.png" alt="Experiential Technologies" width="500">
+</p>
+
 # G1 Moves
 
 Motion capture clips for the Unitree G1 humanoid robot, captured with Movin Studio and exported as BVH and FBX.
+
+## Credits
+
+**Director:** [Mitch Chaiet](https://mitchchaiet.com/)
+**DIT:** [Molly Maguire](https://www.linkedin.com/in/mollymaguire001/)
+**Dance:** [Jasmine Coro](https://jasminecoro.com/)
+**Karate:** [Mike Gassaway](https://www.backstage.com/u/mike-gassaway/)
 
 ## Structure
 
