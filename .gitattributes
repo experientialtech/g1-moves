@@ -6,3 +6,5 @@
 *.pkl filter=lfs diff=lfs merge=lfs -text
 *_training.gif !filter !diff !merge text=auto
 *_training.mp4 !filter !diff !merge text=auto
+*_policy.gif !filter !diff !merge text=auto
+*_policy.mp4 !filter !diff !merge text=auto
