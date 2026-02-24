@@ -249,16 +249,16 @@ The RTX PRO 6000 Blackwell with 96 GB of VRAM enables running thousands of paral
 
 ### Bonus (4)
 
-| Mocap | Retarget | Training |
-|-------|----------|----------|
-| **B_Fence1** | | |
-| ![](bonus/B_Fence1/B_Fence1.gif) | ![](bonus/B_Fence1/B_Fence1_retarget.gif) | ![](bonus/B_Fence1/B_Fence1_training.gif) |
-| **B_Fence2** | | |
-| ![](bonus/B_Fence2/B_Fence2.gif) | ![](bonus/B_Fence2/B_Fence2_retarget.gif) | ![](bonus/B_Fence2/B_Fence2_training.gif) |
-| **B_HandsChop** | | |
-| ![](bonus/B_HandsChop/B_HandsChop.gif) | ![](bonus/B_HandsChop/B_HandsChop_retarget.gif) | ![](bonus/B_HandsChop/B_HandsChop_training.gif) |
-| **B_HandsUp** | | |
-| ![](bonus/B_HandsUp/B_HandsUp.gif) | ![](bonus/B_HandsUp/B_HandsUp_retarget.gif) | ![](bonus/B_HandsUp/B_HandsUp_training.gif) |
+| Mocap | Retarget | Training | Policy |
+|-------|----------|----------|--------|
+| **B_Fence1** | | | |
+| ![](bonus/B_Fence1/B_Fence1.gif) | ![](bonus/B_Fence1/B_Fence1_retarget.gif) | ![](bonus/B_Fence1/B_Fence1_training.gif) | ![](bonus/B_Fence1/B_Fence1_policy.gif) |
+| **B_Fence2** | | | |
+| ![](bonus/B_Fence2/B_Fence2.gif) | ![](bonus/B_Fence2/B_Fence2_retarget.gif) | ![](bonus/B_Fence2/B_Fence2_training.gif) | |
+| **B_HandsChop** | | | |
+| ![](bonus/B_HandsChop/B_HandsChop.gif) | ![](bonus/B_HandsChop/B_HandsChop_retarget.gif) | ![](bonus/B_HandsChop/B_HandsChop_training.gif) | |
+| **B_HandsUp** | | | |
+| ![](bonus/B_HandsUp/B_HandsUp.gif) | ![](bonus/B_HandsUp/B_HandsUp_retarget.gif) | ![](bonus/B_HandsUp/B_HandsUp_training.gif) | |
 
 ## Capture Details
 
