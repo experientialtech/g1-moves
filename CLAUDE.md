@@ -387,28 +387,91 @@ Open http://localhost:8080 to view 3D visualization.
 
 ### Deploy to Physical Robot
 
-Uses RoboJuDo framework in `~/Repositories/mjlab-gui/external/RoboJuDo/`:
+Uses RoboJuDo framework in `~/Repositories/mjlab-gui/external/RoboJuDo/`.
 
-1. **Network setup**: Connect to G1 via Ethernet
-   - Robot IP: `192.168.123.10`
-   - Workstation IP: `192.168.123.100`
+**Entry point**: `python scripts/run_pipeline.py --config=<config_name>`
 
-2. **Export policy**:
-   ```bash
-   cd ~/Repositories/mjlab-gui/external/RoboJuDo
-   python scripts/export_policy.py \
-     --checkpoint ~/Repositories/mjlab-gui/logs/rsl_rl/g1_tracking/<run>/model_29999.pt
-   ```
+#### Step 1: Export policy to TorchScript JIT
 
-3. **Run on robot**:
-   ```bash
-   python scripts/deploy.py \
-     --robot g1 \
-     --policy exported_policy.pt \
-     --motion-file ~/Repositories/g1-moves/<category>/<clip>/training/<clip>.npz
-   ```
+mjlab saves standard PyTorch checkpoints. RoboJuDo requires TorchScript JIT (`.pt`) or ONNX (`.onnx`). Export the actor network:
 
-**Safety**: Always have the robot on a tether/harness for first deployment of new motions. Start with slow, low-energy clips (B_Fence1, B_DadDance) before attempting high-energy dance or karate motions.
+```bash
+cd ~/Repositories/mjlab-gui
+python -c "
+import torch
+ckpt = torch.load('logs/rsl_rl/g1_tracking/<run>/model_29999.pt', map_location='cpu', weights_only=False)
+# Extract actor network from RSL-RL checkpoint
+actor = ckpt['model_state_dict']  # Adapt based on actual model architecture
+# Script and save
+# scripted = torch.jit.script(actor_module)
+# scripted.save('exported_policy.pt')
+print('Keys:', list(ckpt.keys()))
+"
+```
+
+> **Note**: The exact export procedure depends on the mjlab actor architecture. You may need to instantiate the actor class from `src/mjlab/rl/` and load state dict before scripting. This step needs refinement once the first full training run completes.
+
+#### Step 2: Create a RoboJuDo config class
+
+Add a config to `robojudo/config/g1/g1_cfg.py` for the mjlab-trained policy. Use an existing config as template:
+
+- **Sim validation**: Extend `g1` (uses `G1MujocoEnvCfg`)
+- **Real robot**: Extend `g1_real` (uses `G1RealEnvCfg`)
+
+Key config components:
+- **Policy**: Point to exported `.pt` file, define obs/action DOF mappings
+- **Environment**: `G1MujocoEnvCfg` (sim) or `G1RealEnvCfg` (real)
+- **Controller**: `JoystickCtrlCfg` (sim), `UnitreeCtrlCfg` (real), or `MotionCtrlCfg` (motion playback)
+
+#### Step 3: Network setup (real robot only)
+
+Configure the network interface in `robojudo/config/g1/env/g1_real_env_cfg.py`:
+
+```python
+class G1RealEnvCfg(G1EnvCfg, UnitreeEnvCfg):
+    unitree: UnitreeEnvCfg.UnitreeCfg = UnitreeEnvCfg.UnitreeCfg(
+        net_if="eth0",           # Run `ifconfig` to find your interface
+        robot="g1",
+        msg_type="hg",           # G1 uses "hg" message type
+        hand_type="NONE",        # No dexterous hands
+        enable_odometry=True,
+    )
+```
+
+Connect to G1 via Ethernet (robot at `192.168.123.10`, workstation at `192.168.123.100`).
+
+#### Step 4: Run
+
+```bash
+cd ~/Repositories/mjlab-gui/external/RoboJuDo
+
+# Sim2sim validation first
+python scripts/run_pipeline.py --config=g1
+
+# Real robot deployment
+python scripts/run_pipeline.py --config=g1_real
+```
+
+The pipeline runs an infinite control loop at 50 Hz (`dt=0.02`). Emergency stop: press `A` button on controller or `Esc` on keyboard.
+
+#### Available configs
+
+| Config | Environment | Description |
+|--------|------------|-------------|
+| `g1` | MuJoCo sim | Default sim2sim with joystick |
+| `g1_real` | Real robot | Unitree controller |
+| `g1_beyondmimic` | MuJoCo sim | Motion imitation (ONNX) |
+| `g1_switch` | MuJoCo sim | Multi-policy switching |
+| `g1_h2h` | MuJoCo sim | Human2Humanoid motion imitation |
+
+#### Policy format reference
+
+| Format | Used by | Loading |
+|--------|---------|---------|
+| TorchScript JIT (`.pt`) | UnitreePolicy, AMOPolicy, H2HPolicy | `torch.jit.load()` |
+| ONNX (`.onnx`) | BeyondMimicPolicy, ASAPPolicy | `onnxruntime.InferenceSession()` |
+
+**Safety**: Always have the robot on a tether/harness for first deployment of new motions. During real robot initialization (~1000 steps), place the robot on the ground for sensor calibration. Start with slow, low-energy clips (B_Fence1, B_DadDance) before attempting high-energy dance or karate motions.
 
 ## Environment Setup
 
