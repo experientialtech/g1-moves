@@ -16,10 +16,69 @@ Motion capture clips for the Unitree G1 humanoid robot, captured with Movin Stud
 ## Structure
 
 ```
-dance/          28 clips — dance routines
-karate/         27 clips — karate/martial arts moves
-bonus/           4 clips — fencing, hands-up, chops
-movin-studio-project/   Raw Movin Studio recordings and project file
+dance/                          28 clips — dance routines
+  B_DadDance/
+  B_LongDance/
+  B_SpiralDance/
+  B_StretchDance/
+  B_WiggleDance/
+  J_Dance0_StepTouch/
+  J_Dance1_Modern/
+  J_Dance2_Salsa/
+  J_Dance3_Woah/
+  J_Dance4_Broadway/
+  J_Dance5_Hype/
+  J_Dance6_Sassy/
+  J_Dance7_Party/
+  J_Dance8_WestCoast/
+  J_Dance9_PeaceMaker/
+  J_Dance11_Gnarly/
+  J_Dance12_LushLife/
+  J_Dance17_Shuffle/
+  J_Dance18_TikTok/
+  J_Dance19_LetsGO/
+  J_Dance20_DWG/
+  J_Dance21_Blunt/
+  J_Dance22_Thrilling/
+  J_Dance23_MidnightSun/
+  J_ShortDance13_SingleLadies/
+  J_ShortDance14_Disco/
+  J_ShortDance15_Nineties/
+  J_ShortDance16_JazzWalk/
+karate/                         27 clips — karate/martial arts moves
+  B_AttackKarate/
+  B_BowKarate/
+  B_ChopsKarate/
+  B_CrazyChopsKarate/
+  B_ForwardKarate/
+  B_LongKarate/
+  B_SpinKarate/
+  M_Move1/
+  M_Move2/
+  M_Move3/
+  M_Move4/
+  M_Move5/
+  M_Move6/
+  M_Move7/
+  M_Move8/
+  M_Move9/
+  M_Move10/
+  M_Move11/
+  M_Move17/
+  M_Move18/
+  M_Move19/
+  M_Move20/
+  M_ShortMove12/
+  M_ShortMove13/
+  M_ShortMove14/
+  M_ShortMove15/
+  M_ShortMove16/
+bonus/                           4 clips — fencing, hands-up, chops
+  B_Fence1/
+  B_Fence2/
+  B_HandsChop/
+  B_HandsUp/
+movin-studio-project/           Raw Movin Studio recordings and project file
 ```
 
 Each clip lives in its own subfolder containing:
