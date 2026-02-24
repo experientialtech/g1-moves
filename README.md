@@ -53,26 +53,26 @@ karate/                         27 clips — karate/martial arts moves
   B_ForwardKarate/
   B_LongKarate/
   B_SpinKarate/
-  M_Move1/
-  M_Move2/
-  M_Move3/
-  M_Move4/
-  M_Move5/
-  M_Move6/
-  M_Move7/
-  M_Move8/
-  M_Move9/
-  M_Move10/
-  M_Move11/
-  M_Move17/
-  M_Move18/
-  M_Move19/
-  M_Move20/
-  M_ShortMove12/
-  M_ShortMove13/
-  M_ShortMove14/
-  M_ShortMove15/
-  M_ShortMove16/
+  M_Move1/                — Guard Combo
+  M_Move2/                — Low Punch
+  M_Move3/                — Horse Stance
+  M_Move4/                — Spin Punch
+  M_Move5/                — Twist Punch
+  M_Move6/                — Spin Strike
+  M_Move7/                — Rapid Punch
+  M_Move8/                — Drop Spin
+  M_Move9/                — Level Change
+  M_Move10/               — Side Kick
+  M_Move11/               — Blitz
+  M_Move17/               — Double Strike
+  M_Move18/               — Front Kick
+  M_Move19/               — Slow Kata
+  M_Move20/               — Open Strike
+  M_ShortMove12/          — Quick Jab
+  M_ShortMove13/          — Snap Kick
+  M_ShortMove14/          — Light Punch
+  M_ShortMove15/          — Drop Strike
+  M_ShortMove16/          — Power Burst
 bonus/                           4 clips — fencing, hands-up, chops
   B_Fence1/
   B_Fence2/
@@ -206,45 +206,45 @@ The RTX PRO 6000 Blackwell with 96 GB of VRAM enables running thousands of paral
 | ![](karate/B_LongKarate/B_LongKarate.gif) | ![](karate/B_LongKarate/B_LongKarate_retarget.gif) | ![](karate/B_LongKarate/B_LongKarate_training.gif) |
 | **B_SpinKarate** | | |
 | ![](karate/B_SpinKarate/B_SpinKarate.gif) | ![](karate/B_SpinKarate/B_SpinKarate_retarget.gif) | ![](karate/B_SpinKarate/B_SpinKarate_training.gif) |
-| **M_Move1** | | |
+| **M_Move1 — Guard Combo** | | |
 | ![](karate/M_Move1/M_Move1.gif) | ![](karate/M_Move1/M_Move1_retarget.gif) | ![](karate/M_Move1/M_Move1_training.gif) |
-| **M_Move2** | | |
+| **M_Move2 — Low Punch** | | |
 | ![](karate/M_Move2/M_Move2.gif) | ![](karate/M_Move2/M_Move2_retarget.gif) | ![](karate/M_Move2/M_Move2_training.gif) |
-| **M_Move3** | | |
+| **M_Move3 — Horse Stance** | | |
 | ![](karate/M_Move3/M_Move3.gif) | ![](karate/M_Move3/M_Move3_retarget.gif) | ![](karate/M_Move3/M_Move3_training.gif) |
-| **M_Move4** | | |
+| **M_Move4 — Spin Punch** | | |
 | ![](karate/M_Move4/M_Move4.gif) | ![](karate/M_Move4/M_Move4_retarget.gif) | ![](karate/M_Move4/M_Move4_training.gif) |
-| **M_Move5** | | |
+| **M_Move5 — Twist Punch** | | |
 | ![](karate/M_Move5/M_Move5.gif) | ![](karate/M_Move5/M_Move5_retarget.gif) | ![](karate/M_Move5/M_Move5_training.gif) |
-| **M_Move6** | | |
+| **M_Move6 — Spin Strike** | | |
 | ![](karate/M_Move6/M_Move6.gif) | ![](karate/M_Move6/M_Move6_retarget.gif) | ![](karate/M_Move6/M_Move6_training.gif) |
-| **M_Move7** | | |
+| **M_Move7 — Rapid Punch** | | |
 | ![](karate/M_Move7/M_Move7.gif) | ![](karate/M_Move7/M_Move7_retarget.gif) | ![](karate/M_Move7/M_Move7_training.gif) |
-| **M_Move8** | | |
+| **M_Move8 — Drop Spin** | | |
 | ![](karate/M_Move8/M_Move8.gif) | ![](karate/M_Move8/M_Move8_retarget.gif) | ![](karate/M_Move8/M_Move8_training.gif) |
-| **M_Move9** | | |
+| **M_Move9 — Level Change** | | |
 | ![](karate/M_Move9/M_Move9.gif) | ![](karate/M_Move9/M_Move9_retarget.gif) | ![](karate/M_Move9/M_Move9_training.gif) |
-| **M_Move10** | | |
+| **M_Move10 — Side Kick** | | |
 | ![](karate/M_Move10/M_Move10.gif) | ![](karate/M_Move10/M_Move10_retarget.gif) | ![](karate/M_Move10/M_Move10_training.gif) |
-| **M_Move11** | | |
+| **M_Move11 — Blitz** | | |
 | ![](karate/M_Move11/M_Move11.gif) | ![](karate/M_Move11/M_Move11_retarget.gif) | ![](karate/M_Move11/M_Move11_training.gif) |
-| **M_Move17** | | |
+| **M_Move17 — Double Strike** | | |
 | ![](karate/M_Move17/M_Move17.gif) | ![](karate/M_Move17/M_Move17_retarget.gif) | ![](karate/M_Move17/M_Move17_training.gif) |
-| **M_Move18** | | |
+| **M_Move18 — Front Kick** | | |
 | ![](karate/M_Move18/M_Move18.gif) | ![](karate/M_Move18/M_Move18_retarget.gif) | ![](karate/M_Move18/M_Move18_training.gif) |
-| **M_Move19** | | |
+| **M_Move19 — Slow Kata** | | |
 | ![](karate/M_Move19/M_Move19.gif) | ![](karate/M_Move19/M_Move19_retarget.gif) | ![](karate/M_Move19/M_Move19_training.gif) |
-| **M_Move20** | | |
+| **M_Move20 — Open Strike** | | |
 | ![](karate/M_Move20/M_Move20.gif) | ![](karate/M_Move20/M_Move20_retarget.gif) | ![](karate/M_Move20/M_Move20_training.gif) |
-| **M_ShortMove12** | | |
+| **M_ShortMove12 — Quick Jab** | | |
 | ![](karate/M_ShortMove12/M_ShortMove12.gif) | ![](karate/M_ShortMove12/M_ShortMove12_retarget.gif) | ![](karate/M_ShortMove12/M_ShortMove12_training.gif) |
-| **M_ShortMove13** | | |
+| **M_ShortMove13 — Snap Kick** | | |
 | ![](karate/M_ShortMove13/M_ShortMove13.gif) | ![](karate/M_ShortMove13/M_ShortMove13_retarget.gif) | ![](karate/M_ShortMove13/M_ShortMove13_training.gif) |
-| **M_ShortMove14** | | |
+| **M_ShortMove14 — Light Punch** | | |
 | ![](karate/M_ShortMove14/M_ShortMove14.gif) | ![](karate/M_ShortMove14/M_ShortMove14_retarget.gif) | ![](karate/M_ShortMove14/M_ShortMove14_training.gif) |
-| **M_ShortMove15** | | |
+| **M_ShortMove15 — Drop Strike** | | |
 | ![](karate/M_ShortMove15/M_ShortMove15.gif) | ![](karate/M_ShortMove15/M_ShortMove15_retarget.gif) | ![](karate/M_ShortMove15/M_ShortMove15_training.gif) |
-| **M_ShortMove16** | | |
+| **M_ShortMove16 — Power Burst** | | |
 | ![](karate/M_ShortMove16/M_ShortMove16.gif) | ![](karate/M_ShortMove16/M_ShortMove16_retarget.gif) | ![](karate/M_ShortMove16/M_ShortMove16_training.gif) |
 
 ### Bonus (4)
