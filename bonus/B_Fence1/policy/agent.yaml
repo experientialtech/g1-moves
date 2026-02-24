@@ -1,0 +1,48 @@
+seed: 42
+num_steps_per_env: 24
+max_iterations: 30000
+obs_groups:
+  policy: !!python/tuple
+  - policy
+  critic: !!python/tuple
+  - critic
+save_interval: 500
+experiment_name: g1_tracking
+run_name: B_Fence1
+logger: tensorboard
+wandb_project: mjlab
+wandb_tags: !!python/tuple []
+resume: false
+load_run: .*
+load_checkpoint: model_.*.pt
+clip_actions: null
+upload_model: true
+class_name: OnPolicyRunner
+algorithm:
+  num_learning_epochs: 5
+  num_mini_batches: 4
+  learning_rate: 0.0005
+  schedule: adaptive
+  gamma: 0.99
+  lam: 0.95
+  entropy_coef: 0.005
+  desired_kl: 0.01
+  max_grad_norm: 1.0
+  value_loss_coef: 1.0
+  use_clipped_value_loss: true
+  clip_param: 0.2
+  normalize_advantage_per_mini_batch: false
+policy:
+  actor_hidden_dims:
+  - 512
+  - 256
+  - 128
+  critic_hidden_dims:
+  - 512
+  - 256
+  - 128
+  activation: elu
+  init_noise_std: 1.0
+  noise_std_type: scalar
+  actor_obs_normalization: true
+  critic_obs_normalization: true
