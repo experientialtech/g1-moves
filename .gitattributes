@@ -8,3 +8,4 @@
 *_training.mp4 !filter !diff !merge text=auto
 *_policy.gif !filter !diff !merge text=auto
 *_policy.mp4 !filter !diff !merge text=auto
+*_policy.pt !filter !diff !merge text=auto
