@@ -252,7 +252,7 @@ The RTX PRO 6000 Blackwell with 96 GB of VRAM enables running thousands of paral
 | Mocap | Retarget | Training | Policy |
 |-------|----------|----------|--------|
 | **B_Fence1** | | | |
-| ![](bonus/B_Fence1/B_Fence1.gif) | ![](bonus/B_Fence1/B_Fence1_retarget.gif) | ![](bonus/B_Fence1/B_Fence1_training.gif) | ![](bonus/B_Fence1/B_Fence1_policy.gif) |
+| ![](bonus/B_Fence1/capture/B_Fence1.gif) | ![](bonus/B_Fence1/retarget/B_Fence1_retarget.gif) | ![](bonus/B_Fence1/training/B_Fence1_training.gif) | ![](bonus/B_Fence1/policy/B_Fence1_policy.gif) |
 | **B_Fence2** | | | |
 | ![](bonus/B_Fence2/B_Fence2.gif) | ![](bonus/B_Fence2/B_Fence2_retarget.gif) | ![](bonus/B_Fence2/B_Fence2_training.gif) | |
 | **B_HandsChop** | | | |
