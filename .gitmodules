@@ -4,3 +4,6 @@
 [submodule "mjlab"]
 	path = mjlab
 	url = https://github.com/mujocolab/mjlab
+[submodule "RoboJuDo"]
+	path = RoboJuDo
+	url = https://github.com/experientialtech/RoboJuDo.git
