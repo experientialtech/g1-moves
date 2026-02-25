@@ -9,6 +9,7 @@
 | `capture/` | BVH, MP4, GIF, 4x FBX |
 | `retarget/` | PKL, CSV, MP4, GIF |
 | `training/` | NPZ, MP4, GIF |
+| `policy/` | PT, MP4, GIF, agent.yaml, env.yaml, training_log.csv |
 
 ## Motion Stats
 

@@ -38,7 +38,7 @@ GIF_FPS = 15
 
 
 def discover_bvh_clips():
-    """Find all BVH files under category directories."""
+    """Find all BVH files under category/clip/capture/ directories."""
     clips = []
     for cat in CATEGORIES:
         cat_dir = REPO_DIR / cat
@@ -47,7 +47,11 @@ def discover_bvh_clips():
         for clip_dir in sorted(cat_dir.iterdir()):
             if not clip_dir.is_dir():
                 continue
-            bvh_files = list(clip_dir.glob("*.bvh"))
+            capture_dir = clip_dir / "capture"
+            if capture_dir.is_dir():
+                bvh_files = list(capture_dir.glob("*.bvh"))
+            else:
+                bvh_files = list(clip_dir.glob("*.bvh"))
             if bvh_files:
                 clips.append(bvh_files[0])
     return clips
@@ -61,14 +65,27 @@ def is_valid_file(path, min_size=1):
     return path.exists() and path.stat().st_size >= min_size
 
 
+def clip_root(bvh_path):
+    """Get the clip root directory from a BVH path.
+
+    Handles both capture/ subdirectory and flat layout.
+    """
+    if bvh_path.parent.name == "capture":
+        return bvh_path.parent.parent
+    return bvh_path.parent
+
+
 def is_complete(bvh_path):
     """Check if all outputs already exist and are valid for a clip."""
     stem = bvh_path.stem
-    clip_dir = bvh_path.parent
-    pkl = clip_dir / f"{stem}.pkl"
-    mp4 = clip_dir / f"{stem}_retarget.mp4"
-    gif = clip_dir / f"{stem}_retarget.gif"
+    root = clip_root(bvh_path)
+    retarget_dir = root / "retarget"
+    pkl = retarget_dir / f"{stem}.pkl"
+    csv = retarget_dir / f"{stem}.csv"
+    mp4 = retarget_dir / f"{stem}_retarget.mp4"
+    gif = retarget_dir / f"{stem}_retarget.gif"
     return (is_valid_file(pkl, 1000)
+            and is_valid_file(csv, 100)
             and is_valid_file(mp4, MIN_MP4_SIZE)
             and is_valid_file(gif, 1000))
 
@@ -210,16 +227,28 @@ def create_gif(mp4_path, gif_path):
     os.remove(palette_path)
 
 
+def pkl_to_csv(pkl_data, csv_path):
+    """Export PKL motion data to CSV (36 columns: 3 pos + 4 quat + 29 joints)."""
+    root_pos = pkl_data["root_pos"]
+    root_rot = pkl_data["root_rot"]
+    dof_pos = pkl_data["dof_pos"]
+    combined = np.hstack([root_pos, root_rot, dof_pos])
+    np.savetxt(csv_path, combined, delimiter=",", fmt="%.10f")
+
+
 def process_clip(args):
     """Process a single BVH clip through the full pipeline."""
     bvh_path, force = args
     stem = bvh_path.stem
-    cat = bvh_path.parent.parent.name
+    root = clip_root(bvh_path)
+    cat = root.parent.name
     label = f"{cat}/{stem}"
-    clip_dir = bvh_path.parent
-    pkl_path = clip_dir / f"{stem}.pkl"
-    mp4_path = clip_dir / f"{stem}_retarget.mp4"
-    gif_path = clip_dir / f"{stem}_retarget.gif"
+    retarget_dir = root / "retarget"
+    retarget_dir.mkdir(exist_ok=True)
+    pkl_path = retarget_dir / f"{stem}.pkl"
+    csv_path = retarget_dir / f"{stem}.csv"
+    mp4_path = retarget_dir / f"{stem}_retarget.mp4"
+    gif_path = retarget_dir / f"{stem}_retarget.gif"
 
     if not force and is_complete(bvh_path):
         print(f"  [SKIP] {label} — all outputs exist", flush=True)
@@ -242,7 +271,15 @@ def process_clip(args):
             n = len(pkl_data["root_pos"])
             print(f"  [RETARGET] {label} — using existing pkl ({n} frames)", flush=True)
 
-        # Step 2: Render MP4
+        # Step 2: Export CSV
+        if force or not is_valid_file(csv_path, 100):
+            pkl_to_csv(pkl_data, csv_path)
+            sz = csv_path.stat().st_size
+            print(f"  [CSV]      {label} — done: {sz/1024:.0f}KB csv", flush=True)
+        else:
+            print(f"  [CSV]      {label} — using existing csv", flush=True)
+
+        # Step 3: Render retarget MP4
         if force or not is_valid_file(mp4_path, MIN_MP4_SIZE):
             if mp4_path.exists():
                 mp4_path.unlink()  # remove corrupt file
@@ -256,7 +293,7 @@ def process_clip(args):
         else:
             print(f"  [RENDER]   {label} — using existing mp4", flush=True)
 
-        # Step 3: Create GIF
+        # Step 4: Create GIF
         if force or not is_valid_file(gif_path, 1000):
             t2 = time.time()
             print(f"  [GIF]      {label} — generating optimized GIF...", flush=True)
@@ -280,9 +317,13 @@ def main():
     parser = argparse.ArgumentParser(description="Batch retarget BVH clips to G1 robot")
     parser.add_argument("--force", action="store_true", help="Reprocess all clips")
     parser.add_argument("--workers", type=int, default=4, help="Number of parallel workers")
+    parser.add_argument("--clips", type=str, help="Comma-separated clip names to process (e.g. B_Fence1,B_DadDance)")
     args = parser.parse_args()
 
     clips = discover_bvh_clips()
+    if args.clips:
+        names = set(args.clips.split(","))
+        clips = [c for c in clips if c.stem in names]
     print(f"Found {len(clips)} BVH clips")
 
     if not args.force:
