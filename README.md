@@ -125,6 +125,16 @@ All data was captured and policies were trained on a [Dell Pro Max Tower T2](htt
 
 The RTX PRO 6000 Blackwell with 96 GB of VRAM enables running thousands of parallel MuJoCo-Warp simulation environments on a single GPU for reinforcement learning training, while the 24-core Ultra 9 285K handles motion retargeting and data processing. Thank you to [Dell Technologies](https://www.dell.com/) for providing the compute power behind this project.
 
+## Pipeline Progress
+
+| Stage | Bonus (4) | Dance (28) | Karate (27) | Total (59) |
+|-------|:---------:|:----------:|:-----------:|:----------:|
+| BVH (capture) | 4 | 28 | 27 | 59 |
+| PKL (retarget) | 4 | 28 | 27 | 59 |
+| NPZ (training) | 4 | 28 | 27 | 59 |
+| Policy (.pt) | 4 | 0 | 0 | 4 |
+| ONNX (.onnx) | 4 | 0 | 0 | 4 |
+
 ## Clips
 
 ### Dance (28)
@@ -254,11 +264,11 @@ The RTX PRO 6000 Blackwell with 96 GB of VRAM enables running thousands of paral
 | **B_Fence1** | | | |
 | ![](bonus/B_Fence1/capture/B_Fence1.gif) | ![](bonus/B_Fence1/retarget/B_Fence1_retarget.gif) | ![](bonus/B_Fence1/training/B_Fence1_training.gif) | ![](bonus/B_Fence1/policy/B_Fence1_policy.gif) |
 | **B_Fence2** | | | |
-| ![](bonus/B_Fence2/capture/B_Fence2.gif) | ![](bonus/B_Fence2/retarget/B_Fence2_retarget.gif) | ![](bonus/B_Fence2/training/B_Fence2_training.gif) | |
+| ![](bonus/B_Fence2/capture/B_Fence2.gif) | ![](bonus/B_Fence2/retarget/B_Fence2_retarget.gif) | ![](bonus/B_Fence2/training/B_Fence2_training.gif) | ![](bonus/B_Fence2/policy/B_Fence2_policy.gif) |
 | **B_HandsChop** | | | |
-| ![](bonus/B_HandsChop/capture/B_HandsChop.gif) | ![](bonus/B_HandsChop/retarget/B_HandsChop_retarget.gif) | ![](bonus/B_HandsChop/training/B_HandsChop_training.gif) | |
+| ![](bonus/B_HandsChop/capture/B_HandsChop.gif) | ![](bonus/B_HandsChop/retarget/B_HandsChop_retarget.gif) | ![](bonus/B_HandsChop/training/B_HandsChop_training.gif) | ![](bonus/B_HandsChop/policy/B_HandsChop_policy.gif) |
 | **B_HandsUp** | | | |
-| ![](bonus/B_HandsUp/capture/B_HandsUp.gif) | ![](bonus/B_HandsUp/retarget/B_HandsUp_retarget.gif) | ![](bonus/B_HandsUp/training/B_HandsUp_training.gif) | |
+| ![](bonus/B_HandsUp/capture/B_HandsUp.gif) | ![](bonus/B_HandsUp/retarget/B_HandsUp_retarget.gif) | ![](bonus/B_HandsUp/training/B_HandsUp_training.gif) | ![](bonus/B_HandsUp/policy/B_HandsUp_policy.gif) |
 
 ## Capture Details
 
