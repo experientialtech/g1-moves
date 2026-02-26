@@ -5,7 +5,7 @@
 This repository contains 59 motion capture clips for the Unitree G1 humanoid robot (mode 15, 29 DOF). The pipeline takes raw BVH motion capture from MOVIN3D and processes it through retargeting, training data generation, RL policy training, and archival.
 
 **Robot**: Unitree G1, mode 15, 29 DOF
-**Capture system**: MOVIN TRACIN (markerless, LiDAR + vision)
+**Capture systems**: MOVIN TRACIN (markerless, LiDAR + vision), video2robot (monocular video)
 **Training framework**: mjlab (MuJoCo-Warp + RSL-RL PPO)
 **Workstation**: Dell Pro Max Tower T2, RTX PRO 6000 (96GB), Ubuntu 24.04
 
@@ -38,6 +38,8 @@ g1-moves/
       agent.yaml                PPO hyperparameters
       env.yaml                  Full environment config
       training_log.csv          Training metrics
+  external/
+    video2robot/                video2robot pipeline (monocular video → robot motion)
   manifest.json                 Per-clip metadata index
   quality_report.json           Automated validation
   generate_metadata.py          Regenerate metadata
@@ -54,8 +56,226 @@ g1-moves/
 | G1 URDF | `~/Repositories/g1-urdf` |
 | MuJoCo XML | `~/Repositories/g1-urdf/g1_mode15_square.xml` |
 | Training logs | `~/Repositories/mjlab-gui/logs/rsl_rl/g1_tracking/` |
+| video2robot | `~/Repositories/g1-moves/external/video2robot` |
+| GMR | `~/Repositories/g1-moves/external/video2robot/third_party/GMR` |
+| PromptHMR | `~/Repositories/g1-moves/external/video2robot/third_party/PromptHMR` |
 
 ## Pipeline Stages
+
+There are two input paths that converge at the PKL stage:
+- **Path A (BVH)**: MOVIN TRACIN → BVH → retarget_all.py → PKL (Stage 1)
+- **Path B (Video)**: Any video → PromptHMR → SMPL-X → GMR → PKL (Stage 0)
+
+Both produce the same PKL format and feed into Stage 2+ identically.
+
+### Stage 0: Video to PKL via video2robot
+
+Extracts human pose from monocular video (YouTube, phone, etc.) and retargets to G1 robot joints. Alternative to the BVH pipeline for clips without mocap hardware.
+
+**Input**: Any MP4 video with a visible full-body human
+**Output**: `<category>/<clip>/retarget/<clip>.pkl`, `<clip>.csv`
+
+**Environments**: Two separate conda envs required (conflicting deps):
+- `phmr` (Python 3.11) — PromptHMR pose extraction (PyTorch 2.9+, xformers, SAM2, detectron2)
+- `gmr` (Python 3.10) — GMR motion retargeting (MuJoCo, mink IK solver)
+
+#### Step 1: Set up project directory
+
+```bash
+CLIP=V_MyClip
+CATEGORY=bonus
+V2R=~/Repositories/g1-moves/external/video2robot
+
+# Create project folder with video
+mkdir -p $V2R/data/$CLIP
+cp /path/to/video.mp4 $V2R/data/$CLIP/original.mp4
+```
+
+Or download from YouTube:
+```bash
+yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" \
+  -o "$V2R/data/$CLIP/original.mp4" "https://youtube.com/..."
+```
+
+#### Step 2: Extract pose (PromptHMR)
+
+```bash
+cd $V2R
+conda run -n phmr python scripts/extract_pose.py \
+  --project data/$CLIP --static-camera
+```
+
+**What it does**:
+1. Converts video to H.264 if needed (AV1, VP9, etc.)
+2. Runs person detection + SAM2 tracking
+3. Estimates 3D human mesh (SMPL-X) per frame via PromptHMR
+4. Exports `smplx.npz` with root_orient, pose_body, betas, trans
+
+**Output**: `data/$CLIP/smplx.npz`, `smplx_tracks.json`, `results.pkl`, `world4d.glb`
+
+**Flags**:
+- `--static-camera`: Skip SLAM camera estimation (use for tripod/fixed-camera videos)
+
+**Time**: ~2-5 min on RTX PRO 6000
+
+#### Step 3: Retarget to G1 (GMR)
+
+```bash
+cd $V2R
+conda run -n gmr python scripts/convert_to_robot.py \
+  --project data/$CLIP --robot unitree_g1 --no-twist
+```
+
+**What it does**:
+1. Loads SMPL-X body model, computes human height from betas
+2. Per-frame IK: maps SMPL-X joints → G1 29-DOF joint angles
+3. Forward kinematics for body positions + ground calibration
+4. Saves PKL: `{fps, root_pos (N,3), root_rot (N,4) xyzw, dof_pos (N,29)}`
+
+**Output**: `data/$CLIP/robot_motion.pkl`
+
+**Flags**:
+- `--no-twist`: Skip 23-DOF TWIST conversion (we use 29-DOF)
+- `--all-tracks`: Retarget every detected person (default: best track only)
+- `--fps 60`: Upsample to 60 FPS (default: keep original video FPS)
+
+**Time**: ~30s for 285 frames
+
+#### Step 4: Copy to g1-moves and generate CSV
+
+```bash
+mkdir -p ~/Repositories/g1-moves/$CATEGORY/$CLIP/{capture,retarget,training,policy}
+
+# Copy video + retarget output
+cp $V2R/data/$CLIP/original.mp4 ~/Repositories/g1-moves/$CATEGORY/$CLIP/capture/$CLIP.mp4
+cp $V2R/data/$CLIP/robot_motion.pkl ~/Repositories/g1-moves/$CATEGORY/$CLIP/retarget/$CLIP.pkl
+
+# Generate CSV (36 columns: 3 pos + 4 quat_xyzw + 29 joints)
+python3 -c "
+import pickle, numpy as np
+with open('$HOME/Repositories/g1-moves/$CATEGORY/$CLIP/retarget/$CLIP.pkl','rb') as f:
+    d = pickle.load(f)
+combined = np.hstack([d['root_pos'], d['root_rot'], d['dof_pos']])
+np.savetxt('$HOME/Repositories/g1-moves/$CATEGORY/$CLIP/retarget/$CLIP.csv', combined, delimiter=',', fmt='%.10f')
+print(f'CSV: {combined.shape[0]} frames x {combined.shape[1]} cols')
+"
+```
+
+#### Step 5: Visualize in MuJoCo
+
+```bash
+cd ~/Repositories/g1-moves/external/video2robot/third_party/GMR
+conda run -n gmr python scripts/vis_robot_motion.py \
+  --robot unitree_g1 \
+  --robot_motion_path ~/Repositories/g1-moves/$CATEGORY/$CLIP/retarget/$CLIP.pkl \
+  --record_video \
+  --video_path ~/Repositories/g1-moves/$CATEGORY/$CLIP/retarget/${CLIP}_retarget.mp4
+```
+
+#### Step 6: Self-collision correction
+
+video2robot/GMR does not enforce self-collision avoidance during retargeting. Post-process to fix arm-into-arm, arm-into-torso, etc:
+
+```bash
+python3 -c "
+import pickle, mujoco, numpy as np
+
+CLIP='$CLIP'; CAT='$CATEGORY'
+PKL=f'$HOME/Repositories/g1-moves/{CAT}/{CLIP}/retarget/{CLIP}.pkl'
+CSV=f'$HOME/Repositories/g1-moves/{CAT}/{CLIP}/retarget/{CLIP}.csv'
+
+with open(PKL,'rb') as f: d=pickle.load(f)
+model=mujoco.MjModel.from_xml_path('$HOME/Repositories/g1-urdf/g1_mode15_square.xml')
+data=mujoco.MjData(model)
+rp,rr,dp=d['root_pos'].copy(),d['root_rot'].copy(),d['dof_pos'].copy()
+n=len(rp)
+
+def has_col(i):
+    data.qpos[:3]=rp[i]; data.qpos[3:7]=[rr[i,3],rr[i,0],rr[i,1],rr[i,2]]; data.qpos[7:]=dp[i]
+    mujoco.mj_forward(model,data)
+    return any(model.body(model.geom_bodyid[data.contact[c].geom1]).name!='world'
+               and model.body(model.geom_bodyid[data.contact[c].geom2]).name!='world'
+               for c in range(data.ncon))
+
+# Find collision ranges
+ic=[i for i in range(n) if has_col(i)]
+print(f'{len(ic)} collision frames')
+
+# Interpolate arm joints (15-28) from boundary clean frames
+ARM=list(range(15,29))
+ranges=[]; i=0
+while i<n:
+    if has_col(i):
+        s=i
+        while i<n and has_col(i): i+=1
+        ranges.append((s,i-1))
+    else: i+=1
+
+for s,e in ranges:
+    cb=s-1; ca=e+1
+    while cb>0 and has_col(cb): cb-=1
+    while ca<n-1 and has_col(ca): ca+=1
+    span=ca-cb
+    for f in range(s,e+1):
+        t=(f-cb)/span if span>0 else 0.5
+        for j in ARM: dp[f,j]=(1-t)*dp[cb,j]+t*dp[ca,j]
+
+# If any remain, widen to all joints
+for _ in range(3):
+    ic2=[i for i in range(n) if has_col(i)]
+    if not ic2: break
+    for s,e in ranges:
+        cb=max(0,s-3); ca=min(n-1,e+3)
+        while cb>0 and has_col(cb): cb-=1
+        while ca<n-1 and has_col(ca): ca+=1
+        span=ca-cb
+        for f in range(s,e+1):
+            if not has_col(f): continue
+            t=(f-cb)/span if span>0 else 0.5
+            dp[f]=(1-t)*dp[cb]+t*dp[ca]
+
+final=sum(has_col(i) for i in range(n))
+print(f'Remaining: {final}')
+
+d['dof_pos']=dp.astype(np.float32)
+with open(PKL,'wb') as f: pickle.dump(d,f)
+np.savetxt(CSV,np.hstack([rp,rr,dp]),delimiter=',',fmt='%.10f')
+print('Saved corrected PKL+CSV')
+"
+```
+
+**Strategy**: For collision frames, interpolate arm joints (shoulder/elbow/wrist) between nearest clean boundary frames. Falls back to full-joint interpolation if arm-only doesn't resolve. Typically corrects <5 deg mean deviation, preserving motion character.
+
+#### Verify
+
+```bash
+python3 -c "
+import pickle, numpy as np, mujoco
+with open('$HOME/Repositories/g1-moves/$CATEGORY/$CLIP/retarget/$CLIP.pkl','rb') as f:
+    d = pickle.load(f)
+assert d['dof_pos'].shape[1] == 29
+assert d['root_rot'].shape[1] == 4
+assert not np.any(np.isnan(d['dof_pos']))
+
+# Self-collision check
+model=mujoco.MjModel.from_xml_path('$HOME/Repositories/g1-urdf/g1_mode15_square.xml')
+data=mujoco.MjData(model)
+cols=0
+for i in range(len(d['root_pos'])):
+    data.qpos[:3]=d['root_pos'][i]
+    data.qpos[3:7]=[d['root_rot'][i,3],d['root_rot'][i,0],d['root_rot'][i,1],d['root_rot'][i,2]]
+    data.qpos[7:]=d['dof_pos'][i]
+    mujoco.mj_forward(model,data)
+    for c in range(data.ncon):
+        b1=model.body(model.geom_bodyid[data.contact[c].geom1]).name
+        b2=model.body(model.geom_bodyid[data.contact[c].geom2]).name
+        if b1!='world' and b2!='world': cols+=1; break
+print(f'frames={d[\"dof_pos\"].shape[0]}, fps={d[\"fps\"]}, dof={d[\"dof_pos\"].shape[1]}, self_collisions={cols}')
+assert cols == 0, f'{cols} self-collision frames remain!'
+"
+```
+
+**Then continue with Stage 2 (CSV → NPZ) and beyond.**
 
 ### Stage 1: Retarget BVH to PKL
 
@@ -490,6 +710,10 @@ uv run <command>       # Uses pyproject.toml dependencies
 # Python execution in g1-moves
 cd ~/Repositories/g1-moves
 python <script>        # Uses system Python with movin_sdk_python
+
+# video2robot (two conda envs)
+conda run -n phmr python <script>   # Pose extraction (PromptHMR)
+conda run -n gmr python <script>    # Motion retargeting (GMR)
 ```
 
 ## Common Issues
@@ -503,6 +727,9 @@ python <script>        # Uses system Python with movin_sdk_python
 | Training reward not improving | Check motion NPZ is valid, try lower learning rate (1e-4) |
 | Policy falls immediately | Train longer, or check ground calibration in retarget step |
 | TensorBoard empty | Run `uv run tensorboard --logdir logs/rsl_rl` from mjlab-gui dir |
+| SMPL-X betas size mismatch | Pass `num_betas=10` to `smplx.create()` in GMR's `smpl.py` |
+| PromptHMR sam2 warning | Non-critical `_C.so undefined symbol` — results are unaffected |
+| video2robot AV1 codec | PromptHMR auto-converts to H.264; no manual step needed |
 
 ## Data Formats
 
