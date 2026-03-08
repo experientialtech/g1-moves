@@ -1,3 +1,25 @@
 .venv/
 __pycache__/
 *.pyc
+
+# Data lives on HuggingFace (huggingface.co/datasets/exptech/g1-moves)
+dance/
+karate/
+bonus/
+movin-studio-project/
+manifest.json
+quality_report.json
+DATASET_CARD.md
+logo.png
+
+# HuggingFace Space
+space/
+
+# Local dev artifacts
+.cache/
+.playwright-mcp/
+.claude/
+g1-moves/
+HuggingFace:bonus/
+app/
+mjlab-gui/

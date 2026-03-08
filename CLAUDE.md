@@ -389,23 +389,30 @@ cd ~/Repositories/mjlab-gui
 MUJOCO_GL=egl MUJOCO_EGL_DEVICE_ID=0 uv run train \
   Mjlab-Tracking-Flat-Unitree-G1 \
   --env.commands.motion.motion-file ~/Repositories/g1-moves/<category>/<clip>/training/<clip>.npz \
-  --env.scene.num-envs 4096 \
+  --env.scene.num-envs 8192 \
   --agent.max-iterations 30000 \
-  --agent.save-interval 500 \
+  --agent.save-interval 2000 \
   --agent.run-name <clip> \
   --video --video-interval 5000
 ```
 
 **Key parameters**:
-- `num-envs 4096`: parallel simulation environments (reduce to 2048/1024 if OOM)
-- `max-iterations 30000`: training steps (~6 hours on RTX PRO 6000)
-- `save-interval 500`: checkpoint every 500 iterations
+- `num-envs 8192`: parallel simulation environments (~40GB VRAM on RTX PRO 6000; reduce to 4096/2048 if OOM)
+- `max-iterations`: adaptive based on clip duration (see below)
+- `save-interval 2000`: checkpoint every 2000 iterations
 - `video-interval 5000`: record evaluation video every 5000 steps
+
+**Adaptive iterations** (set automatically by `batch_pipeline.py`):
+- Clips < 10s: 15,000 iterations (~2-3 hours)
+- Clips 10-25s: 20,000 iterations (~3-4 hours)
+- Clips >= 25s: 30,000 iterations (~4-5 hours)
+
+**Early stopping**: The batch pipeline monitors TensorBoard during training (every 5 min). If `Episode_Termination/time_out` ratio >= 0.95 for 3 consecutive checks after 10k iterations, training is terminated early. A time_out ratio of 0.95 means the robot survives the full episode 95% of the time, which strongly correlates with good motion tracking quality.
 
 **Output structure**:
 ```
 logs/rsl_rl/g1_tracking/<timestamp>_<clip>/
-  model_0.pt ... model_29999.pt    Checkpoints
+  model_0.pt ... model_N.pt        Checkpoints (every 2000 iterations)
   params/agent.yaml                PPO hyperparameters
   params/env.yaml                  Environment config (includes motion_file path)
   events.out.tfevents.*            TensorBoard log
@@ -429,13 +436,12 @@ uv run tensorboard --logdir logs/rsl_rl/g1_tracking/ --port 6006
 # Check final checkpoint exists and has expected keys
 python -c "
 import torch
-ckpt = torch.load('logs/rsl_rl/g1_tracking/<run>/model_29999.pt', map_location='cpu', weights_only=False)
+ckpt = torch.load('logs/rsl_rl/g1_tracking/<run>/model_N.pt', map_location='cpu', weights_only=False)
 print(f'iter={ckpt[\"iter\"]}, keys={list(ckpt.keys())}')
-assert ckpt['iter'] == 29999
 "
 ```
 
-**Time**: ~6 hours for 30k iterations with 4096 envs on RTX PRO 6000
+**Time**: ~2-5 hours per clip with 8192 envs on RTX PRO 6000 (depends on clip duration and early stopping)
 
 ### Stage 5: Render Policy Rollout
 
@@ -545,7 +551,54 @@ git push
 
 ## Batch Processing
 
-To process multiple clips end-to-end:
+The preferred method for batch training is `batch_pipeline.py`, which handles all 5 stages (correction → NPZ → training → verification → archive) with resilience, early stopping, and adaptive iterations.
+
+### Automated pipeline (recommended)
+
+```bash
+cd ~/Repositories/mjlab-gui
+
+# Preview what will be processed
+python app/scripts/batch_pipeline.py --dry-run
+
+# Run the full pipeline (processes all untrained clips)
+python app/scripts/batch_pipeline.py
+
+# Check progress
+python app/scripts/batch_pipeline.py --status
+```
+
+The pipeline is designed to run unattended via systemd:
+```bash
+# Start/stop
+systemctl --user start g1-batch-training
+systemctl --user stop g1-batch-training
+
+# View logs
+journalctl --user -u g1-batch-training -f
+tail -f ~/Repositories/mjlab-gui/app/scripts/batch_logs/<clip>_training.log
+```
+
+**Pipeline features**:
+- Processes clips longest-first (most training value per hour)
+- Skips clips that already have policies (`has_policy` in manifest.json)
+- JSON state file with atomic writes — survives crashes and restarts
+- SIGTERM/SIGINT signal handling — saves state before exit
+- Checkpoint-based training resume on restart
+- Per-clip logs in `app/scripts/batch_logs/`
+
+**Training optimizations** (configured in `batch_pipeline.py`):
+| Parameter | Value | Effect |
+|-----------|-------|--------|
+| `NUM_ENVS` | 8192 | ~2x throughput vs 4096 (~40GB VRAM) |
+| `SAVE_INTERVAL` | 2000 | Less checkpoint I/O overhead |
+| Adaptive iterations | 15k/20k/30k | Based on clip duration (<10s / <25s / >=25s) |
+| Early stopping | time_out >= 0.95 | Terminates converged training after 3 consecutive checks (every 5 min), minimum 10k iterations |
+
+**Expected training time per clip** (RTX PRO 6000, 8192 envs):
+- Short clips (<10s): ~1.5-2.5 hours
+- Medium clips (10-25s): ~2.5-4 hours
+- Long clips (>=25s): ~3-5 hours (often early-stopped before 30k)
 
 ### Retarget all (Stage 1)
 ```bash
@@ -553,35 +606,17 @@ cd ~/Repositories/g1-moves
 python retarget_all.py --workers 4
 ```
 
-### Train multiple clips sequentially (Stage 4)
+### Manual single-clip training (Stage 4)
 ```bash
 cd ~/Repositories/mjlab-gui
-for CLIP in B_DadDance J_Dance3_Woah M_Move1; do
-  CATEGORY=$(python -c "
-import json
-with open('$HOME/Repositories/g1-moves/manifest.json') as f:
-    print(json.load(f)['clips']['${CLIP}']['category'])
-  ")
-  echo "=== Training ${CLIP} (${CATEGORY}) ==="
-  MUJOCO_GL=egl MUJOCO_EGL_DEVICE_ID=0 uv run train \
-    Mjlab-Tracking-Flat-Unitree-G1 \
-    --env.commands.motion.motion-file ~/Repositories/g1-moves/${CATEGORY}/${CLIP}/training/${CLIP}.npz \
-    --env.scene.num-envs 4096 \
-    --agent.max-iterations 30000 \
-    --agent.save-interval 500 \
-    --agent.run-name ${CLIP} \
-    --video --video-interval 5000
-done
-```
-
-### Batch archive all new policies (Stage 6)
-After training completes, archive each run:
-```bash
-cd ~/Repositories/mjlab-gui/logs/rsl_rl/g1_tracking/
-for RUN_DIR in */; do
-  CLIP=$(echo ${RUN_DIR} | sed 's/.*_//' | sed 's/\///')
-  # ... run Stage 6 commands for each
-done
+MUJOCO_GL=egl MUJOCO_EGL_DEVICE_ID=0 uv run train \
+  Mjlab-Tracking-Flat-Unitree-G1 \
+  --env.commands.motion.motion-file ~/Repositories/g1-moves/<category>/<clip>/training/<clip>.npz \
+  --env.scene.num-envs 8192 \
+  --agent.max-iterations 30000 \
+  --agent.save-interval 2000 \
+  --agent.run-name <clip> \
+  --video --video-interval 5000
 ```
 
 ## Sim-to-Real Deployment
