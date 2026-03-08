@@ -1,31 +1,10 @@
----
-license: cc-by-4.0
-task_categories:
-  - robotics
-  - reinforcement-learning
-tags:
-  - motion-capture
-  - humanoid-robot
-  - unitree-g1
-  - bvh
-  - sim-to-real
-  - mujoco
-  - reinforcement-learning
-  - motion-imitation
-size_categories:
-  - n<1K
-viewer: false
----
-
-<p align="center">
-  <img src="logo.png" alt="Experiential Technologies" width="500">
-</p>
-
 # G1 Moves
 
-Motion capture clips for the Unitree G1 humanoid robot, captured with Movin Studio and exported as BVH and FBX.
+> **[Dataset](https://huggingface.co/datasets/exptech/g1-moves)** (BVH, FBX, PKL, NPZ, ONNX policies) · **[Showcase](https://huggingface.co/spaces/exptech/g1-moves)** (interactive gallery) · **Code** (this repo)
 
-**[Browse the showcase](https://huggingface.co/spaces/exptech/g1-moves)** — interactive gallery with video previews of every clip across all pipeline stages.
+Scripts and documentation for the G1 Moves motion capture dataset — 60 clips for the Unitree G1 humanoid robot, captured with MOVIN TRACIN and retargeted to 29-DOF joint trajectories with trained RL policies.
+
+**All data files live on [HuggingFace](https://huggingface.co/datasets/exptech/g1-moves).** This repository contains only the processing scripts, standalone inference code, and documentation.
 
 ## Credits
 
@@ -34,7 +13,17 @@ Motion capture clips for the Unitree G1 humanoid robot, captured with Movin Stud
 **Dance:** [Jasmine Coro](https://jasminecoro.com/)
 **Karate:** [Mike Gassaway](https://www.backstage.com/u/mike-gassaway/)
 
-## Structure
+## What's Where
+
+| Location | Contents |
+|----------|----------|
+| [HuggingFace Dataset](https://huggingface.co/datasets/exptech/g1-moves) | All motion data (BVH, FBX, PKL, NPZ), trained policies (PT, ONNX), training logs, metadata |
+| [HuggingFace Space](https://huggingface.co/spaces/exptech/g1-moves) | Interactive showcase with video previews of every clip at each pipeline stage |
+| [GitHub](https://github.com/experientialtech/g1-moves) (this repo) | `run_policy.py`, `retarget_all.py`, `generate_metadata.py`, `CONTROLLER.md`, documentation |
+
+## Dataset Structure
+
+The dataset on HuggingFace is organized as follows:
 
 ```
 dance/                          28 clips — dance routines
