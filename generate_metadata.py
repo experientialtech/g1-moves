@@ -74,6 +74,26 @@ PERFORMERS = {
     "B_": "Mitch Chaiet",
     "J_": "Jasmine Coro",
     "M_": "Mike Gassaway",
+    "V_": "YouTube",
+}
+
+# Per-clip performer overrides (takes precedence over prefix mapping)
+PERFORMER_OVERRIDES = {
+    "B_LongDance": "Jasmine Coro",
+    "B_SpiralDance": "Jasmine Coro",
+    "B_StretchDance": "Jasmine Coro",
+    "B_WiggleDance": "Jasmine Coro",
+    "B_HandsUp": "Jasmine Coro",
+    "B_HandsChop": "Jasmine Coro",
+    "B_AttackKarate": "Mike Gassaway",
+    "B_BowKarate": "Mike Gassaway",
+    "B_ChopsKarate": "Mike Gassaway",
+    "B_CrazyChopsKarate": "Mike Gassaway",
+    "B_ForwardKarate": "Mike Gassaway",
+    "B_LongKarate": "Mike Gassaway",
+    "B_SpinKarate": "Mike Gassaway",
+    "B_Fence1": "Maya Coro",
+    "B_Fence2": "Maya Coro",
 }
 
 # Foot body indices in NPZ body_pos_w (30 bodies)
@@ -83,6 +103,8 @@ FOOT_BODY_INDICES = [3, 6]  # indices in the 30-body array
 
 
 def get_performer(clip_name):
+    if clip_name in PERFORMER_OVERRIDES:
+        return PERFORMER_OVERRIDES[clip_name]
     for prefix, name in PERFORMERS.items():
         if clip_name.startswith(prefix):
             return name
@@ -238,7 +260,8 @@ def get_file_sizes(clip_dir, clip_name):
 def get_pipeline_stages(clip_dir, clip_name):
     """Determine which pipeline stages are complete."""
     stages = []
-    if os.path.exists(os.path.join(clip_dir, "capture", f"{clip_name}.bvh")):
+    if (os.path.exists(os.path.join(clip_dir, "capture", f"{clip_name}.bvh")) or
+            os.path.exists(os.path.join(clip_dir, "capture", f"{clip_name}.mp4"))):
         stages.append("capture")
     if os.path.exists(os.path.join(clip_dir, "retarget", f"{clip_name}.pkl")):
         stages.append("retarget")
@@ -267,7 +290,7 @@ def generate_clip_readme(clip_dir, clip_name, clip_data):
         "",
         "| Stage | Files |",
         "|-------|-------|",
-        f"| `capture/` | BVH, MP4, GIF, 4x FBX |",
+        f"| `capture/` | {'BVH, MP4, GIF, 4x FBX' if clip_data.get('source', 'mocap') == 'mocap' else 'MP4, GIF (video source)'} |",
         f"| `retarget/` | PKL, CSV, MP4, GIF |",
         f"| `training/` | NPZ, MP4, GIF |",
     ]
@@ -303,7 +326,12 @@ def generate_clip_readme(clip_dir, clip_name, clip_data):
 
 
 def discover_clips(base_dir, pattern=None):
-    """Find all clip directories."""
+    """Find all clip directories.
+
+    A clip is valid if it has either:
+      - A BVH file in capture/ (mocap-sourced)
+      - A PKL file in retarget/ (video-sourced, e.g. video2robot)
+    """
     clips = []
     for category in ["dance", "karate", "bonus"]:
         cat_dir = os.path.join(base_dir, category)
@@ -314,7 +342,8 @@ def discover_clips(base_dir, pattern=None):
             if not os.path.isdir(clip_dir):
                 continue
             bvh = os.path.join(clip_dir, "capture", f"{clip_name}.bvh")
-            if not os.path.exists(bvh):
+            pkl = os.path.join(clip_dir, "retarget", f"{clip_name}.pkl")
+            if not os.path.exists(bvh) and not os.path.exists(pkl):
                 continue
             if pattern and not fnmatch.fnmatch(clip_name, pattern):
                 continue
@@ -365,17 +394,23 @@ def main():
     for category, clip_name, clip_dir in clips:
         print(f"  Processing {clip_name}...", end=" ", flush=True)
 
-        # Parse BVH
+        # Determine source type
         bvh_path = os.path.join(clip_dir, "capture", f"{clip_name}.bvh")
-        bvh = parse_bvh(bvh_path)
+        has_bvh = os.path.exists(bvh_path)
+
+        # Parse BVH if available
+        if has_bvh:
+            bvh = parse_bvh(bvh_path)
+        else:
+            bvh = None
 
         # Load PKL
         pkl_path = os.path.join(clip_dir, "retarget", f"{clip_name}.pkl")
         pkl_data = load_pkl(pkl_path)
 
-        # Load NPZ
+        # Load NPZ (optional for video-sourced clips)
         npz_path = os.path.join(clip_dir, "training", f"{clip_name}.npz")
-        npz_data = load_npz(npz_path)
+        npz_data = load_npz(npz_path) if os.path.exists(npz_path) else None
 
         # Compute stats
         motion_stats = compute_motion_stats(pkl_data)
@@ -383,25 +418,40 @@ def main():
         stages = get_pipeline_stages(clip_dir, clip_name)
         file_sizes = get_file_sizes(clip_dir, clip_name)
 
+        # Derive frame/fps/duration from BVH or PKL
+        if bvh:
+            clip_frames = bvh["frames"]
+            clip_fps = bvh["fps"]
+            clip_duration = bvh["duration_s"]
+            clip_bvh_joints = bvh["joints"]
+        else:
+            pkl_fps = int(pkl_data.get("fps", 60))
+            pkl_frames = np.array(pkl_data["dof_pos"]).shape[0]
+            clip_frames = pkl_frames
+            clip_fps = pkl_fps
+            clip_duration = round(pkl_frames / pkl_fps, 2)
+            clip_bvh_joints = 0
+
         clip_entry = {
             "category": category,
             "performer": get_performer(clip_name),
-            "frames": bvh["frames"],
-            "fps": bvh["fps"],
-            "duration_s": bvh["duration_s"],
-            "bvh_joints": bvh["joints"],
+            "frames": clip_frames,
+            "fps": clip_fps,
+            "duration_s": clip_duration,
+            "bvh_joints": clip_bvh_joints,
             "retarget_dof": 29,
-            "training_frames": int(npz_data["joint_pos"].shape[0]),
+            "training_frames": int(npz_data["joint_pos"].shape[0]) if npz_data else 0,
             "file_sizes": file_sizes,
             "joint_range": joint_range,
             "motion_stats": motion_stats,
             "has_policy": "policy" in stages,
             "pipeline_stages": stages,
+            "source": "mocap" if has_bvh else "video",
         }
         manifest["clips"][clip_name] = clip_entry
 
-        total_frames += bvh["frames"]
-        total_duration += bvh["duration_s"]
+        total_frames += clip_frames
+        total_duration += clip_duration
 
         # Quality checks
         if not args.skip_quality:
@@ -410,29 +460,47 @@ def main():
             quality["checks"]["joint_limit_violations"]["clips"][clip_name] = jl
 
             # Ground penetration
-            gp = check_ground_penetration(npz_data)
+            if npz_data:
+                gp = check_ground_penetration(npz_data)
+            else:
+                gp = {"penetration_frames": 0, "min_foot_z_m": 0.0}
             quality["checks"]["ground_penetration"]["clips"][clip_name] = gp
 
             # Frame consistency
             pkl_frames = np.array(pkl_data["dof_pos"]).shape[0]
-            npz_frames = npz_data["joint_pos"].shape[0]
-            fc = {
-                "bvh_frames": bvh["frames"],
-                "pkl_frames": pkl_frames,
-                "npz_frames": npz_frames,
-                "pkl_match": pkl_frames == bvh["frames"],
-                "npz_match": npz_frames in (bvh["frames"], bvh["frames"] - 1),
-            }
+            npz_frames = npz_data["joint_pos"].shape[0] if npz_data else 0
+            if bvh:
+                fc = {
+                    "bvh_frames": bvh["frames"],
+                    "pkl_frames": pkl_frames,
+                    "npz_frames": npz_frames,
+                    "pkl_match": pkl_frames == bvh["frames"],
+                    "npz_match": npz_frames in (bvh["frames"], bvh["frames"] - 1),
+                }
+            else:
+                fc = {
+                    "bvh_frames": 0,
+                    "pkl_frames": pkl_frames,
+                    "npz_frames": npz_frames,
+                    "pkl_match": True,  # No BVH to compare against
+                    "npz_match": npz_frames in (pkl_frames, pkl_frames - 1) if npz_data else True,
+                }
             quality["checks"]["frame_consistency"]["clips"][clip_name] = fc
 
             # NaN check
-            nan = check_nan(pkl_data, npz_data)
+            if npz_data:
+                nan = check_nan(pkl_data, npz_data)
+            else:
+                nan = {"has_nan": False, "fields": []}
             quality["checks"]["nan_check"]["clips"][clip_name] = nan
 
-            # File completeness
-            expected_capture = [f"{clip_name}.bvh", f"{clip_name}.gif", f"{clip_name}.mp4",
-                                f"{clip_name}_bl.fbx", f"{clip_name}_mb.fbx",
-                                f"{clip_name}_ue.fbx", f"{clip_name}_un.fbx"]
+            # File completeness (adapt expected files for video-sourced clips)
+            if has_bvh:
+                expected_capture = [f"{clip_name}.bvh", f"{clip_name}.gif", f"{clip_name}.mp4",
+                                    f"{clip_name}_bl.fbx", f"{clip_name}_mb.fbx",
+                                    f"{clip_name}_ue.fbx", f"{clip_name}_un.fbx"]
+            else:
+                expected_capture = [f"{clip_name}.mp4", f"{clip_name}.gif"]
             expected_retarget = [f"{clip_name}.pkl", f"{clip_name}.csv",
                                  f"{clip_name}_retarget.gif", f"{clip_name}_retarget.mp4"]
             expected_training = [f"{clip_name}.npz",

@@ -25,6 +25,8 @@ viewer: false
 
 Motion capture clips for the Unitree G1 humanoid robot, captured with Movin Studio and exported as BVH and FBX.
 
+**[Browse the showcase](https://huggingface.co/spaces/exptech/g1-moves)** — interactive gallery with video previews of every clip across all pipeline stages.
+
 ## Credits
 
 **Director:** [Mitch Chaiet](https://mitchchaiet.com/)
@@ -114,7 +116,7 @@ Each clip lives in its own subfolder containing:
 
 ## Retarget
 
-All 59 BVH clips have been retargeted to the Unitree G1 (mode 15, 29 DOF) using [movin_sdk_python](https://github.com/MOVIN3D/movin_sdk_python). The pipeline:
+All 60 clips have been retargeted to the Unitree G1 (mode 15, 29 DOF) using [movin_sdk_python](https://github.com/MOVIN3D/movin_sdk_python). The pipeline:
 
 1. **BVH → IK**: Per-frame inverse kinematics maps human skeleton to G1 joint limits (1.75m human height)
 2. **Ground calibration**: MuJoCo forward kinematics finds minimum foot Z across all frames, shifts root down for ground contact
@@ -123,17 +125,189 @@ All 59 BVH clips have been retargeted to the Unitree G1 (mode 15, 29 DOF) using 
 
 Run `python retarget_all.py` to regenerate (skips existing outputs).
 
+## Deploying Policies
+
+Each trained clip includes an ONNX policy (`<clip>_policy.onnx`) and a PyTorch checkpoint (`<clip>_policy.pt`). The ONNX model has observation normalization baked in — feed it raw observations and it outputs 29 joint position targets directly.
+
+### Policy Format
+
+| Property | Value |
+|----------|-------|
+| Input | `obs` — float32 tensor, shape `[batch, 160]` |
+| Output | `actions` — float32 tensor, shape `[batch, 29]` |
+| Normalization | Baked into the model (obs mean/std from training) |
+| Framework | ONNX opset 17, compatible with onnxruntime |
+| Control freq | 50 Hz (decimation=4 at 200 Hz sim) |
+
+### Observation Vector (160 dims)
+
+| Index | Size | Name | Description |
+|-------|------|------|-------------|
+| 0-28 | 29 | `ref_joint_pos` | Reference motion joint positions at current timestep |
+| 29-57 | 29 | `ref_joint_vel` | Reference motion joint velocities at current timestep |
+| 58-60 | 3 | `motion_anchor_pos_b` | Motion anchor position relative to robot pelvis (body frame) |
+| 61-66 | 6 | `motion_anchor_ori_b` | Motion anchor orientation relative to robot (first 2 columns of rotation matrix) |
+| 67-69 | 3 | `base_ang_vel` | Robot base angular velocity (IMU) |
+| 70-72 | 3 | `base_lin_vel` | Robot base linear velocity |
+| 73-101 | 29 | `joint_pos_rel` | Current joint positions minus default pose |
+| 102-130 | 29 | `joint_vel` | Current joint velocities |
+| 131-159 | 29 | `last_action` | Previous policy output |
+
+### Joint Order (29 DOF, Unitree G1 mode 15)
+
+```
+ 0: left_hip_pitch        7: right_hip_roll       14: waist_pitch
+ 1: left_hip_roll         8: right_hip_yaw        15: left_shoulder_pitch
+ 2: left_hip_yaw          9: right_knee           16: left_shoulder_roll
+ 3: left_knee            10: right_ankle_pitch    17: left_shoulder_yaw
+ 4: left_ankle_pitch     11: right_ankle_roll     18: left_elbow
+ 5: left_ankle_roll      12: waist_yaw            19: left_wrist_roll
+ 6: right_hip_pitch      13: waist_roll           20: left_wrist_pitch
+21: left_wrist_yaw       25: right_elbow
+22: right_shoulder_pitch  26: right_wrist_roll
+23: right_shoulder_roll   27: right_wrist_pitch
+24: right_shoulder_yaw    28: right_wrist_yaw
+```
+
+### Option 1: Sim2Sim with mjlab (easiest)
+
+Visualize any policy in MuJoCo simulation:
+
+```bash
+git clone https://github.com/mujocolab/mjlab
+cd mjlab
+uv sync
+
+# Play a trained policy
+MUJOCO_GL=egl uv run play \
+  Mjlab-Tracking-Flat-Unitree-G1 \
+  --checkpoint-file <clip>/policy/<clip>_policy.pt \
+  --motion-file <clip>/training/<clip>.npz \
+  --num-envs 1 \
+  --viewer viser
+# Open http://localhost:8080 for 3D viewer
+```
+
+### Option 2: Deploy with RoboJuDo
+
+[RoboJuDo](https://github.com/GDDG08/RoboJuDo) is a plug-and-play deployment framework for humanoid robots that supports both MuJoCo sim2sim and real robot deployment.
+
+#### Setup
+
+```bash
+git clone https://github.com/GDDG08/RoboJuDo.git
+cd RoboJuDo
+pip install -e .
+python submodule_install.py  # installs mujoco_viewer
+```
+
+#### Loading a Policy
+
+Each policy needs its corresponding motion NPZ file for the reference trajectory. At each timestep, the NPZ provides the reference joint positions/velocities and body anchor positions that form the first 67 dims of the observation vector.
+
+```python
+import numpy as np
+import onnxruntime as ort
+
+# Load policy and motion
+session = ort.InferenceSession("<clip>_policy.onnx")
+motion = np.load("<clip>.npz")
+
+ref_joint_pos = motion["joint_pos"]    # (T, 29) reference joint positions
+ref_joint_vel = motion["joint_vel"]    # (T, 29) reference joint velocities
+ref_body_pos = motion["body_pos_w"]    # (T, N, 3) reference body positions
+ref_body_quat = motion["body_quat_w"]  # (T, N, 4) reference body quaternions
+fps = float(motion["fps"])             # typically 60
+
+# At each control step (50 Hz), construct the 160-dim observation:
+obs = np.concatenate([
+    ref_joint_pos[t],           # 29: reference joint positions
+    ref_joint_vel[t],           # 29: reference joint velocities
+    anchor_pos_body_frame,      # 3:  motion anchor pos in robot frame
+    anchor_ori_body_frame,      # 6:  motion anchor ori (2 cols of rot matrix)
+    robot_ang_vel,              # 3:  from IMU
+    robot_lin_vel,              # 3:  from state estimation
+    joint_pos - default_pos,    # 29: current joints minus default
+    joint_vel,                  # 29: current joint velocities
+    last_action,                # 29: previous policy output
+])
+
+actions = session.run(["actions"], {"obs": obs[None].astype(np.float32)})[0][0]
+# actions are 29 joint position targets to send to PD controller
+```
+
+#### RoboJuDo Integration
+
+To add G1 Moves policies as a RoboJuDo policy module, create a policy class that replays the NPZ motion and constructs the observation vector. The architecture is similar to `BeyondMimicPolicy` — an ONNX model with motion replay — but uses a simpler observation format. See the [BeyondMimic policy source](https://github.com/GDDG08/RoboJuDo/blob/main/robojudo/policy/beyondmimic_policy.py) as a reference implementation.
+
+Key differences from BeyondMimic:
+- Our ONNX takes only `obs` as input (no `time_step`)
+- Observation normalization is baked into the ONNX model
+- Motion data comes from the NPZ file, not embedded in the ONNX model
+- Actions are direct joint position targets (no per-joint scaling needed)
+
+### Option 3: Standalone MuJoCo Viewer
+
+Run any policy in MuJoCo simulation without the training framework:
+
+```bash
+pip install mujoco onnxruntime numpy
+python run_policy.py dance/B_DadDance --xml /path/to/g1_mode15_square.xml
+```
+
+This opens an interactive MuJoCo viewer with the robot executing the trained policy in a loop. See `run_policy.py` for the complete observation vector construction and control loop.
+
+### Option 4: Raw ONNX Inference
+
+For custom deployments (Jetson, microcontrollers, web):
+
+```python
+import onnxruntime as ort
+session = ort.InferenceSession("B_DadDance_policy.onnx")
+actions = session.run(["actions"], {"obs": obs_160.astype(np.float32)})[0]
+```
+
+The ONNX model is a 4-layer MLP (160 → 512 → 256 → 128 → 29) with ELU activations. It runs in <1ms on CPU and is compatible with ONNX Runtime on all platforms including NVIDIA Jetson (TensorRT), web (ONNX.js), and mobile.
+
+## Training Quality
+
+Aggregate metrics across all 44 trained policies (higher reward = better, lower error = better):
+
+| Metric | Mean | Min | Max |
+|--------|------|-----|-----|
+| Reward | 39.7 | 33.1 | 45.6 |
+| Episode length | 493 / 500 | 458 | 500 |
+| Body position error | 0.045 m | 0.031 m | 0.078 m |
+| Joint position error | 0.56 rad | 0.42 rad | 0.85 rad |
+
+Per-clip training metrics are available in each clip's `policy/training_log.csv`.
+
+## Citation
+
+```bibtex
+@misc{g1moves2026,
+  title     = {G1 Moves: Motion Capture Dataset for the Unitree G1 Humanoid Robot},
+  author    = {Chaiet, Mitch},
+  year      = {2026},
+  publisher = {Hugging Face},
+  url       = {https://huggingface.co/datasets/exptech/g1-moves},
+  note      = {60 motion capture clips with retargeted joint trajectories, RL training data, and trained policies}
+}
+```
+
 ## Equipment
 
 ### Motion Capture
 
-All 59 clips were captured using the [MOVIN TRACIN](https://movin3d.com/) markerless motion capture system from [MOVIN3D](https://movin3d.com/). MOVIN TRACIN uses on-device AI to fuse LiDAR point clouds and vision into production-ready motion data — no markers, no suit, no multi-camera rig. Captured performances were recorded and exported using [MOVIN Studio](https://www.movin3d.com/studio), which provides real-time skeleton visualization, recording management, and export to BVH and FBX formats. Retargeting from human skeleton to G1 robot joint space was performed using [movin_sdk_python](https://github.com/MOVIN3D/movin_sdk_python).
+59 clips were captured using the [MOVIN TRACIN](https://movin3d.com/) markerless motion capture system from [MOVIN3D](https://movin3d.com/), with 1 additional clip (V_Rocamena) extracted from monocular video via [video2robot](https://github.com/experientialtech/video2robot). MOVIN TRACIN uses on-device AI to fuse LiDAR point clouds and vision into production-ready motion data — no markers, no suit, no multi-camera rig. Captured performances were recorded and exported using [MOVIN Studio](https://www.movin3d.com/studio), which provides real-time skeleton visualization, recording management, and export to BVH and FBX formats. Retargeting from human skeleton to G1 robot joint space was performed using [movin_sdk_python](https://github.com/MOVIN3D/movin_sdk_python).
 
 Thank you to [MOVIN3D](https://movin3d.com/) for building an incredible motion capture platform that makes professional-grade mocap accessible to robotics researchers.
 
 ### Workstation
 
-All data was captured and policies were trained on a [Dell Pro Max Tower T2](https://creatorfolio.co/mitchbookpro) workstation from [Dell Technologies](https://www.dell.com/):
+All data was captured and policies were trained on two machines from [Dell Technologies](https://www.dell.com/):
+
+#### [Dell Pro Max Tower T2](https://www.dell.com/en-us/shop/desktop-computers/dell-pro-max-tower-t2/spd/dell-pro-max-tower-t2-desktop/usepmtbts2_t2)
 
 | Component | Spec |
 |-----------|------|
@@ -143,7 +317,23 @@ All data was captured and policies were trained on a [Dell Pro Max Tower T2](htt
 | Storage | 2x 4 TB WD SN8000S NVMe SSD (8 TB total) |
 | OS | Ubuntu 24.04 LTS |
 
-The RTX PRO 6000 Blackwell with 96 GB of VRAM enables running thousands of parallel MuJoCo-Warp simulation environments on a single GPU for reinforcement learning training, while the 24-core Ultra 9 285K handles motion retargeting and data processing. Thank you to [Dell Technologies](https://www.dell.com/) for providing the compute power behind this project.
+The RTX PRO 6000 Blackwell with 96 GB of VRAM enables running 8,192 parallel MuJoCo-Warp simulation environments on a single GPU for reinforcement learning training, while the 24-core Ultra 9 285K handles motion retargeting and data processing.
+
+#### [Dell Pro Max with GB10](https://www.dell.com/en-us/shop/desktop-computers/dell-pro-max-desktop-with-nvidia-gb10/spd/dell-pro-max-gb10-desktop/usepmgb10bts)
+
+| Component | Spec |
+|-----------|------|
+| SoC | NVIDIA GB10 Grace Blackwell Superchip |
+| CPU | NVIDIA Grace (20x ARM Cortex-X925) |
+| GPU | NVIDIA Blackwell GPU (1,024 CUDA cores, 120 GB unified memory) |
+| RAM | 120 GB LPDDR5X unified (shared CPU/GPU, 273 GB/s) |
+| Storage | 4 TB NVMe SSD |
+| AI Performance | Up to 1,000 TOPS (INT4) |
+| OS | Ubuntu 24.04 LTS (NVIDIA DGX OS 7.3.1) |
+
+The Dell Pro Max with GB10 is a compact desktop AI supercomputer powered by the NVIDIA GB10 Grace Blackwell Superchip. Its unified memory architecture allows the GPU to access the full 120 GB memory pool without PCIe bottlenecks, running 4,096 parallel MuJoCo-Warp environments for secondary training workloads. Both machines train policies simultaneously from opposite ends of the clip queue.
+
+Thank you to [Dell Technologies](https://www.dell.com/) for providing the compute power behind this project.
 
 ## Pipeline Progress
 
@@ -151,148 +341,7 @@ The RTX PRO 6000 Blackwell with 96 GB of VRAM enables running thousands of paral
 |-------|:---------:|:----------:|:-----------:|:----------:|
 | Capture | 5 | 28 | 27 | 60 |
 | PKL (retarget) | 5 | 28 | 27 | 60 |
-| NPZ (training) | 4 | 28 | 27 | 59 |
-| Policy (.pt) | 4 | 7 | 3 | 14 |
-| ONNX (.onnx) | 4 | 7 | 3 | 14 |
+| NPZ (training) | 5 | 28 | 27 | 60 |
+| Policy (.pt) | 4 | 22 | 18 | 44 |
+| ONNX (.onnx) | 4 | 22 | 18 | 44 |
 
-## Clips
-
-### Dance (28)
-
-| Mocap | Retarget | Training | Policy |
-|-------|----------|----------|--------|
-| **B_DadDance** `MOVIN3D` | | | |
-| ![](dance/B_DadDance/capture/B_DadDance.gif) | ![](dance/B_DadDance/retarget/B_DadDance_retarget.gif) | ![](dance/B_DadDance/training/B_DadDance_training.gif) | |
-| **B_LongDance** `MOVIN3D` | | | |
-| ![](dance/B_LongDance/capture/B_LongDance.gif) | ![](dance/B_LongDance/retarget/B_LongDance_retarget.gif) | ![](dance/B_LongDance/training/B_LongDance_training.gif) | ![](dance/B_LongDance/policy/B_LongDance_policy.gif) |
-| **B_SpiralDance** `MOVIN3D` | | | |
-| ![](dance/B_SpiralDance/capture/B_SpiralDance.gif) | ![](dance/B_SpiralDance/retarget/B_SpiralDance_retarget.gif) | ![](dance/B_SpiralDance/training/B_SpiralDance_training.gif) | ![](dance/B_SpiralDance/policy/B_SpiralDance_policy.gif) |
-| **B_StretchDance** `MOVIN3D` | | | |
-| ![](dance/B_StretchDance/capture/B_StretchDance.gif) | ![](dance/B_StretchDance/retarget/B_StretchDance_retarget.gif) | ![](dance/B_StretchDance/training/B_StretchDance_training.gif) | ![](dance/B_StretchDance/policy/B_StretchDance_policy.gif) |
-| **B_WiggleDance** `MOVIN3D` | | | |
-| ![](dance/B_WiggleDance/capture/B_WiggleDance.gif) | ![](dance/B_WiggleDance/retarget/B_WiggleDance_retarget.gif) | ![](dance/B_WiggleDance/training/B_WiggleDance_training.gif) | |
-| **J_Dance0_StepTouch** `MOVIN3D` | | | |
-| ![](dance/J_Dance0_StepTouch/capture/J_Dance0_StepTouch.gif) | ![](dance/J_Dance0_StepTouch/retarget/J_Dance0_StepTouch_retarget.gif) | ![](dance/J_Dance0_StepTouch/training/J_Dance0_StepTouch_training.gif) | |
-| **J_Dance1_Modern** `MOVIN3D` | | | |
-| ![](dance/J_Dance1_Modern/capture/J_Dance1_Modern.gif) | ![](dance/J_Dance1_Modern/retarget/J_Dance1_Modern_retarget.gif) | ![](dance/J_Dance1_Modern/training/J_Dance1_Modern_training.gif) | |
-| **J_Dance2_Salsa** `MOVIN3D` | | | |
-| ![](dance/J_Dance2_Salsa/capture/J_Dance2_Salsa.gif) | ![](dance/J_Dance2_Salsa/retarget/J_Dance2_Salsa_retarget.gif) | ![](dance/J_Dance2_Salsa/training/J_Dance2_Salsa_training.gif) | |
-| **J_Dance3_Woah** `MOVIN3D` | | | |
-| ![](dance/J_Dance3_Woah/capture/J_Dance3_Woah.gif) | ![](dance/J_Dance3_Woah/retarget/J_Dance3_Woah_retarget.gif) | ![](dance/J_Dance3_Woah/training/J_Dance3_Woah_training.gif) | |
-| **J_Dance4_Broadway** `MOVIN3D` | | | |
-| ![](dance/J_Dance4_Broadway/capture/J_Dance4_Broadway.gif) | ![](dance/J_Dance4_Broadway/retarget/J_Dance4_Broadway_retarget.gif) | ![](dance/J_Dance4_Broadway/training/J_Dance4_Broadway_training.gif) | |
-| **J_Dance5_Hype** `MOVIN3D` | | | |
-| ![](dance/J_Dance5_Hype/capture/J_Dance5_Hype.gif) | ![](dance/J_Dance5_Hype/retarget/J_Dance5_Hype_retarget.gif) | ![](dance/J_Dance5_Hype/training/J_Dance5_Hype_training.gif) | |
-| **J_Dance6_Sassy** `MOVIN3D` | | | |
-| ![](dance/J_Dance6_Sassy/capture/J_Dance6_Sassy.gif) | ![](dance/J_Dance6_Sassy/retarget/J_Dance6_Sassy_retarget.gif) | ![](dance/J_Dance6_Sassy/training/J_Dance6_Sassy_training.gif) | |
-| **J_Dance7_Party** `MOVIN3D` | | | |
-| ![](dance/J_Dance7_Party/capture/J_Dance7_Party.gif) | ![](dance/J_Dance7_Party/retarget/J_Dance7_Party_retarget.gif) | ![](dance/J_Dance7_Party/training/J_Dance7_Party_training.gif) | ![](dance/J_Dance7_Party/policy/J_Dance7_Party_policy.gif) |
-| **J_Dance8_WestCoast** `MOVIN3D` | | | |
-| ![](dance/J_Dance8_WestCoast/capture/J_Dance8_WestCoast.gif) | ![](dance/J_Dance8_WestCoast/retarget/J_Dance8_WestCoast_retarget.gif) | ![](dance/J_Dance8_WestCoast/training/J_Dance8_WestCoast_training.gif) | |
-| **J_Dance9_PeaceMaker** `MOVIN3D` | | | |
-| ![](dance/J_Dance9_PeaceMaker/capture/J_Dance9_PeaceMaker.gif) | ![](dance/J_Dance9_PeaceMaker/retarget/J_Dance9_PeaceMaker_retarget.gif) | ![](dance/J_Dance9_PeaceMaker/training/J_Dance9_PeaceMaker_training.gif) | ![](dance/J_Dance9_PeaceMaker/policy/J_Dance9_PeaceMaker_policy.gif) |
-| **J_Dance11_Gnarly** `MOVIN3D` | | | |
-| ![](dance/J_Dance11_Gnarly/capture/J_Dance11_Gnarly.gif) | ![](dance/J_Dance11_Gnarly/retarget/J_Dance11_Gnarly_retarget.gif) | ![](dance/J_Dance11_Gnarly/training/J_Dance11_Gnarly_training.gif) | ![](dance/J_Dance11_Gnarly/policy/J_Dance11_Gnarly_policy.gif) |
-| **J_Dance12_LushLife** `MOVIN3D` | | | |
-| ![](dance/J_Dance12_LushLife/capture/J_Dance12_LushLife.gif) | ![](dance/J_Dance12_LushLife/retarget/J_Dance12_LushLife_retarget.gif) | ![](dance/J_Dance12_LushLife/training/J_Dance12_LushLife_training.gif) | |
-| **J_Dance17_Shuffle** `MOVIN3D` | | | |
-| ![](dance/J_Dance17_Shuffle/capture/J_Dance17_Shuffle.gif) | ![](dance/J_Dance17_Shuffle/retarget/J_Dance17_Shuffle_retarget.gif) | ![](dance/J_Dance17_Shuffle/training/J_Dance17_Shuffle_training.gif) | |
-| **J_Dance18_TikTok** `MOVIN3D` | | | |
-| ![](dance/J_Dance18_TikTok/capture/J_Dance18_TikTok.gif) | ![](dance/J_Dance18_TikTok/retarget/J_Dance18_TikTok_retarget.gif) | ![](dance/J_Dance18_TikTok/training/J_Dance18_TikTok_training.gif) | |
-| **J_Dance19_LetsGO** `MOVIN3D` | | | |
-| ![](dance/J_Dance19_LetsGO/capture/J_Dance19_LetsGO.gif) | ![](dance/J_Dance19_LetsGO/retarget/J_Dance19_LetsGO_retarget.gif) | ![](dance/J_Dance19_LetsGO/training/J_Dance19_LetsGO_training.gif) | |
-| **J_Dance20_DWG** `MOVIN3D` | | | |
-| ![](dance/J_Dance20_DWG/capture/J_Dance20_DWG.gif) | ![](dance/J_Dance20_DWG/retarget/J_Dance20_DWG_retarget.gif) | ![](dance/J_Dance20_DWG/training/J_Dance20_DWG_training.gif) | |
-| **J_Dance21_Blunt** `MOVIN3D` | | | |
-| ![](dance/J_Dance21_Blunt/capture/J_Dance21_Blunt.gif) | ![](dance/J_Dance21_Blunt/retarget/J_Dance21_Blunt_retarget.gif) | ![](dance/J_Dance21_Blunt/training/J_Dance21_Blunt_training.gif) | |
-| **J_Dance22_Thrilling** `MOVIN3D` | | | |
-| ![](dance/J_Dance22_Thrilling/capture/J_Dance22_Thrilling.gif) | ![](dance/J_Dance22_Thrilling/retarget/J_Dance22_Thrilling_retarget.gif) | ![](dance/J_Dance22_Thrilling/training/J_Dance22_Thrilling_training.gif) | |
-| **J_Dance23_MidnightSun** `MOVIN3D` | | | |
-| ![](dance/J_Dance23_MidnightSun/capture/J_Dance23_MidnightSun.gif) | ![](dance/J_Dance23_MidnightSun/retarget/J_Dance23_MidnightSun_retarget.gif) | ![](dance/J_Dance23_MidnightSun/training/J_Dance23_MidnightSun_training.gif) | ![](dance/J_Dance23_MidnightSun/policy/J_Dance23_MidnightSun_policy.gif) |
-| **J_ShortDance13_SingleLadies** `MOVIN3D` | | | |
-| ![](dance/J_ShortDance13_SingleLadies/capture/J_ShortDance13_SingleLadies.gif) | ![](dance/J_ShortDance13_SingleLadies/retarget/J_ShortDance13_SingleLadies_retarget.gif) | ![](dance/J_ShortDance13_SingleLadies/training/J_ShortDance13_SingleLadies_training.gif) | |
-| **J_ShortDance14_Disco** `MOVIN3D` | | | |
-| ![](dance/J_ShortDance14_Disco/capture/J_ShortDance14_Disco.gif) | ![](dance/J_ShortDance14_Disco/retarget/J_ShortDance14_Disco_retarget.gif) | ![](dance/J_ShortDance14_Disco/training/J_ShortDance14_Disco_training.gif) | |
-| **J_ShortDance15_Nineties** `MOVIN3D` | | | |
-| ![](dance/J_ShortDance15_Nineties/capture/J_ShortDance15_Nineties.gif) | ![](dance/J_ShortDance15_Nineties/retarget/J_ShortDance15_Nineties_retarget.gif) | ![](dance/J_ShortDance15_Nineties/training/J_ShortDance15_Nineties_training.gif) | |
-| **J_ShortDance16_JazzWalk** `MOVIN3D` | | | |
-| ![](dance/J_ShortDance16_JazzWalk/capture/J_ShortDance16_JazzWalk.gif) | ![](dance/J_ShortDance16_JazzWalk/retarget/J_ShortDance16_JazzWalk_retarget.gif) | ![](dance/J_ShortDance16_JazzWalk/training/J_ShortDance16_JazzWalk_training.gif) | |
-
-### Karate (27)
-
-| Mocap | Retarget | Training | Policy |
-|-------|----------|----------|--------|
-| **B_AttackKarate** `MOVIN3D` | | | |
-| ![](karate/B_AttackKarate/capture/B_AttackKarate.gif) | ![](karate/B_AttackKarate/retarget/B_AttackKarate_retarget.gif) | ![](karate/B_AttackKarate/training/B_AttackKarate_training.gif) | ![](karate/B_AttackKarate/policy/B_AttackKarate_policy.gif) |
-| **B_BowKarate** `MOVIN3D` | | | |
-| ![](karate/B_BowKarate/capture/B_BowKarate.gif) | ![](karate/B_BowKarate/retarget/B_BowKarate_retarget.gif) | ![](karate/B_BowKarate/training/B_BowKarate_training.gif) | |
-| **B_ChopsKarate** `MOVIN3D` | | | |
-| ![](karate/B_ChopsKarate/capture/B_ChopsKarate.gif) | ![](karate/B_ChopsKarate/retarget/B_ChopsKarate_retarget.gif) | ![](karate/B_ChopsKarate/training/B_ChopsKarate_training.gif) | ![](karate/B_ChopsKarate/policy/B_ChopsKarate_policy.gif) |
-| **B_CrazyChopsKarate** `MOVIN3D` | | | |
-| ![](karate/B_CrazyChopsKarate/capture/B_CrazyChopsKarate.gif) | ![](karate/B_CrazyChopsKarate/retarget/B_CrazyChopsKarate_retarget.gif) | ![](karate/B_CrazyChopsKarate/training/B_CrazyChopsKarate_training.gif) | |
-| **B_ForwardKarate** `MOVIN3D` | | | |
-| ![](karate/B_ForwardKarate/capture/B_ForwardKarate.gif) | ![](karate/B_ForwardKarate/retarget/B_ForwardKarate_retarget.gif) | ![](karate/B_ForwardKarate/training/B_ForwardKarate_training.gif) | |
-| **B_LongKarate** `MOVIN3D` | | | |
-| ![](karate/B_LongKarate/capture/B_LongKarate.gif) | ![](karate/B_LongKarate/retarget/B_LongKarate_retarget.gif) | ![](karate/B_LongKarate/training/B_LongKarate_training.gif) | ![](karate/B_LongKarate/policy/B_LongKarate_policy.gif) |
-| **B_SpinKarate** `MOVIN3D` | | | |
-| ![](karate/B_SpinKarate/capture/B_SpinKarate.gif) | ![](karate/B_SpinKarate/retarget/B_SpinKarate_retarget.gif) | ![](karate/B_SpinKarate/training/B_SpinKarate_training.gif) | |
-| **M_Move1 — Guard Combo** `MOVIN3D` | | | |
-| ![](karate/M_Move1/capture/M_Move1.gif) | ![](karate/M_Move1/retarget/M_Move1_retarget.gif) | ![](karate/M_Move1/training/M_Move1_training.gif) | |
-| **M_Move2 — Low Punch** `MOVIN3D` | | | |
-| ![](karate/M_Move2/capture/M_Move2.gif) | ![](karate/M_Move2/retarget/M_Move2_retarget.gif) | ![](karate/M_Move2/training/M_Move2_training.gif) | |
-| **M_Move3 — Horse Stance** `MOVIN3D` | | | |
-| ![](karate/M_Move3/capture/M_Move3.gif) | ![](karate/M_Move3/retarget/M_Move3_retarget.gif) | ![](karate/M_Move3/training/M_Move3_training.gif) | |
-| **M_Move4 — Spin Punch** `MOVIN3D` | | | |
-| ![](karate/M_Move4/capture/M_Move4.gif) | ![](karate/M_Move4/retarget/M_Move4_retarget.gif) | ![](karate/M_Move4/training/M_Move4_training.gif) | |
-| **M_Move5 — Twist Punch** `MOVIN3D` | | | |
-| ![](karate/M_Move5/capture/M_Move5.gif) | ![](karate/M_Move5/retarget/M_Move5_retarget.gif) | ![](karate/M_Move5/training/M_Move5_training.gif) | |
-| **M_Move6 — Spin Strike** `MOVIN3D` | | | |
-| ![](karate/M_Move6/capture/M_Move6.gif) | ![](karate/M_Move6/retarget/M_Move6_retarget.gif) | ![](karate/M_Move6/training/M_Move6_training.gif) | |
-| **M_Move7 — Rapid Punch** `MOVIN3D` | | | |
-| ![](karate/M_Move7/capture/M_Move7.gif) | ![](karate/M_Move7/retarget/M_Move7_retarget.gif) | ![](karate/M_Move7/training/M_Move7_training.gif) | |
-| **M_Move8 — Drop Spin** `MOVIN3D` | | | |
-| ![](karate/M_Move8/capture/M_Move8.gif) | ![](karate/M_Move8/retarget/M_Move8_retarget.gif) | ![](karate/M_Move8/training/M_Move8_training.gif) | |
-| **M_Move9 — Level Change** `MOVIN3D` | | | |
-| ![](karate/M_Move9/capture/M_Move9.gif) | ![](karate/M_Move9/retarget/M_Move9_retarget.gif) | ![](karate/M_Move9/training/M_Move9_training.gif) | |
-| **M_Move10 — Side Kick** `MOVIN3D` | | | |
-| ![](karate/M_Move10/capture/M_Move10.gif) | ![](karate/M_Move10/retarget/M_Move10_retarget.gif) | ![](karate/M_Move10/training/M_Move10_training.gif) | |
-| **M_Move11 — Blitz** `MOVIN3D` | | | |
-| ![](karate/M_Move11/capture/M_Move11.gif) | ![](karate/M_Move11/retarget/M_Move11_retarget.gif) | ![](karate/M_Move11/training/M_Move11_training.gif) | |
-| **M_Move17 — Double Strike** `MOVIN3D` | | | |
-| ![](karate/M_Move17/capture/M_Move17.gif) | ![](karate/M_Move17/retarget/M_Move17_retarget.gif) | ![](karate/M_Move17/training/M_Move17_training.gif) | |
-| **M_Move18 — Front Kick** `MOVIN3D` | | | |
-| ![](karate/M_Move18/capture/M_Move18.gif) | ![](karate/M_Move18/retarget/M_Move18_retarget.gif) | ![](karate/M_Move18/training/M_Move18_training.gif) | |
-| **M_Move19 — Slow Kata** `MOVIN3D` | | | |
-| ![](karate/M_Move19/capture/M_Move19.gif) | ![](karate/M_Move19/retarget/M_Move19_retarget.gif) | ![](karate/M_Move19/training/M_Move19_training.gif) | |
-| **M_Move20 — Open Strike** `MOVIN3D` | | | |
-| ![](karate/M_Move20/capture/M_Move20.gif) | ![](karate/M_Move20/retarget/M_Move20_retarget.gif) | ![](karate/M_Move20/training/M_Move20_training.gif) | |
-| **M_ShortMove12 — Quick Jab** `MOVIN3D` | | | |
-| ![](karate/M_ShortMove12/capture/M_ShortMove12.gif) | ![](karate/M_ShortMove12/retarget/M_ShortMove12_retarget.gif) | ![](karate/M_ShortMove12/training/M_ShortMove12_training.gif) | |
-| **M_ShortMove13 — Snap Kick** `MOVIN3D` | | | |
-| ![](karate/M_ShortMove13/capture/M_ShortMove13.gif) | ![](karate/M_ShortMove13/retarget/M_ShortMove13_retarget.gif) | ![](karate/M_ShortMove13/training/M_ShortMove13_training.gif) | |
-| **M_ShortMove14 — Light Punch** `MOVIN3D` | | | |
-| ![](karate/M_ShortMove14/capture/M_ShortMove14.gif) | ![](karate/M_ShortMove14/retarget/M_ShortMove14_retarget.gif) | ![](karate/M_ShortMove14/training/M_ShortMove14_training.gif) | |
-| **M_ShortMove15 — Drop Strike** `MOVIN3D` | | | |
-| ![](karate/M_ShortMove15/capture/M_ShortMove15.gif) | ![](karate/M_ShortMove15/retarget/M_ShortMove15_retarget.gif) | ![](karate/M_ShortMove15/training/M_ShortMove15_training.gif) | |
-| **M_ShortMove16 — Power Burst** `MOVIN3D` | | | |
-| ![](karate/M_ShortMove16/capture/M_ShortMove16.gif) | ![](karate/M_ShortMove16/retarget/M_ShortMove16_retarget.gif) | ![](karate/M_ShortMove16/training/M_ShortMove16_training.gif) | |
-
-### Bonus (5)
-
-| Mocap | Retarget | Training | Policy |
-|-------|----------|----------|--------|
-| **B_Fence1** `MOVIN3D` | | | |
-| ![](bonus/B_Fence1/capture/B_Fence1.gif) | ![](bonus/B_Fence1/retarget/B_Fence1_retarget.gif) | ![](bonus/B_Fence1/training/B_Fence1_training.gif) | ![](bonus/B_Fence1/policy/B_Fence1_policy.gif) |
-| **B_Fence2** `MOVIN3D` | | | |
-| ![](bonus/B_Fence2/capture/B_Fence2.gif) | ![](bonus/B_Fence2/retarget/B_Fence2_retarget.gif) | ![](bonus/B_Fence2/training/B_Fence2_training.gif) | ![](bonus/B_Fence2/policy/B_Fence2_policy.gif) |
-| **B_HandsChop** `MOVIN3D` | | | |
-| ![](bonus/B_HandsChop/capture/B_HandsChop.gif) | ![](bonus/B_HandsChop/retarget/B_HandsChop_retarget.gif) | ![](bonus/B_HandsChop/training/B_HandsChop_training.gif) | ![](bonus/B_HandsChop/policy/B_HandsChop_policy.gif) |
-| **B_HandsUp** `MOVIN3D` | | | |
-| ![](bonus/B_HandsUp/capture/B_HandsUp.gif) | ![](bonus/B_HandsUp/retarget/B_HandsUp_retarget.gif) | ![](bonus/B_HandsUp/training/B_HandsUp_training.gif) | ![](bonus/B_HandsUp/policy/B_HandsUp_policy.gif) |
-| **V_Rocamena** `video2robot` | | | |
-| ![](bonus/V_Rocamena/capture/V_Rocamena.gif) | ![](bonus/V_Rocamena/retarget/V_Rocamena_retarget.gif) | | |
-
-## Capture Details
-
-- **Skeleton**: Humanoid, Hips root, 6-DOF root channels, 3-DOF joint rotations (YXZ)
-- **Export formats**: BVH + 4 FBX variants (Blender, Maya, Unreal, Unity)
