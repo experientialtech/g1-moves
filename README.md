@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo.png" alt="Experiential Technologies" width="500">
+</p>
+
 # G1 Moves
 
 > **[Dataset](https://huggingface.co/datasets/exptech/g1-moves)** (BVH, FBX, PKL, NPZ, ONNX policies) · **[Showcase](https://huggingface.co/spaces/exptech/g1-moves)** (interactive gallery) · **Code** (this repo)
