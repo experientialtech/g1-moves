@@ -1,0 +1,1754 @@
+{
+  "base_url": "",
+  "clips": [
+    {
+      "id": "B_DadDance",
+      "name": "Dad Dance",
+      "category": "dance",
+      "performer": "Mitch Chaiet",
+      "duration": 41.82,
+      "fps": 60,
+      "frames": 2509,
+      "stages": {
+        "capture": {
+          "gif": "dance/B_DadDance/capture/B_DadDance.gif",
+          "mp4": "dance/B_DadDance/capture/B_DadDance.mp4"
+        },
+        "retarget": {
+          "gif": "dance/B_DadDance/retarget/B_DadDance_retarget.gif",
+          "mp4": "dance/B_DadDance/retarget/B_DadDance_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/B_DadDance/training/B_DadDance_training.gif",
+          "mp4": "dance/B_DadDance/training/B_DadDance_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/B_DadDance/policy/B_DadDance_policy.gif",
+          "mp4": "dance/B_DadDance/policy/B_DadDance_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "B_LongDance",
+      "name": "Long Dance",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 119.45,
+      "fps": 60,
+      "frames": 7167,
+      "stages": {
+        "capture": {
+          "gif": "dance/B_LongDance/capture/B_LongDance.gif",
+          "mp4": "dance/B_LongDance/capture/B_LongDance.mp4"
+        },
+        "retarget": {
+          "gif": "dance/B_LongDance/retarget/B_LongDance_retarget.gif",
+          "mp4": "dance/B_LongDance/retarget/B_LongDance_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/B_LongDance/training/B_LongDance_training.gif",
+          "mp4": "dance/B_LongDance/training/B_LongDance_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/B_LongDance/policy/B_LongDance_policy.gif",
+          "mp4": "dance/B_LongDance/policy/B_LongDance_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "B_SpiralDance",
+      "name": "Spiral Dance",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 47.8,
+      "fps": 60,
+      "frames": 2868,
+      "stages": {
+        "capture": {
+          "gif": "dance/B_SpiralDance/capture/B_SpiralDance.gif",
+          "mp4": "dance/B_SpiralDance/capture/B_SpiralDance.mp4"
+        },
+        "retarget": {
+          "gif": "dance/B_SpiralDance/retarget/B_SpiralDance_retarget.gif",
+          "mp4": "dance/B_SpiralDance/retarget/B_SpiralDance_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/B_SpiralDance/training/B_SpiralDance_training.gif",
+          "mp4": "dance/B_SpiralDance/training/B_SpiralDance_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/B_SpiralDance/policy/B_SpiralDance_policy.gif",
+          "mp4": "dance/B_SpiralDance/policy/B_SpiralDance_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "B_StretchDance",
+      "name": "Stretch Dance",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 43.1,
+      "fps": 60,
+      "frames": 2586,
+      "stages": {
+        "capture": {
+          "gif": "dance/B_StretchDance/capture/B_StretchDance.gif",
+          "mp4": "dance/B_StretchDance/capture/B_StretchDance.mp4"
+        },
+        "retarget": {
+          "gif": "dance/B_StretchDance/retarget/B_StretchDance_retarget.gif",
+          "mp4": "dance/B_StretchDance/retarget/B_StretchDance_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/B_StretchDance/training/B_StretchDance_training.gif",
+          "mp4": "dance/B_StretchDance/training/B_StretchDance_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/B_StretchDance/policy/B_StretchDance_policy.gif",
+          "mp4": "dance/B_StretchDance/policy/B_StretchDance_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "B_WiggleDance",
+      "name": "Wiggle Dance",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 37.28,
+      "fps": 60,
+      "frames": 2237,
+      "stages": {
+        "capture": {
+          "gif": "dance/B_WiggleDance/capture/B_WiggleDance.gif",
+          "mp4": "dance/B_WiggleDance/capture/B_WiggleDance.mp4"
+        },
+        "retarget": {
+          "gif": "dance/B_WiggleDance/retarget/B_WiggleDance_retarget.gif",
+          "mp4": "dance/B_WiggleDance/retarget/B_WiggleDance_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/B_WiggleDance/training/B_WiggleDance_training.gif",
+          "mp4": "dance/B_WiggleDance/training/B_WiggleDance_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/B_WiggleDance/policy/B_WiggleDance_policy.gif",
+          "mp4": "dance/B_WiggleDance/policy/B_WiggleDance_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_Dance0_StepTouch",
+      "name": "Dance 0 Step Touch",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 32.48,
+      "fps": 60,
+      "frames": 1949,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_Dance0_StepTouch/capture/J_Dance0_StepTouch.gif",
+          "mp4": "dance/J_Dance0_StepTouch/capture/J_Dance0_StepTouch.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_Dance0_StepTouch/retarget/J_Dance0_StepTouch_retarget.gif",
+          "mp4": "dance/J_Dance0_StepTouch/retarget/J_Dance0_StepTouch_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_Dance0_StepTouch/training/J_Dance0_StepTouch_training.gif",
+          "mp4": "dance/J_Dance0_StepTouch/training/J_Dance0_StepTouch_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_Dance0_StepTouch/policy/J_Dance0_StepTouch_policy.gif",
+          "mp4": "dance/J_Dance0_StepTouch/policy/J_Dance0_StepTouch_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_Dance11_Gnarly",
+      "name": "Dance 11 Gnarly",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 45.15,
+      "fps": 60,
+      "frames": 2709,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_Dance11_Gnarly/capture/J_Dance11_Gnarly.gif",
+          "mp4": "dance/J_Dance11_Gnarly/capture/J_Dance11_Gnarly.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_Dance11_Gnarly/retarget/J_Dance11_Gnarly_retarget.gif",
+          "mp4": "dance/J_Dance11_Gnarly/retarget/J_Dance11_Gnarly_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_Dance11_Gnarly/training/J_Dance11_Gnarly_training.gif",
+          "mp4": "dance/J_Dance11_Gnarly/training/J_Dance11_Gnarly_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_Dance11_Gnarly/policy/J_Dance11_Gnarly_policy.gif",
+          "mp4": "dance/J_Dance11_Gnarly/policy/J_Dance11_Gnarly_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_Dance12_LushLife",
+      "name": "Dance 12 Lush Life",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 35.6,
+      "fps": 60,
+      "frames": 2136,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_Dance12_LushLife/capture/J_Dance12_LushLife.gif",
+          "mp4": "dance/J_Dance12_LushLife/capture/J_Dance12_LushLife.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_Dance12_LushLife/retarget/J_Dance12_LushLife_retarget.gif",
+          "mp4": "dance/J_Dance12_LushLife/retarget/J_Dance12_LushLife_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_Dance12_LushLife/training/J_Dance12_LushLife_training.gif",
+          "mp4": "dance/J_Dance12_LushLife/training/J_Dance12_LushLife_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_Dance12_LushLife/policy/J_Dance12_LushLife_policy.gif",
+          "mp4": "dance/J_Dance12_LushLife/policy/J_Dance12_LushLife_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_Dance17_Shuffle",
+      "name": "Dance 17 Shuffle",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 32.03,
+      "fps": 60,
+      "frames": 1922,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_Dance17_Shuffle/capture/J_Dance17_Shuffle.gif",
+          "mp4": "dance/J_Dance17_Shuffle/capture/J_Dance17_Shuffle.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_Dance17_Shuffle/retarget/J_Dance17_Shuffle_retarget.gif",
+          "mp4": "dance/J_Dance17_Shuffle/retarget/J_Dance17_Shuffle_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_Dance17_Shuffle/training/J_Dance17_Shuffle_training.gif",
+          "mp4": "dance/J_Dance17_Shuffle/training/J_Dance17_Shuffle_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_Dance17_Shuffle/policy/J_Dance17_Shuffle_policy.gif",
+          "mp4": "dance/J_Dance17_Shuffle/policy/J_Dance17_Shuffle_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_Dance18_TikTok",
+      "name": "Dance 18 Tik Tok",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 17.95,
+      "fps": 60,
+      "frames": 1077,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_Dance18_TikTok/capture/J_Dance18_TikTok.gif",
+          "mp4": "dance/J_Dance18_TikTok/capture/J_Dance18_TikTok.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_Dance18_TikTok/retarget/J_Dance18_TikTok_retarget.gif",
+          "mp4": "dance/J_Dance18_TikTok/retarget/J_Dance18_TikTok_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_Dance18_TikTok/training/J_Dance18_TikTok_training.gif",
+          "mp4": "dance/J_Dance18_TikTok/training/J_Dance18_TikTok_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_Dance18_TikTok/policy/J_Dance18_TikTok_policy.gif",
+          "mp4": "dance/J_Dance18_TikTok/policy/J_Dance18_TikTok_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_Dance19_LetsGO",
+      "name": "Dance 19 Lets GO",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 24.85,
+      "fps": 60,
+      "frames": 1491,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_Dance19_LetsGO/capture/J_Dance19_LetsGO.gif",
+          "mp4": "dance/J_Dance19_LetsGO/capture/J_Dance19_LetsGO.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_Dance19_LetsGO/retarget/J_Dance19_LetsGO_retarget.gif",
+          "mp4": "dance/J_Dance19_LetsGO/retarget/J_Dance19_LetsGO_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_Dance19_LetsGO/training/J_Dance19_LetsGO_training.gif",
+          "mp4": "dance/J_Dance19_LetsGO/training/J_Dance19_LetsGO_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_Dance19_LetsGO/policy/J_Dance19_LetsGO_policy.gif",
+          "mp4": "dance/J_Dance19_LetsGO/policy/J_Dance19_LetsGO_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_Dance1_Modern",
+      "name": "Dance 1 Modern",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 37.75,
+      "fps": 60,
+      "frames": 2265,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_Dance1_Modern/capture/J_Dance1_Modern.gif",
+          "mp4": "dance/J_Dance1_Modern/capture/J_Dance1_Modern.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_Dance1_Modern/retarget/J_Dance1_Modern_retarget.gif",
+          "mp4": "dance/J_Dance1_Modern/retarget/J_Dance1_Modern_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_Dance1_Modern/training/J_Dance1_Modern_training.gif",
+          "mp4": "dance/J_Dance1_Modern/training/J_Dance1_Modern_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_Dance1_Modern/policy/J_Dance1_Modern_policy.gif",
+          "mp4": "dance/J_Dance1_Modern/policy/J_Dance1_Modern_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_Dance20_DWG",
+      "name": "Dance 20 DWG",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 15.63,
+      "fps": 60,
+      "frames": 938,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_Dance20_DWG/capture/J_Dance20_DWG.gif",
+          "mp4": "dance/J_Dance20_DWG/capture/J_Dance20_DWG.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_Dance20_DWG/retarget/J_Dance20_DWG_retarget.gif",
+          "mp4": "dance/J_Dance20_DWG/retarget/J_Dance20_DWG_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_Dance20_DWG/training/J_Dance20_DWG_training.gif",
+          "mp4": "dance/J_Dance20_DWG/training/J_Dance20_DWG_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_Dance20_DWG/policy/J_Dance20_DWG_policy.gif",
+          "mp4": "dance/J_Dance20_DWG/policy/J_Dance20_DWG_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_Dance21_Blunt",
+      "name": "Dance 21 Blunt",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 28.75,
+      "fps": 60,
+      "frames": 1725,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_Dance21_Blunt/capture/J_Dance21_Blunt.gif",
+          "mp4": "dance/J_Dance21_Blunt/capture/J_Dance21_Blunt.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_Dance21_Blunt/retarget/J_Dance21_Blunt_retarget.gif",
+          "mp4": "dance/J_Dance21_Blunt/retarget/J_Dance21_Blunt_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_Dance21_Blunt/training/J_Dance21_Blunt_training.gif",
+          "mp4": "dance/J_Dance21_Blunt/training/J_Dance21_Blunt_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_Dance21_Blunt/policy/J_Dance21_Blunt_policy.gif",
+          "mp4": "dance/J_Dance21_Blunt/policy/J_Dance21_Blunt_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_Dance22_Thrilling",
+      "name": "Dance 22 Thrilling",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 26.98,
+      "fps": 60,
+      "frames": 1619,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_Dance22_Thrilling/capture/J_Dance22_Thrilling.gif",
+          "mp4": "dance/J_Dance22_Thrilling/capture/J_Dance22_Thrilling.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_Dance22_Thrilling/retarget/J_Dance22_Thrilling_retarget.gif",
+          "mp4": "dance/J_Dance22_Thrilling/retarget/J_Dance22_Thrilling_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_Dance22_Thrilling/training/J_Dance22_Thrilling_training.gif",
+          "mp4": "dance/J_Dance22_Thrilling/training/J_Dance22_Thrilling_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_Dance22_Thrilling/policy/J_Dance22_Thrilling_policy.gif",
+          "mp4": "dance/J_Dance22_Thrilling/policy/J_Dance22_Thrilling_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_Dance23_MidnightSun",
+      "name": "Dance 23 Midnight Sun",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 48.58,
+      "fps": 60,
+      "frames": 2915,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_Dance23_MidnightSun/capture/J_Dance23_MidnightSun.gif",
+          "mp4": "dance/J_Dance23_MidnightSun/capture/J_Dance23_MidnightSun.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_Dance23_MidnightSun/retarget/J_Dance23_MidnightSun_retarget.gif",
+          "mp4": "dance/J_Dance23_MidnightSun/retarget/J_Dance23_MidnightSun_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_Dance23_MidnightSun/training/J_Dance23_MidnightSun_training.gif",
+          "mp4": "dance/J_Dance23_MidnightSun/training/J_Dance23_MidnightSun_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_Dance23_MidnightSun/policy/J_Dance23_MidnightSun_policy.gif",
+          "mp4": "dance/J_Dance23_MidnightSun/policy/J_Dance23_MidnightSun_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_Dance2_Salsa",
+      "name": "Dance 2 Salsa",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 35.85,
+      "fps": 60,
+      "frames": 2151,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_Dance2_Salsa/capture/J_Dance2_Salsa.gif",
+          "mp4": "dance/J_Dance2_Salsa/capture/J_Dance2_Salsa.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_Dance2_Salsa/retarget/J_Dance2_Salsa_retarget.gif",
+          "mp4": "dance/J_Dance2_Salsa/retarget/J_Dance2_Salsa_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_Dance2_Salsa/training/J_Dance2_Salsa_training.gif",
+          "mp4": "dance/J_Dance2_Salsa/training/J_Dance2_Salsa_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_Dance2_Salsa/policy/J_Dance2_Salsa_policy.gif",
+          "mp4": "dance/J_Dance2_Salsa/policy/J_Dance2_Salsa_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_Dance3_Woah",
+      "name": "Dance 3 Woah",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 30.0,
+      "fps": 60,
+      "frames": 1800,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_Dance3_Woah/capture/J_Dance3_Woah.gif",
+          "mp4": "dance/J_Dance3_Woah/capture/J_Dance3_Woah.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_Dance3_Woah/retarget/J_Dance3_Woah_retarget.gif",
+          "mp4": "dance/J_Dance3_Woah/retarget/J_Dance3_Woah_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_Dance3_Woah/training/J_Dance3_Woah_training.gif",
+          "mp4": "dance/J_Dance3_Woah/training/J_Dance3_Woah_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_Dance3_Woah/policy/J_Dance3_Woah_policy.gif",
+          "mp4": "dance/J_Dance3_Woah/policy/J_Dance3_Woah_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_Dance4_Broadway",
+      "name": "Dance 4 Broadway",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 27.95,
+      "fps": 60,
+      "frames": 1677,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_Dance4_Broadway/capture/J_Dance4_Broadway.gif",
+          "mp4": "dance/J_Dance4_Broadway/capture/J_Dance4_Broadway.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_Dance4_Broadway/retarget/J_Dance4_Broadway_retarget.gif",
+          "mp4": "dance/J_Dance4_Broadway/retarget/J_Dance4_Broadway_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_Dance4_Broadway/training/J_Dance4_Broadway_training.gif",
+          "mp4": "dance/J_Dance4_Broadway/training/J_Dance4_Broadway_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_Dance4_Broadway/policy/J_Dance4_Broadway_policy.gif",
+          "mp4": "dance/J_Dance4_Broadway/policy/J_Dance4_Broadway_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_Dance5_Hype",
+      "name": "Dance 5 Hype",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 31.6,
+      "fps": 60,
+      "frames": 1896,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_Dance5_Hype/capture/J_Dance5_Hype.gif",
+          "mp4": "dance/J_Dance5_Hype/capture/J_Dance5_Hype.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_Dance5_Hype/retarget/J_Dance5_Hype_retarget.gif",
+          "mp4": "dance/J_Dance5_Hype/retarget/J_Dance5_Hype_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_Dance5_Hype/training/J_Dance5_Hype_training.gif",
+          "mp4": "dance/J_Dance5_Hype/training/J_Dance5_Hype_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_Dance5_Hype/policy/J_Dance5_Hype_policy.gif",
+          "mp4": "dance/J_Dance5_Hype/policy/J_Dance5_Hype_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_Dance6_Sassy",
+      "name": "Dance 6 Sassy",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 31.9,
+      "fps": 60,
+      "frames": 1914,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_Dance6_Sassy/capture/J_Dance6_Sassy.gif",
+          "mp4": "dance/J_Dance6_Sassy/capture/J_Dance6_Sassy.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_Dance6_Sassy/retarget/J_Dance6_Sassy_retarget.gif",
+          "mp4": "dance/J_Dance6_Sassy/retarget/J_Dance6_Sassy_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_Dance6_Sassy/training/J_Dance6_Sassy_training.gif",
+          "mp4": "dance/J_Dance6_Sassy/training/J_Dance6_Sassy_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_Dance6_Sassy/policy/J_Dance6_Sassy_policy.gif",
+          "mp4": "dance/J_Dance6_Sassy/policy/J_Dance6_Sassy_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_Dance7_Party",
+      "name": "Dance 7 Party",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 46.22,
+      "fps": 60,
+      "frames": 2773,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_Dance7_Party/capture/J_Dance7_Party.gif",
+          "mp4": "dance/J_Dance7_Party/capture/J_Dance7_Party.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_Dance7_Party/retarget/J_Dance7_Party_retarget.gif",
+          "mp4": "dance/J_Dance7_Party/retarget/J_Dance7_Party_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_Dance7_Party/training/J_Dance7_Party_training.gif",
+          "mp4": "dance/J_Dance7_Party/training/J_Dance7_Party_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_Dance7_Party/policy/J_Dance7_Party_policy.gif",
+          "mp4": "dance/J_Dance7_Party/policy/J_Dance7_Party_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_Dance8_WestCoast",
+      "name": "Dance 8 West Coast",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 39.92,
+      "fps": 60,
+      "frames": 2395,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_Dance8_WestCoast/capture/J_Dance8_WestCoast.gif",
+          "mp4": "dance/J_Dance8_WestCoast/capture/J_Dance8_WestCoast.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_Dance8_WestCoast/retarget/J_Dance8_WestCoast_retarget.gif",
+          "mp4": "dance/J_Dance8_WestCoast/retarget/J_Dance8_WestCoast_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_Dance8_WestCoast/training/J_Dance8_WestCoast_training.gif",
+          "mp4": "dance/J_Dance8_WestCoast/training/J_Dance8_WestCoast_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_Dance8_WestCoast/policy/J_Dance8_WestCoast_policy.gif",
+          "mp4": "dance/J_Dance8_WestCoast/policy/J_Dance8_WestCoast_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_Dance9_PeaceMaker",
+      "name": "Dance 9 Peace Maker",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 58.35,
+      "fps": 60,
+      "frames": 3501,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_Dance9_PeaceMaker/capture/J_Dance9_PeaceMaker.gif",
+          "mp4": "dance/J_Dance9_PeaceMaker/capture/J_Dance9_PeaceMaker.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_Dance9_PeaceMaker/retarget/J_Dance9_PeaceMaker_retarget.gif",
+          "mp4": "dance/J_Dance9_PeaceMaker/retarget/J_Dance9_PeaceMaker_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_Dance9_PeaceMaker/training/J_Dance9_PeaceMaker_training.gif",
+          "mp4": "dance/J_Dance9_PeaceMaker/training/J_Dance9_PeaceMaker_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_Dance9_PeaceMaker/policy/J_Dance9_PeaceMaker_policy.gif",
+          "mp4": "dance/J_Dance9_PeaceMaker/policy/J_Dance9_PeaceMaker_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_ShortDance13_SingleLadies",
+      "name": "Short Dance 13 Single Ladies",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 14.03,
+      "fps": 60,
+      "frames": 842,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_ShortDance13_SingleLadies/capture/J_ShortDance13_SingleLadies.gif",
+          "mp4": "dance/J_ShortDance13_SingleLadies/capture/J_ShortDance13_SingleLadies.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_ShortDance13_SingleLadies/retarget/J_ShortDance13_SingleLadies_retarget.gif",
+          "mp4": "dance/J_ShortDance13_SingleLadies/retarget/J_ShortDance13_SingleLadies_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_ShortDance13_SingleLadies/training/J_ShortDance13_SingleLadies_training.gif",
+          "mp4": "dance/J_ShortDance13_SingleLadies/training/J_ShortDance13_SingleLadies_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_ShortDance13_SingleLadies/policy/J_ShortDance13_SingleLadies_policy.gif",
+          "mp4": "dance/J_ShortDance13_SingleLadies/policy/J_ShortDance13_SingleLadies_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_ShortDance14_Disco",
+      "name": "Short Dance 14 Disco",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 14.3,
+      "fps": 60,
+      "frames": 858,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_ShortDance14_Disco/capture/J_ShortDance14_Disco.gif",
+          "mp4": "dance/J_ShortDance14_Disco/capture/J_ShortDance14_Disco.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_ShortDance14_Disco/retarget/J_ShortDance14_Disco_retarget.gif",
+          "mp4": "dance/J_ShortDance14_Disco/retarget/J_ShortDance14_Disco_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_ShortDance14_Disco/training/J_ShortDance14_Disco_training.gif",
+          "mp4": "dance/J_ShortDance14_Disco/training/J_ShortDance14_Disco_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_ShortDance14_Disco/policy/J_ShortDance14_Disco_policy.gif",
+          "mp4": "dance/J_ShortDance14_Disco/policy/J_ShortDance14_Disco_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_ShortDance15_Nineties",
+      "name": "Short Dance 15 Nineties",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 13.12,
+      "fps": 60,
+      "frames": 787,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_ShortDance15_Nineties/capture/J_ShortDance15_Nineties.gif",
+          "mp4": "dance/J_ShortDance15_Nineties/capture/J_ShortDance15_Nineties.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_ShortDance15_Nineties/retarget/J_ShortDance15_Nineties_retarget.gif",
+          "mp4": "dance/J_ShortDance15_Nineties/retarget/J_ShortDance15_Nineties_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_ShortDance15_Nineties/training/J_ShortDance15_Nineties_training.gif",
+          "mp4": "dance/J_ShortDance15_Nineties/training/J_ShortDance15_Nineties_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_ShortDance15_Nineties/policy/J_ShortDance15_Nineties_policy.gif",
+          "mp4": "dance/J_ShortDance15_Nineties/policy/J_ShortDance15_Nineties_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "J_ShortDance16_JazzWalk",
+      "name": "Short Dance 16 Jazz Walk",
+      "category": "dance",
+      "performer": "Jasmine Coro",
+      "duration": 10.62,
+      "fps": 60,
+      "frames": 637,
+      "stages": {
+        "capture": {
+          "gif": "dance/J_ShortDance16_JazzWalk/capture/J_ShortDance16_JazzWalk.gif",
+          "mp4": "dance/J_ShortDance16_JazzWalk/capture/J_ShortDance16_JazzWalk.mp4"
+        },
+        "retarget": {
+          "gif": "dance/J_ShortDance16_JazzWalk/retarget/J_ShortDance16_JazzWalk_retarget.gif",
+          "mp4": "dance/J_ShortDance16_JazzWalk/retarget/J_ShortDance16_JazzWalk_retarget.mp4"
+        },
+        "training": {
+          "gif": "dance/J_ShortDance16_JazzWalk/training/J_ShortDance16_JazzWalk_training.gif",
+          "mp4": "dance/J_ShortDance16_JazzWalk/training/J_ShortDance16_JazzWalk_training.mp4"
+        },
+        "policy": {
+          "gif": "dance/J_ShortDance16_JazzWalk/policy/J_ShortDance16_JazzWalk_policy.gif",
+          "mp4": "dance/J_ShortDance16_JazzWalk/policy/J_ShortDance16_JazzWalk_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "B_AttackKarate",
+      "name": "Attack Karate",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 47.18,
+      "fps": 60,
+      "frames": 2831,
+      "stages": {
+        "capture": {
+          "gif": "karate/B_AttackKarate/capture/B_AttackKarate.gif",
+          "mp4": "karate/B_AttackKarate/capture/B_AttackKarate.mp4"
+        },
+        "retarget": {
+          "gif": "karate/B_AttackKarate/retarget/B_AttackKarate_retarget.gif",
+          "mp4": "karate/B_AttackKarate/retarget/B_AttackKarate_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/B_AttackKarate/training/B_AttackKarate_training.gif",
+          "mp4": "karate/B_AttackKarate/training/B_AttackKarate_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/B_AttackKarate/policy/B_AttackKarate_policy.gif",
+          "mp4": "karate/B_AttackKarate/policy/B_AttackKarate_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "B_BowKarate",
+      "name": "Bow Karate",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 37.57,
+      "fps": 60,
+      "frames": 2254,
+      "stages": {
+        "capture": {
+          "gif": "karate/B_BowKarate/capture/B_BowKarate.gif",
+          "mp4": "karate/B_BowKarate/capture/B_BowKarate.mp4"
+        },
+        "retarget": {
+          "gif": "karate/B_BowKarate/retarget/B_BowKarate_retarget.gif",
+          "mp4": "karate/B_BowKarate/retarget/B_BowKarate_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/B_BowKarate/training/B_BowKarate_training.gif",
+          "mp4": "karate/B_BowKarate/training/B_BowKarate_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/B_BowKarate/policy/B_BowKarate_policy.gif",
+          "mp4": "karate/B_BowKarate/policy/B_BowKarate_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "B_ChopsKarate",
+      "name": "Chops Karate",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 52.67,
+      "fps": 60,
+      "frames": 3160,
+      "stages": {
+        "capture": {
+          "gif": "karate/B_ChopsKarate/capture/B_ChopsKarate.gif",
+          "mp4": "karate/B_ChopsKarate/capture/B_ChopsKarate.mp4"
+        },
+        "retarget": {
+          "gif": "karate/B_ChopsKarate/retarget/B_ChopsKarate_retarget.gif",
+          "mp4": "karate/B_ChopsKarate/retarget/B_ChopsKarate_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/B_ChopsKarate/training/B_ChopsKarate_training.gif",
+          "mp4": "karate/B_ChopsKarate/training/B_ChopsKarate_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/B_ChopsKarate/policy/B_ChopsKarate_policy.gif",
+          "mp4": "karate/B_ChopsKarate/policy/B_ChopsKarate_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "B_CrazyChopsKarate",
+      "name": "Crazy Chops Karate",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 24.2,
+      "fps": 60,
+      "frames": 1452,
+      "stages": {
+        "capture": {
+          "gif": "karate/B_CrazyChopsKarate/capture/B_CrazyChopsKarate.gif",
+          "mp4": "karate/B_CrazyChopsKarate/capture/B_CrazyChopsKarate.mp4"
+        },
+        "retarget": {
+          "gif": "karate/B_CrazyChopsKarate/retarget/B_CrazyChopsKarate_retarget.gif",
+          "mp4": "karate/B_CrazyChopsKarate/retarget/B_CrazyChopsKarate_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/B_CrazyChopsKarate/training/B_CrazyChopsKarate_training.gif",
+          "mp4": "karate/B_CrazyChopsKarate/training/B_CrazyChopsKarate_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/B_CrazyChopsKarate/policy/B_CrazyChopsKarate_policy.gif",
+          "mp4": "karate/B_CrazyChopsKarate/policy/B_CrazyChopsKarate_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "B_ForwardKarate",
+      "name": "Forward Karate",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 36.33,
+      "fps": 60,
+      "frames": 2180,
+      "stages": {
+        "capture": {
+          "gif": "karate/B_ForwardKarate/capture/B_ForwardKarate.gif",
+          "mp4": "karate/B_ForwardKarate/capture/B_ForwardKarate.mp4"
+        },
+        "retarget": {
+          "gif": "karate/B_ForwardKarate/retarget/B_ForwardKarate_retarget.gif",
+          "mp4": "karate/B_ForwardKarate/retarget/B_ForwardKarate_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/B_ForwardKarate/training/B_ForwardKarate_training.gif",
+          "mp4": "karate/B_ForwardKarate/training/B_ForwardKarate_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/B_ForwardKarate/policy/B_ForwardKarate_policy.gif",
+          "mp4": "karate/B_ForwardKarate/policy/B_ForwardKarate_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "B_LongKarate",
+      "name": "Long Karate",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 48.02,
+      "fps": 60,
+      "frames": 2881,
+      "stages": {
+        "capture": {
+          "gif": "karate/B_LongKarate/capture/B_LongKarate.gif",
+          "mp4": "karate/B_LongKarate/capture/B_LongKarate.mp4"
+        },
+        "retarget": {
+          "gif": "karate/B_LongKarate/retarget/B_LongKarate_retarget.gif",
+          "mp4": "karate/B_LongKarate/retarget/B_LongKarate_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/B_LongKarate/training/B_LongKarate_training.gif",
+          "mp4": "karate/B_LongKarate/training/B_LongKarate_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/B_LongKarate/policy/B_LongKarate_policy.gif",
+          "mp4": "karate/B_LongKarate/policy/B_LongKarate_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "B_SpinKarate",
+      "name": "Spin Karate",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 25.67,
+      "fps": 60,
+      "frames": 1540,
+      "stages": {
+        "capture": {
+          "gif": "karate/B_SpinKarate/capture/B_SpinKarate.gif",
+          "mp4": "karate/B_SpinKarate/capture/B_SpinKarate.mp4"
+        },
+        "retarget": {
+          "gif": "karate/B_SpinKarate/retarget/B_SpinKarate_retarget.gif",
+          "mp4": "karate/B_SpinKarate/retarget/B_SpinKarate_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/B_SpinKarate/training/B_SpinKarate_training.gif",
+          "mp4": "karate/B_SpinKarate/training/B_SpinKarate_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/B_SpinKarate/policy/B_SpinKarate_policy.gif",
+          "mp4": "karate/B_SpinKarate/policy/B_SpinKarate_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_Move1",
+      "name": "Move 1: Guard Combo",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 31.17,
+      "fps": 60,
+      "frames": 1870,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_Move1/capture/M_Move1.gif",
+          "mp4": "karate/M_Move1/capture/M_Move1.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_Move1/retarget/M_Move1_retarget.gif",
+          "mp4": "karate/M_Move1/retarget/M_Move1_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_Move1/training/M_Move1_training.gif",
+          "mp4": "karate/M_Move1/training/M_Move1_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_Move1/policy/M_Move1_policy.gif",
+          "mp4": "karate/M_Move1/policy/M_Move1_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_Move10",
+      "name": "Move 10: Side Kick",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 30.53,
+      "fps": 60,
+      "frames": 1832,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_Move10/capture/M_Move10.gif",
+          "mp4": "karate/M_Move10/capture/M_Move10.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_Move10/retarget/M_Move10_retarget.gif",
+          "mp4": "karate/M_Move10/retarget/M_Move10_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_Move10/training/M_Move10_training.gif",
+          "mp4": "karate/M_Move10/training/M_Move10_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_Move10/policy/M_Move10_policy.gif",
+          "mp4": "karate/M_Move10/policy/M_Move10_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_Move11",
+      "name": "Move 11: Blitz",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 16.6,
+      "fps": 60,
+      "frames": 996,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_Move11/capture/M_Move11.gif",
+          "mp4": "karate/M_Move11/capture/M_Move11.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_Move11/retarget/M_Move11_retarget.gif",
+          "mp4": "karate/M_Move11/retarget/M_Move11_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_Move11/training/M_Move11_training.gif",
+          "mp4": "karate/M_Move11/training/M_Move11_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_Move11/policy/M_Move11_policy.gif",
+          "mp4": "karate/M_Move11/policy/M_Move11_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_Move17",
+      "name": "Move 17: Double Strike",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 26.63,
+      "fps": 60,
+      "frames": 1598,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_Move17/capture/M_Move17.gif",
+          "mp4": "karate/M_Move17/capture/M_Move17.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_Move17/retarget/M_Move17_retarget.gif",
+          "mp4": "karate/M_Move17/retarget/M_Move17_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_Move17/training/M_Move17_training.gif",
+          "mp4": "karate/M_Move17/training/M_Move17_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_Move17/policy/M_Move17_policy.gif",
+          "mp4": "karate/M_Move17/policy/M_Move17_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_Move18",
+      "name": "Move 18: Front Kick",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 16.72,
+      "fps": 60,
+      "frames": 1003,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_Move18/capture/M_Move18.gif",
+          "mp4": "karate/M_Move18/capture/M_Move18.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_Move18/retarget/M_Move18_retarget.gif",
+          "mp4": "karate/M_Move18/retarget/M_Move18_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_Move18/training/M_Move18_training.gif",
+          "mp4": "karate/M_Move18/training/M_Move18_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_Move18/policy/M_Move18_policy.gif",
+          "mp4": "karate/M_Move18/policy/M_Move18_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_Move19",
+      "name": "Move 19: Slow Kata",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 16.87,
+      "fps": 60,
+      "frames": 1012,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_Move19/capture/M_Move19.gif",
+          "mp4": "karate/M_Move19/capture/M_Move19.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_Move19/retarget/M_Move19_retarget.gif",
+          "mp4": "karate/M_Move19/retarget/M_Move19_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_Move19/training/M_Move19_training.gif",
+          "mp4": "karate/M_Move19/training/M_Move19_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_Move19/policy/M_Move19_policy.gif",
+          "mp4": "karate/M_Move19/policy/M_Move19_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_Move2",
+      "name": "Move 2: Low Punch",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 36.45,
+      "fps": 60,
+      "frames": 2187,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_Move2/capture/M_Move2.gif",
+          "mp4": "karate/M_Move2/capture/M_Move2.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_Move2/retarget/M_Move2_retarget.gif",
+          "mp4": "karate/M_Move2/retarget/M_Move2_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_Move2/training/M_Move2_training.gif",
+          "mp4": "karate/M_Move2/training/M_Move2_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_Move2/policy/M_Move2_policy.gif",
+          "mp4": "karate/M_Move2/policy/M_Move2_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_Move20",
+      "name": "Move 20: Open Strike",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 23.57,
+      "fps": 60,
+      "frames": 1414,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_Move20/capture/M_Move20.gif",
+          "mp4": "karate/M_Move20/capture/M_Move20.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_Move20/retarget/M_Move20_retarget.gif",
+          "mp4": "karate/M_Move20/retarget/M_Move20_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_Move20/training/M_Move20_training.gif",
+          "mp4": "karate/M_Move20/training/M_Move20_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_Move20/policy/M_Move20_policy.gif",
+          "mp4": "karate/M_Move20/policy/M_Move20_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_Move3",
+      "name": "Move 3: Horse Stance",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 31.97,
+      "fps": 60,
+      "frames": 1918,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_Move3/capture/M_Move3.gif",
+          "mp4": "karate/M_Move3/capture/M_Move3.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_Move3/retarget/M_Move3_retarget.gif",
+          "mp4": "karate/M_Move3/retarget/M_Move3_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_Move3/training/M_Move3_training.gif",
+          "mp4": "karate/M_Move3/training/M_Move3_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_Move3/policy/M_Move3_policy.gif",
+          "mp4": "karate/M_Move3/policy/M_Move3_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_Move4",
+      "name": "Move 4: Spin Punch",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 29.25,
+      "fps": 60,
+      "frames": 1755,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_Move4/capture/M_Move4.gif",
+          "mp4": "karate/M_Move4/capture/M_Move4.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_Move4/retarget/M_Move4_retarget.gif",
+          "mp4": "karate/M_Move4/retarget/M_Move4_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_Move4/training/M_Move4_training.gif",
+          "mp4": "karate/M_Move4/training/M_Move4_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_Move4/policy/M_Move4_policy.gif",
+          "mp4": "karate/M_Move4/policy/M_Move4_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_Move5",
+      "name": "Move 5: Twist Punch",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 35.98,
+      "fps": 60,
+      "frames": 2159,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_Move5/capture/M_Move5.gif",
+          "mp4": "karate/M_Move5/capture/M_Move5.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_Move5/retarget/M_Move5_retarget.gif",
+          "mp4": "karate/M_Move5/retarget/M_Move5_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_Move5/training/M_Move5_training.gif",
+          "mp4": "karate/M_Move5/training/M_Move5_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_Move5/policy/M_Move5_policy.gif",
+          "mp4": "karate/M_Move5/policy/M_Move5_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_Move6",
+      "name": "Move 6: Spin Strike",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 35.62,
+      "fps": 60,
+      "frames": 2137,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_Move6/capture/M_Move6.gif",
+          "mp4": "karate/M_Move6/capture/M_Move6.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_Move6/retarget/M_Move6_retarget.gif",
+          "mp4": "karate/M_Move6/retarget/M_Move6_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_Move6/training/M_Move6_training.gif",
+          "mp4": "karate/M_Move6/training/M_Move6_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_Move6/policy/M_Move6_policy.gif",
+          "mp4": "karate/M_Move6/policy/M_Move6_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_Move7",
+      "name": "Move 7: Rapid Punch",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 23.82,
+      "fps": 60,
+      "frames": 1429,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_Move7/capture/M_Move7.gif",
+          "mp4": "karate/M_Move7/capture/M_Move7.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_Move7/retarget/M_Move7_retarget.gif",
+          "mp4": "karate/M_Move7/retarget/M_Move7_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_Move7/training/M_Move7_training.gif",
+          "mp4": "karate/M_Move7/training/M_Move7_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_Move7/policy/M_Move7_policy.gif",
+          "mp4": "karate/M_Move7/policy/M_Move7_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_Move8",
+      "name": "Move 8: Drop Spin",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 14.05,
+      "fps": 60,
+      "frames": 843,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_Move8/capture/M_Move8.gif",
+          "mp4": "karate/M_Move8/capture/M_Move8.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_Move8/retarget/M_Move8_retarget.gif",
+          "mp4": "karate/M_Move8/retarget/M_Move8_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_Move8/training/M_Move8_training.gif",
+          "mp4": "karate/M_Move8/training/M_Move8_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_Move8/policy/M_Move8_policy.gif",
+          "mp4": "karate/M_Move8/policy/M_Move8_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_Move9",
+      "name": "Move 9: Level Change",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 27.3,
+      "fps": 60,
+      "frames": 1638,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_Move9/capture/M_Move9.gif",
+          "mp4": "karate/M_Move9/capture/M_Move9.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_Move9/retarget/M_Move9_retarget.gif",
+          "mp4": "karate/M_Move9/retarget/M_Move9_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_Move9/training/M_Move9_training.gif",
+          "mp4": "karate/M_Move9/training/M_Move9_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_Move9/policy/M_Move9_policy.gif",
+          "mp4": "karate/M_Move9/policy/M_Move9_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_ShortMove12",
+      "name": "Short Move 12: Quick Jab",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 7.78,
+      "fps": 60,
+      "frames": 467,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_ShortMove12/capture/M_ShortMove12.gif",
+          "mp4": "karate/M_ShortMove12/capture/M_ShortMove12.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_ShortMove12/retarget/M_ShortMove12_retarget.gif",
+          "mp4": "karate/M_ShortMove12/retarget/M_ShortMove12_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_ShortMove12/training/M_ShortMove12_training.gif",
+          "mp4": "karate/M_ShortMove12/training/M_ShortMove12_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_ShortMove12/policy/M_ShortMove12_policy.gif",
+          "mp4": "karate/M_ShortMove12/policy/M_ShortMove12_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_ShortMove13",
+      "name": "Short Move 13: Snap Kick",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 8.98,
+      "fps": 60,
+      "frames": 539,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_ShortMove13/capture/M_ShortMove13.gif",
+          "mp4": "karate/M_ShortMove13/capture/M_ShortMove13.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_ShortMove13/retarget/M_ShortMove13_retarget.gif",
+          "mp4": "karate/M_ShortMove13/retarget/M_ShortMove13_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_ShortMove13/training/M_ShortMove13_training.gif",
+          "mp4": "karate/M_ShortMove13/training/M_ShortMove13_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_ShortMove13/policy/M_ShortMove13_policy.gif",
+          "mp4": "karate/M_ShortMove13/policy/M_ShortMove13_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_ShortMove14",
+      "name": "Short Move 14: Light Punch",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 6.55,
+      "fps": 60,
+      "frames": 393,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_ShortMove14/capture/M_ShortMove14.gif",
+          "mp4": "karate/M_ShortMove14/capture/M_ShortMove14.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_ShortMove14/retarget/M_ShortMove14_retarget.gif",
+          "mp4": "karate/M_ShortMove14/retarget/M_ShortMove14_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_ShortMove14/training/M_ShortMove14_training.gif",
+          "mp4": "karate/M_ShortMove14/training/M_ShortMove14_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_ShortMove14/policy/M_ShortMove14_policy.gif",
+          "mp4": "karate/M_ShortMove14/policy/M_ShortMove14_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_ShortMove15",
+      "name": "Short Move 15: Drop Strike",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 6.8,
+      "fps": 60,
+      "frames": 408,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_ShortMove15/capture/M_ShortMove15.gif",
+          "mp4": "karate/M_ShortMove15/capture/M_ShortMove15.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_ShortMove15/retarget/M_ShortMove15_retarget.gif",
+          "mp4": "karate/M_ShortMove15/retarget/M_ShortMove15_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_ShortMove15/training/M_ShortMove15_training.gif",
+          "mp4": "karate/M_ShortMove15/training/M_ShortMove15_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_ShortMove15/policy/M_ShortMove15_policy.gif",
+          "mp4": "karate/M_ShortMove15/policy/M_ShortMove15_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "M_ShortMove16",
+      "name": "Short Move 16: Power Burst",
+      "category": "karate",
+      "performer": "Mike Gassaway",
+      "duration": 7.38,
+      "fps": 60,
+      "frames": 443,
+      "stages": {
+        "capture": {
+          "gif": "karate/M_ShortMove16/capture/M_ShortMove16.gif",
+          "mp4": "karate/M_ShortMove16/capture/M_ShortMove16.mp4"
+        },
+        "retarget": {
+          "gif": "karate/M_ShortMove16/retarget/M_ShortMove16_retarget.gif",
+          "mp4": "karate/M_ShortMove16/retarget/M_ShortMove16_retarget.mp4"
+        },
+        "training": {
+          "gif": "karate/M_ShortMove16/training/M_ShortMove16_training.gif",
+          "mp4": "karate/M_ShortMove16/training/M_ShortMove16_training.mp4"
+        },
+        "policy": {
+          "gif": "karate/M_ShortMove16/policy/M_ShortMove16_policy.gif",
+          "mp4": "karate/M_ShortMove16/policy/M_ShortMove16_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "B_Fence1",
+      "name": "Fence 1",
+      "category": "bonus",
+      "performer": "Maya Coro",
+      "duration": 27.0,
+      "fps": 60,
+      "frames": 1620,
+      "stages": {
+        "capture": {
+          "gif": "bonus/B_Fence1/capture/B_Fence1.gif",
+          "mp4": "bonus/B_Fence1/capture/B_Fence1.mp4"
+        },
+        "retarget": {
+          "gif": "bonus/B_Fence1/retarget/B_Fence1_retarget.gif",
+          "mp4": "bonus/B_Fence1/retarget/B_Fence1_retarget.mp4"
+        },
+        "training": {
+          "gif": "bonus/B_Fence1/training/B_Fence1_training.gif",
+          "mp4": "bonus/B_Fence1/training/B_Fence1_training.mp4"
+        },
+        "policy": {
+          "gif": "bonus/B_Fence1/policy/B_Fence1_policy.gif",
+          "mp4": "bonus/B_Fence1/policy/B_Fence1_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "B_Fence2",
+      "name": "Fence 2",
+      "category": "bonus",
+      "performer": "Maya Coro",
+      "duration": 10.63,
+      "fps": 60,
+      "frames": 638,
+      "stages": {
+        "capture": {
+          "gif": "bonus/B_Fence2/capture/B_Fence2.gif",
+          "mp4": "bonus/B_Fence2/capture/B_Fence2.mp4"
+        },
+        "retarget": {
+          "gif": "bonus/B_Fence2/retarget/B_Fence2_retarget.gif",
+          "mp4": "bonus/B_Fence2/retarget/B_Fence2_retarget.mp4"
+        },
+        "training": {
+          "gif": "bonus/B_Fence2/training/B_Fence2_training.gif",
+          "mp4": "bonus/B_Fence2/training/B_Fence2_training.mp4"
+        },
+        "policy": {
+          "gif": "bonus/B_Fence2/policy/B_Fence2_policy.gif",
+          "mp4": "bonus/B_Fence2/policy/B_Fence2_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "B_HandsChop",
+      "name": "Hands Chop",
+      "category": "bonus",
+      "performer": "Jasmine Coro",
+      "duration": 29.43,
+      "fps": 60,
+      "frames": 1766,
+      "stages": {
+        "capture": {
+          "gif": "bonus/B_HandsChop/capture/B_HandsChop.gif",
+          "mp4": "bonus/B_HandsChop/capture/B_HandsChop.mp4"
+        },
+        "retarget": {
+          "gif": "bonus/B_HandsChop/retarget/B_HandsChop_retarget.gif",
+          "mp4": "bonus/B_HandsChop/retarget/B_HandsChop_retarget.mp4"
+        },
+        "training": {
+          "gif": "bonus/B_HandsChop/training/B_HandsChop_training.gif",
+          "mp4": "bonus/B_HandsChop/training/B_HandsChop_training.mp4"
+        },
+        "policy": {
+          "gif": "bonus/B_HandsChop/policy/B_HandsChop_policy.gif",
+          "mp4": "bonus/B_HandsChop/policy/B_HandsChop_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "B_HandsUp",
+      "name": "Hands Up",
+      "category": "bonus",
+      "performer": "Jasmine Coro",
+      "duration": 7.37,
+      "fps": 60,
+      "frames": 442,
+      "stages": {
+        "capture": {
+          "gif": "bonus/B_HandsUp/capture/B_HandsUp.gif",
+          "mp4": "bonus/B_HandsUp/capture/B_HandsUp.mp4"
+        },
+        "retarget": {
+          "gif": "bonus/B_HandsUp/retarget/B_HandsUp_retarget.gif",
+          "mp4": "bonus/B_HandsUp/retarget/B_HandsUp_retarget.mp4"
+        },
+        "training": {
+          "gif": "bonus/B_HandsUp/training/B_HandsUp_training.gif",
+          "mp4": "bonus/B_HandsUp/training/B_HandsUp_training.mp4"
+        },
+        "policy": {
+          "gif": "bonus/B_HandsUp/policy/B_HandsUp_policy.gif",
+          "mp4": "bonus/B_HandsUp/policy/B_HandsUp_policy.mp4"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    },
+    {
+      "id": "V_Rocamena",
+      "name": "Rocamena",
+      "category": "bonus",
+      "performer": "YouTube",
+      "duration": 9.5,
+      "fps": 30,
+      "frames": 285,
+      "stages": {
+        "capture": {
+          "gif": "bonus/V_Rocamena/capture/V_Rocamena.gif",
+          "mp4": "bonus/V_Rocamena/capture/V_Rocamena.mp4"
+        },
+        "retarget": {
+          "gif": "bonus/V_Rocamena/retarget/V_Rocamena_retarget.gif",
+          "mp4": "bonus/V_Rocamena/retarget/V_Rocamena_retarget.mp4"
+        },
+        "training": {
+          "gif": "bonus/V_Rocamena/training/V_Rocamena_training.gif",
+          "mp4": "bonus/V_Rocamena/training/V_Rocamena_training.mp4"
+        },
+        "policy": {
+          "gif": "bonus/V_Rocamena/policy/V_Rocamena_policy.gif",
+          "mp4": "bonus/V_Rocamena/policy/V_Rocamena_policy.mp4",
+          "onnx": "bonus/V_Rocamena/policy/V_Rocamena_policy.onnx",
+          "npz": "bonus/V_Rocamena/training/V_Rocamena.npz"
+        }
+      },
+      "has_policy": true,
+      "has_onnx": true
+    }
+  ],
+  "stats": {
+    "dance": 28,
+    "karate": 27,
+    "bonus": 5,
+    "policies": 59,
+    "total": 60
+  }
+}

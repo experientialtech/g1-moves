@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>G1 Policy Viewer</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #07070b; color: #e2e2ec; font-family: 'Manrope', sans-serif; overflow: hidden; }
+    #viewer-canvas { display: block; width: 100vw; height: 100vh; }
+
+    #overlay {
+      position: fixed; inset: 0; background: #07070b; display: flex;
+      flex-direction: column; align-items: center; justify-content: center;
+      z-index: 100; transition: opacity 0.5s;
+    }
+    #overlay.hidden { opacity: 0; pointer-events: none; }
+    #overlay h2 { font-family: 'IBM Plex Mono', monospace; font-size: 1.2rem; margin-bottom: 1.5rem; color: #00d4ff; }
+    #load-status { font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; color: #8585a0; margin-bottom: 1rem; }
+    #progress-bar { width: 300px; height: 4px; background: #1a1a2e; border-radius: 2px; overflow: hidden; }
+    #progress-fill { height: 100%; width: 0%; background: #00d4ff; transition: width 0.3s; }
+    #error-msg { color: #ff6b6b; font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; max-width: 500px; text-align: center; margin-top: 1rem; display: none; }
+
+    #hud {
+      position: fixed; top: 0; left: 0; right: 0; padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      z-index: 10; background: linear-gradient(to bottom, rgba(7,7,11,0.9), transparent);
+    }
+    #hud a { color: #8585a0; text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+    #hud a:hover { color: #00d4ff; }
+    #clip-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.6rem; letter-spacing: 0.05em; color: #e2e2ec; }
+
+    #controls {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 12px; z-index: 10;
+    }
+    #controls button {
+      background: rgba(18,18,27,0.85); border: 1px solid rgba(133,133,160,0.2);
+      color: #e2e2ec; padding: 10px 20px; border-radius: 8px; cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; backdrop-filter: blur(8px);
+      transition: all 0.2s;
+    }
+    #controls button:hover { border-color: #00d4ff; color: #00d4ff; }
+    #controls button.active { background: rgba(0,212,255,0.15); border-color: #00d4ff; color: #00d4ff; }
+
+    #info-panel {
+      position: fixed; bottom: 24px; right: 24px; z-index: 10;
+      font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; color: #8585a0;
+      text-align: right; line-height: 1.6;
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <canvas id="viewer-canvas"></canvas>
+
+  <div id="overlay">
+    <h2>LOADING POLICY VIEWER</h2>
+    <div id="load-status">Initializing...</div>
+    <div id="progress-bar"><div id="progress-fill"></div></div>
+    <div id="error-msg"></div>
+  </div>
+
+  <div id="hud" style="display:none">
+    <a href="index.html">&larr; Back to Gallery</a>
+    <div id="clip-name"></div>
+  </div>
+
+  <div id="controls" style="display:none">
+    <button id="btn-pause">Pause</button>
+    <button id="btn-reset">Reset</button>
+    <button id="btn-camera">Reset Camera</button>
+  </div>
+
+  <div id="info-panel" style="display:none">
+    <div id="info-fps">--</div>
+    <div id="info-frame">Frame: --</div>
+  </div>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.20.1/dist/ort.min.js"></script>
+  <script type="module" src="viewer.js"></script>
+</body>
+</html>
