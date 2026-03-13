@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>G1 Jukebox</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Manrope:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Background -->
+  <div class="bg-glow"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <h1 class="logo-text">G1 JUKEBOX</h1>
+    <div class="connection-dot" id="conn-dot" title="Disconnected"></div>
+  </header>
+
+  <!-- Status bar -->
+  <div class="status-bar" id="status-bar">
+    <span class="status-icon" id="status-icon">●</span>
+    <span class="status-text" id="status-text">Connecting...</span>
+  </div>
+
+  <!-- Gallery View -->
+  <div id="gallery-view">
+    <!-- Category filters -->
+    <div class="filters">
+      <button class="filter-btn active" data-category="all">All</button>
+      <button class="filter-btn" data-category="dance">Dance</button>
+      <button class="filter-btn" data-category="karate">Karate</button>
+      <button class="filter-btn" data-category="bonus">Bonus</button>
+    </div>
+
+    <!-- Policy grid -->
+    <div class="grid" id="policy-grid"></div>
+  </div>
+
+  <!-- Remote Control View -->
+  <div id="remote-view" class="hidden">
+    <button class="back-btn" id="back-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Back
+    </button>
+
+    <div class="remote-card">
+      <div class="remote-viewer" id="remote-viewer"></div>
+      <h2 class="remote-title" id="remote-title"></h2>
+      <p class="remote-meta" id="remote-meta"></p>
+      <div class="remote-status" id="remote-status">Ready</div>
+    </div>
+
+    <div class="remote-controls">
+      <button class="ctrl-btn ctrl-load" id="btn-load">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Load
+      </button>
+      <button class="ctrl-btn ctrl-start" id="btn-start" disabled>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        Start
+      </button>
+      <button class="ctrl-btn ctrl-stop" id="btn-stop" disabled>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="6" width="12" height="12" rx="1"/></svg>
+        Stop
+      </button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
