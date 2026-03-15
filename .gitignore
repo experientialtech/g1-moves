@@ -22,3 +22,6 @@ g1-moves/
 HuggingFace:bonus/
 app/
 mjlab-gui/
+video/node_modules/
+video/out/
+video/video/
