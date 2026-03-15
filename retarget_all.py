@@ -20,7 +20,7 @@ import numpy as np
 from movin_sdk_python import Retargeter, load_bvh_file
 
 REPO_DIR = Path(__file__).resolve().parent
-MUJOCO_XML = Path("/home/mitch/Repositories/g1-urdf/g1_mode15_square.xml")
+MUJOCO_XML = Path(os.environ.get("MUJOCO_XML", str(Path.home() / "Repositories/g1-urdf/g1_mode15_square.xml")))
 CATEGORIES = ["dance", "karate", "bonus"]
 HUMAN_HEIGHT = 1.75
 
