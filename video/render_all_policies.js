@@ -37,11 +37,11 @@ const http = require('http');
 
 const VIEWER_BASE = 'https://exptech-g1-moves.static.hf.space/viewer.html';
 const CDP_URL = 'http://127.0.0.1:9222';
-const CROP = { w: 1200, h: 800, x: 200, y: 200 };
+const CROP = { w: 780, h: 570, x: 72, y: 108 };
 const TRIM_START = 3; // seconds to trim from start (A-pose)
 const TRIM_END = 3;   // seconds to trim from end (A-pose)
 const POLICY_FPS = 50; // policy runs at 50Hz
-const SCREEN_SIZE = { w: 4096, h: 2160 };
+const SCREEN_SIZE = { w: 2560, h: 1440 };
 const OUTPUT_DIR = '/tmp/policy-renders';
 const LOG_FILE = path.join(OUTPUT_DIR, 'render.log');
 const STATUS_FILE = path.join(OUTPUT_DIR, 'status.json');
@@ -99,7 +99,7 @@ function checkChromium() {
 
 async function launchChromium(url) {
   log('Launching Chromium in kiosk mode...');
-  const proc = spawn('chromium-browser', [
+  const proc = spawn('google-chrome', [
     '--kiosk',
     '--remote-debugging-port=9222',
     '--no-first-run',
@@ -174,6 +174,22 @@ async function renderClip(clipId, category) {
     return { clipId, success: false, error: 'no_frames' };
   }
 
+  // 4b. Hide ALL UI elements for clean recording — keep only the canvas
+  await page.evaluate(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      * { color: transparent !important; }
+      button, a, nav, header, footer, .controls, .info, .hud,
+      [class*="title"], [class*="header"], [class*="footer"],
+      [class*="control"], [class*="button"], [class*="overlay"]:not(.hidden) {
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
+      canvas { color: initial !important; }
+    `;
+    document.head.appendChild(style);
+  });
+
   // 5. Wait for frame to reset near 0
   log('Waiting for loop start...');
   let currentFrame = 999;
@@ -247,7 +263,7 @@ async function renderClip(clipId, category) {
   // 9. Upload to HF
   log('Uploading to HF...');
   try {
-    execFileSync('python3', ['-c', `
+    execFileSync('/home/mitch/.local/share/pipx/venvs/huggingface-hub/bin/python', ['-c', `
 from huggingface_hub import HfApi
 api = HfApi()
 f = "${finalFile}"
