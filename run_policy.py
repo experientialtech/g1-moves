@@ -31,6 +31,26 @@ DEFAULT_JOINT_POS = np.zeros(29, dtype=np.float32)
 DECIMATION = 4
 CONTROL_DT = 0.02  # 1 / 50 Hz
 
+# PD gains per joint (29 DOF), matched to mjlab training configuration.
+# Joint order: L hip p/r/y, L knee, L ankle p/r, R hip p/r/y, R knee,
+#              R ankle p/r, waist y/r/p, L shoulder p/r/y, L elbow,
+#              L wrist r/p/y, R shoulder p/r/y, R elbow, R wrist r/p/y
+KP = np.array([
+    40.2, 99.1, 40.2, 99.1, 28.6, 28.6,   # left leg (hip p/r/y, knee, ankle p/r)
+    40.2, 99.1, 40.2, 99.1, 28.6, 28.6,   # right leg
+    40.2, 28.6, 28.6,                       # waist (yaw, roll, pitch)
+    14.3, 14.3, 14.3, 14.3, 14.3, 16.8, 16.8,  # left arm (shoulder p/r/y, elbow, wrist r/p/y)
+    14.3, 14.3, 14.3, 14.3, 14.3, 16.8, 16.8,  # right arm
+], dtype=np.float32)
+
+KD = np.array([
+    2.6, 6.3, 2.6, 6.3, 1.8, 1.8,         # left leg
+    2.6, 6.3, 2.6, 6.3, 1.8, 1.8,         # right leg
+    2.6, 1.8, 1.8,                          # waist
+    0.9, 0.9, 0.9, 0.9, 0.9, 1.1, 1.1,    # left arm
+    0.9, 0.9, 0.9, 0.9, 0.9, 1.1, 1.1,    # right arm
+], dtype=np.float32)
+
 
 def rotation_matrix_to_6d(rot_matrix: np.ndarray) -> np.ndarray:
     """Extract first two columns of a 3x3 rotation matrix (6D representation)."""
@@ -141,8 +161,10 @@ def run_policy(onnx_path: str, npz_path: str, xml_path: str, speed: float = 1.0)
         actions = session.run(["actions"], {"obs": obs[None]})[0][0]
         last_action = actions.copy()
 
-        # Apply joint position targets via PD control
-        data.ctrl[:29] = actions
+        # PD control: convert position targets to torques
+        target_pos = actions + DEFAULT_JOINT_POS
+        torques = KP * (target_pos - joint_pos) - KD * joint_vel
+        data.ctrl[:29] = torques
 
         motion_time += CONTROL_DT * speed
 
@@ -202,6 +224,7 @@ def main():
     else:
         # Try common locations
         candidates = [
+            Path.home() / "Repositories/mjlab-gui/external/RoboJuDo/assets/robots/g1/g1_29dof_rev_1_0.xml",
             Path.home() / "Repositories/g1-urdf/g1_mode15_square.xml",
             base / "g1_mode15_square.xml",
         ]
