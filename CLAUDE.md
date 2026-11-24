@@ -54,7 +54,8 @@ g1-moves/
 | This repo | `~/Repositories/g1-moves` |
 | mjlab-gui | `~/Repositories/mjlab-gui` |
 | G1 URDF | `~/Repositories/g1-urdf` |
-| MuJoCo XML | `~/Repositories/g1-urdf/g1_mode15_square.xml` |
+| MuJoCo XML (retarget ground offset only) | `~/Repositories/g1-urdf/g1_mode15_square.xml` |
+| Training robot model | mjlab `asset_zoo/robots/unitree_g1/xmls/g1.xml` (submodule `mjlab/`) |
 | Training logs | `~/Repositories/mjlab-gui/logs/rsl_rl/g1_tracking/` |
 | video2robot | `~/Repositories/g1-moves/external/video2robot` |
 | GMR | `~/Repositories/g1-moves/external/video2robot/third_party/GMR` |
@@ -342,6 +343,10 @@ MUJOCO_GL=egl python app/scripts/process_motion_local.py \
   --render
 ```
 
+> **FPS note**: mjlab advances the motion by one frame per 50 Hz control step, so a 60 fps NPZ is
+> tracked at 50/60 speed while its stored velocities are for full speed. All current policies were
+> trained this way. For new clips, use `--output-fps 50` so the motion plays at real speed.
+
 **What it does**:
 1. Loads CSV (36 columns: 3 root pos + 4 root quat + 29 joint angles)
 2. Optional interpolation to target FPS
@@ -395,6 +400,10 @@ MUJOCO_GL=egl MUJOCO_EGL_DEVICE_ID=0 uv run train \
   --agent.run-name <clip> \
   --video --video-interval 5000
 ```
+
+For the real robot, train with `Mjlab-Tracking-Flat-Unitree-G1-No-State-Estimation` (154 inputs, no
+`base_lin_vel` / `motion_anchor_pos_b`) and archive to `<clip>/policy_154/`. Export with
+`export_onnx.py <cat>/<clip> --policy-dir policy_154 --task Mjlab-Tracking-Flat-Unitree-G1-No-State-Estimation`.
 
 **Key parameters**:
 - `num-envs 8192`: parallel simulation environments (~40GB VRAM on RTX PRO 6000; reduce to 4096/2048 if OOM)

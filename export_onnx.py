@@ -4,6 +4,8 @@ Usage:
     uv run python export_onnx.py <category>/<clip>
     uv run python export_onnx.py bonus/B_Fence1
     uv run python export_onnx.py --all              # export all clips with policies
+    uv run python export_onnx.py bonus/B_Fence1 --policy-dir policy_154 \
+        --task Mjlab-Tracking-Flat-Unitree-G1-No-State-Estimation
 """
 
 import argparse
@@ -75,13 +77,14 @@ class _OnnxMotionModel(nn.Module):
         )
 
 
-def export_clip(category: str, clip: str, device: str = "cuda:0"):
+def export_clip(category: str, clip: str, device: str = "cuda:0", task: str = TASK,
+                policy_dir: str = "policy"):
     """Export a single clip's policy to ONNX."""
     clip_dir = REPO_DIR / category / clip
-    checkpoint = clip_dir / "policy" / f"{clip}_policy.pt"
+    checkpoint = clip_dir / policy_dir / f"{clip}_policy.pt"
     motion = clip_dir / "training" / f"{clip}.npz"
-    output_dir = clip_dir / "policy"
-    output_name = f"{clip}.onnx"
+    output_dir = clip_dir / policy_dir
+    output_name = f"{clip}.onnx" if policy_dir == "policy" else f"{clip}_policy.onnx"
 
     if not checkpoint.exists():
         print(f"SKIP {category}/{clip} — no policy checkpoint")
@@ -92,8 +95,8 @@ def export_clip(category: str, clip: str, device: str = "cuda:0"):
 
     print(f"Exporting {category}/{clip}...")
 
-    env_cfg = load_env_cfg(TASK, play=True)
-    agent_cfg = load_rl_cfg(TASK)
+    env_cfg = load_env_cfg(task, play=True)
+    agent_cfg = load_rl_cfg(task)
 
     motion_cmd = env_cfg.commands["motion"]
     assert isinstance(motion_cmd, MotionCommandCfg)
@@ -103,7 +106,7 @@ def export_clip(category: str, clip: str, device: str = "cuda:0"):
     env = ManagerBasedRlEnv(cfg=env_cfg, device=device)
     env_wrapped = RslRlVecEnvWrapper(env, clip_actions=agent_cfg.clip_actions)
 
-    runner_cls = load_runner_cls(TASK) or MotionTrackingOnPolicyRunner
+    runner_cls = load_runner_cls(task) or MotionTrackingOnPolicyRunner
     runner = runner_cls(env_wrapped, asdict(agent_cfg), device=device)
     runner.load(str(checkpoint), load_optimizer=False, map_location=device)
 
@@ -154,7 +157,7 @@ def export_clip(category: str, clip: str, device: str = "cuda:0"):
     return True
 
 
-def find_all_clips_with_policies():
+def find_all_clips_with_policies(policy_dir: str = "policy"):
     """Find all clips that have a trained policy checkpoint."""
     clips = []
     for category in ["bonus", "dance", "karate"]:
@@ -165,7 +168,7 @@ def find_all_clips_with_policies():
             if not clip_dir.is_dir():
                 continue
             clip = clip_dir.name
-            pt = clip_dir / "policy" / f"{clip}_policy.pt"
+            pt = clip_dir / policy_dir / f"{clip}_policy.pt"
             npz = clip_dir / "training" / f"{clip}.npz"
             if pt.exists() and npz.exists():
                 clips.append((category, clip))
@@ -177,6 +180,8 @@ def main():
     parser.add_argument("clip", nargs="?", help="category/clip (e.g. bonus/B_Fence1)")
     parser.add_argument("--all", action="store_true", help="Export all clips with policies")
     parser.add_argument("--device", default="cuda:0", help="Device (default: cuda:0)")
+    parser.add_argument("--task", default=TASK, help=f"mjlab task the checkpoint was trained with (default: {TASK})")
+    parser.add_argument("--policy-dir", default="policy", help="policy (160 inputs) or policy_154")
     args = parser.parse_args()
 
     if not args.clip and not args.all:
@@ -187,16 +192,17 @@ def main():
     device = args.device if torch.cuda.is_available() else "cpu"
 
     if args.all:
-        clips = find_all_clips_with_policies()
+        clips = find_all_clips_with_policies(args.policy_dir)
         print(f"Found {len(clips)} clips with trained policies")
         ok, skip = 0, 0
         for category, clip in clips:
-            onnx = REPO_DIR / category / clip / "policy" / f"{clip}.onnx"
+            name = f"{clip}.onnx" if args.policy_dir == "policy" else f"{clip}_policy.onnx"
+            onnx = REPO_DIR / category / clip / args.policy_dir / name
             if onnx.exists():
                 print(f"SKIP {category}/{clip} — ONNX already exists")
                 skip += 1
                 continue
-            if export_clip(category, clip, device):
+            if export_clip(category, clip, device, args.task, args.policy_dir):
                 ok += 1
             else:
                 skip += 1
@@ -207,7 +213,7 @@ def main():
             print(f"Expected category/clip, got: {args.clip}")
             sys.exit(1)
         category, clip = parts
-        if not export_clip(category, clip, device):
+        if not export_clip(category, clip, device, args.task, args.policy_dir):
             sys.exit(1)
 
 

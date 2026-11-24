@@ -120,33 +120,55 @@ Run `python retarget_all.py` to regenerate (skips existing outputs).
 
 ## Deploying Policies
 
-Each trained clip includes an ONNX policy (`<clip>_policy.onnx`) and a PyTorch checkpoint (`<clip>_policy.pt`). The ONNX model has observation normalization baked in — feed it raw observations and it outputs 29 joint position targets directly.
+Each trained clip has two policy variants in the [HF dataset](https://huggingface.co/datasets/exptech/g1-moves):
 
-### Policy Format
+| Folder | Task trained with | Inputs | Use for |
+|--------|-------------------|--------|---------|
+| `<clip>/policy/` | `Mjlab-Tracking-Flat-Unitree-G1` | 160 | Simulation |
+| `<clip>/policy_154/` | `Mjlab-Tracking-Flat-Unitree-G1-No-State-Estimation` | 154 | **Real robot** (and simulation) |
 
-| Property | Value |
-|----------|-------|
-| Input | `obs` — float32 tensor, shape `[batch, 160]` |
-| Output | `actions` — float32 tensor, shape `[batch, 29]` |
-| Normalization | Baked into the model (obs mean/std from training) |
-| Framework | ONNX opset 17, compatible with onnxruntime |
-| Control freq | 50 Hz (decimation=4 at 200 Hz sim) |
+The 160-input policies also observe `motion_anchor_pos_b` (where the robot is relative to the reference in the world) and `base_lin_vel`. A real G1 has no reliable source for these without external odometry, so deploy the `policy_154` variant on hardware. All 59 `policy_154` policies (no `B_Fence1` yet) complete their motion in the standalone simulator below.
 
-### Observation Vector (160 dims)
+### ONNX files
 
-| Index | Size | Name | Description |
-|-------|------|------|-------------|
-| 0-28 | 29 | `ref_joint_pos` | Reference motion joint positions at current timestep |
-| 29-57 | 29 | `ref_joint_vel` | Reference motion joint velocities at current timestep |
-| 58-60 | 3 | `motion_anchor_pos_b` | Motion anchor position relative to robot pelvis (body frame) |
-| 61-66 | 6 | `motion_anchor_ori_b` | Motion anchor orientation relative to robot (first 2 columns of rotation matrix) |
-| 67-69 | 3 | `base_ang_vel` | Robot base angular velocity (IMU) |
-| 70-72 | 3 | `base_lin_vel` | Robot base linear velocity |
-| 73-101 | 29 | `joint_pos_rel` | Current joint positions minus default pose |
-| 102-130 | 29 | `joint_vel` | Current joint velocities |
-| 131-159 | 29 | `last_action` | Previous policy output |
+| File | Inputs | Outputs | Metadata |
+|------|--------|---------|----------|
+| `policy/<clip>.onnx` | `obs [1,160]`, `time_step [1,1]` | `actions` + reference motion at `time_step` | yes |
+| `policy_154/<clip>_policy.onnx` | `obs [1,154]`, `time_step [1,1]` | `actions` + reference motion at `time_step` | yes |
+| `policy/<clip>_policy.onnx` | `obs [1,160]` | `actions` | yes (actor only, motion comes from the NPZ) |
 
-### Joint Order (29 DOF, Unitree G1 mode 15)
+The reference motion is bundled in the files that take `time_step`, so you don't need the NPZ. Observation normalization is baked in. Everything a deployment has to match is stored as ONNX metadata (`session.get_modelmeta().custom_metadata_map`):
+
+| Key | Meaning |
+|-----|---------|
+| `joint_names` | Joint order of actions and joint observations (Unitree 29-DOF motor order) |
+| `default_joint_pos` | Default pose; joint observations are relative to it and actions are offsets from it |
+| `action_scale` | Per-joint scale, 0.075 to 0.548 |
+| `joint_stiffness`, `joint_damping` | PD gains used in training |
+| `observation_names` | Order of the observation terms |
+| `anchor_body_name` | `torso_link` |
+| `body_names` | Bodies in the bundled `body_pos_w` / `body_quat_w` outputs |
+
+**Joint target**: `target = default_joint_pos + action_scale * action`, sent to a PD controller with the gains above at 50 Hz (sim at 200 Hz, decimation 4). Raw actions are *not* joint positions.
+
+**Motion timing**: training advances the reference by one frame per 50 Hz control step (`time_step += 1`). The motion files are 60 fps, so each policy tracks its clip at 50/60 speed. Use the same stepping when deploying.
+
+### Observation vector
+
+Terms are concatenated in `observation_names` order. The 154-input variant drops the two terms marked *.
+
+| Term | Size | Description |
+|------|------|-------------|
+| `command` | 58 | Reference joint positions (29) then velocities (29) at `time_step` |
+| `motion_anchor_pos_b` * | 3 | Reference `torso_link` position in the robot's `torso_link` frame |
+| `motion_anchor_ori_b` | 6 | Reference `torso_link` orientation in the robot's `torso_link` frame: first two columns of the rotation matrix, row-major `[R00, R01, R10, R11, R20, R21]` |
+| `base_lin_vel` * | 3 | Pelvis IMU linear velocity, body frame |
+| `base_ang_vel` | 3 | Pelvis IMU angular velocity, body frame |
+| `joint_pos` | 29 | Joint positions minus `default_joint_pos` |
+| `joint_vel` | 29 | Joint velocities |
+| `actions` | 29 | Previous raw policy output |
+
+### Joint Order (29 DOF, Unitree G1)
 
 ```
  0: left_hip_pitch        7: right_hip_roll       14: waist_pitch
@@ -162,105 +184,76 @@ Each trained clip includes an ONNX policy (`<clip>_policy.onnx`) and a PyTorch c
 24: right_shoulder_yaw    28: right_wrist_yaw
 ```
 
-### Option 1: Sim2Sim with mjlab (easiest)
+### Robot model
 
-Visualize any policy in MuJoCo simulation:
+All policies were trained on mjlab's G1 model, `mjlab/src/mjlab/asset_zoo/robots/unitree_g1/xmls/g1.xml` (the `mjlab` submodule here). mjlab adds actuators, armature, collision settings and solver options in code (`g1_constants.py`, `tracking_env_cfg.py`). `g1_mode15_square.xml` was only used during retargeting, to put the feet on the ground. It is not needed to run policies.
+
+### Option 1: Sim2Sim with mjlab
 
 ```bash
 git clone https://github.com/mujocolab/mjlab
 cd mjlab
 uv sync
 
-# Play a trained policy
 MUJOCO_GL=egl uv run play \
-  Mjlab-Tracking-Flat-Unitree-G1 \
-  --checkpoint-file <clip>/policy/<clip>_policy.pt \
+  Mjlab-Tracking-Flat-Unitree-G1-No-State-Estimation \
+  --checkpoint-file <clip>/policy_154/<clip>_policy.pt \
   --motion-file <clip>/training/<clip>.npz \
   --num-envs 1 \
   --viewer viser
 # Open http://localhost:8080 for 3D viewer
+# For policy/<clip>_policy.pt use task Mjlab-Tracking-Flat-Unitree-G1
 ```
 
 ### Option 2: Deploy with RoboJuDo
 
-[RoboJuDo](https://github.com/GDDG08/RoboJuDo) is a plug-and-play deployment framework for humanoid robots that supports both MuJoCo sim2sim and real robot deployment.
-
-#### Setup
+[RoboJuDo](https://github.com/GDDG08/RoboJuDo)'s `BeyondMimicPolicy` reads the ONNX metadata above, so the bundled ONNX files work as-is. Our fork with g1-moves configs is the `RoboJuDo` submodule (`robojudo/config/g1/g1_loco_mimic_cfg.py`, guide in `RoboJuDo/docs/g1_moves.md`).
 
 ```bash
-git clone https://github.com/GDDG08/RoboJuDo.git
 cd RoboJuDo
 pip install -e .
-python submodule_install.py  # installs mujoco_viewer
+cp <clip>/policy_154/<clip>_policy.onnx assets/models/g1/beyondmimic/<clip>.onnx
 ```
-
-#### Loading a Policy
-
-Each policy needs its corresponding motion NPZ file for the reference trajectory. At each timestep, the NPZ provides the reference joint positions/velocities and body anchor positions that form the first 67 dims of the observation vector.
 
 ```python
-import numpy as np
-import onnxruntime as ort
-
-# Load policy and motion
-session = ort.InferenceSession("<clip>_policy.onnx")
-motion = np.load("<clip>.npz")
-
-ref_joint_pos = motion["joint_pos"]    # (T, 29) reference joint positions
-ref_joint_vel = motion["joint_vel"]    # (T, 29) reference joint velocities
-ref_body_pos = motion["body_pos_w"]    # (T, N, 3) reference body positions
-ref_body_quat = motion["body_quat_w"]  # (T, N, 4) reference body quaternions
-fps = float(motion["fps"])             # typically 60
-
-# At each control step (50 Hz), construct the 160-dim observation:
-obs = np.concatenate([
-    ref_joint_pos[t],           # 29: reference joint positions
-    ref_joint_vel[t],           # 29: reference joint velocities
-    anchor_pos_body_frame,      # 3:  motion anchor pos in robot frame
-    anchor_ori_body_frame,      # 6:  motion anchor ori (2 cols of rot matrix)
-    robot_ang_vel,              # 3:  from IMU
-    robot_lin_vel,              # 3:  from state estimation
-    joint_pos - default_pos,    # 29: current joints minus default
-    joint_vel,                  # 29: current joint velocities
-    last_action,                # 29: previous policy output
-])
-
-actions = session.run(["actions"], {"obs": obs[None].astype(np.float32)})[0][0]
-# actions are 29 joint position targets to send to PD controller
+G1BeyondMimicPolicyCfg(policy_name="<clip>", without_state_estimator=True)   # policy_154
+G1BeyondMimicPolicyCfg(policy_name="<clip>", without_state_estimator=False)  # policy (sim only)
 ```
 
-#### RoboJuDo Integration
+`without_state_estimator` must match the file's input size; the policy refuses to load if it doesn't.
 
-To add G1 Moves policies as a RoboJuDo policy module, create a policy class that replays the NPZ motion and constructs the observation vector. The architecture is similar to `BeyondMimicPolicy` — an ONNX model with motion replay — but uses a simpler observation format. See the [BeyondMimic policy source](https://github.com/GDDG08/RoboJuDo/blob/main/robojudo/policy/beyondmimic_policy.py) as a reference implementation.
+### Option 3: Standalone MuJoCo
 
-Key differences from BeyondMimic:
-- Our ONNX takes only `obs` as input (no `time_step`)
-- Observation normalization is baked into the ONNX model
-- Motion data comes from the NPZ file, not embedded in the ONNX model
-- Actions are direct joint position targets (no per-joint scaling needed)
-
-### Option 3: Standalone MuJoCo Viewer
-
-Run any policy in MuJoCo simulation without the training framework:
+`run_policy.py` needs only `mujoco`, `onnxruntime` and `numpy`. It reads everything from the ONNX metadata and configures mjlab's `g1.xml` the way training did.
 
 ```bash
 pip install mujoco onnxruntime numpy
-python run_policy.py dance/B_DadDance --xml /path/to/g1_mode15_square.xml
+git submodule update --init mjlab
+hf download exptech/g1-moves --repo-type dataset --include "dance/B_DadDance/*" --local-dir .
+
+python run_policy.py dance/B_DadDance                    # 160-input policy, viewer
+python run_policy.py --onnx dance/B_DadDance/policy_154/B_DadDance_policy.onnx
+python run_policy.py dance/B_DadDance --headless         # print tracking metrics
 ```
 
-This opens an interactive MuJoCo viewer with the robot executing the trained policy in a loop. See `run_policy.py` for the complete observation vector construction and control loop.
+`--headless` runs one pass and reports whether mjlab's termination conditions would have fired. `--zero-state-estimation` feeds zeros for the two state-estimation inputs, the way a robot without odometry would.
 
 ### Option 4: Raw ONNX Inference
 
-For custom deployments (Jetson, microcontrollers, web):
-
 ```python
-import onnxruntime as ort
-session = ort.InferenceSession("B_DadDance_policy.onnx")
-actions = session.run(["actions"], {"obs": obs_160.astype(np.float32)})[0]
+import numpy as np, onnxruntime as ort
+
+s = ort.InferenceSession("B_DadDance_policy.onnx")          # from policy_154/
+meta = s.get_modelmeta().custom_metadata_map
+default = np.array(meta["default_joint_pos"].split(","), dtype=np.float32)
+scale = np.array(meta["action_scale"].split(","), dtype=np.float32)
+
+out = s.run(None, {"obs": obs_154[None], "time_step": np.array([[t]], np.float32)})
+actions, ref_joint_pos, ref_joint_vel = out[0][0], out[1][0], out[2][0]
+target = default + scale * actions                           # PD target, 50 Hz
 ```
 
-The ONNX model is a 4-layer MLP (160 → 512 → 256 → 128 → 29) with ELU activations. It runs in <1ms on CPU and is compatible with ONNX Runtime on all platforms including NVIDIA Jetson (TensorRT), web (ONNX.js), and mobile.
+The network is a 4-layer MLP (154 or 160 → 512 → 256 → 128 → 29) with ELU activations. It runs in under 1 ms on CPU.
 
 ## Training Quality
 
